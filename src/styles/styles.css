@@ -1,0 +1,78 @@
+.cardDetail{
+  padding: 50px ;
+  gap: 50px;
+}
+
+.body{
+  background-color: aqua;
+}
+
+.CardContent{
+  background-color:rgba(27, 27, 27, 0.795);
+  padding: 10px ;
+  border-radius: 5px;
+
+  color: white;
+}
+
+.parrafo{
+  padding: 7px 10px 7px 10px;
+
+}
+
+.card{
+  padding: 50px ;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 90%;
+  width: 90%;
+  gap: 60px;
+  background-color:  rgb(236, 236, 236);
+
+}
+
+.content{
+  background-color:rgba(27, 27, 27, 0.795);
+  color: white;
+  height: 325px;
+  width: 325px;
+}
+.link{
+  color: rgb(29, 29, 29);
+  text-decoration: none;
+  padding: 7px 10px 7px 10px
+}
+.linkCards{
+  color: white;
+  text-decoration: none;
+  padding: 7px 10px 7px 10px
+}
+
+.butonspage {
+  margin: 50px;
+
+  padding: 7px 10px 7px 10px
+}
+.bottonMenu{
+  padding: 7px 10px 7px 10px
+}
+.linkNavbar{
+  color: white;
+  text-decoration: none;
+}
+.inputbusqueda{
+  padding: 7px 10px 7px 10px;
+  margin: 10px;
+}
+.principalTitle{
+  text-align: center;
+  padding: 7px 10px 7px 10px;
+  font: bold;
+}
+.circularProgress{
+  display: flex;
+  justify-content: center;
+}
+.general{
+  background-color: rgb(236, 236, 236);
+}
