@@ -1,78 +1,84 @@
-.cardDetail{
-  padding: 50px ;
-  gap: 50px;
+.body {
+	background-color: aqua;
 }
 
-.body{
-  background-color: aqua;
+/* .cardDetail {
+	padding: 50px;
+	gap: 50px;
 }
 
-.CardContent{
-  background-color:rgba(27, 27, 27, 0.795);
-  padding: 10px ;
-  border-radius: 5px;
+.CardContent {
+	background-color: rgba(27, 27, 27, 0.795);
+	padding: 10px;
+	border-radius: 5px;
+	color: white;
+} */
 
-  color: white;
-}
+.cardDetail {
+	padding: 50px;
+	gap: 50px;
+	grid-template-columns: 1fr 1fr;
+	background-color: rgba(27, 27, 27, 0.795);
+	padding: 10px;
+	border-radius: 5px;
+	height: 90%;
 
-.parrafo{
-  padding: 7px 10px 7px 10px;
-
-}
-
-.card{
-  padding: 50px ;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  height: 90%;
-  width: 90%;
-  gap: 60px;
-  background-color:  rgb(236, 236, 236);
-
+	color: white;
 }
 
-.content{
-  background-color:rgba(27, 27, 27, 0.795);
-  color: white;
-  height: 325px;
-  width: 325px;
-}
-.link{
-  color: rgb(29, 29, 29);
-  text-decoration: none;
-  padding: 7px 10px 7px 10px
-}
-.linkCards{
-  color: white;
-  text-decoration: none;
-  padding: 7px 10px 7px 10px
+.parrafo {
+	padding: 7px 10px 7px 10px;
 }
 
-.butonspage {
-  margin: 50px;
+.card {
+	padding: 50px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	height: 90%;
+	width: 90%;
+	gap: 60px;
+	background-color: rgb(236, 236, 236);
+}
 
-  padding: 7px 10px 7px 10px
+.content {
+	background-color: rgba(27, 27, 27, 0.795);
+	color: white;
+	height: 300px;
+	width: 350px;
 }
-.bottonMenu{
-  padding: 7px 10px 7px 10px
+.link {
+	color: rgb(29, 29, 29);
+	text-decoration: none;
+	padding: 7px 10px 7px 10px;
 }
-.linkNavbar{
-  color: white;
-  text-decoration: none;
+.linkCards {
+	color: white;
+	text-decoration: none;
+	padding: 7px 10px 7px 10px;
 }
-.inputbusqueda{
-  padding: 7px 10px 7px 10px;
-  margin: 10px;
+.bottonMenu {
+	padding: 7px 10px 7px 10px;
 }
-.principalTitle{
-  text-align: center;
-  padding: 7px 10px 7px 10px;
-  font: bold;
+.linkNavbar {
+	color: white;
+	text-decoration: none;
 }
-.circularProgress{
-  display: flex;
-  justify-content: center;
+.inputbusqueda {
+	padding: 7px 10px 7px 10px;
+	margin: 10px;
 }
-.general{
-  background-color: rgb(236, 236, 236);
+.principalTitle {
+	text-align: center;
+	padding: 7px 10px 7px 10px;
+	font: bold;
+}
+
+.general {
+	background-color: rgb(236, 236, 236);
+}
+
+.viewcard {
+	color: rgb(68, 68, 197);
+	text-decoration: none;
+	padding: 7px 10px 7px 10px;
 }

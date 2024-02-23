@@ -1,57 +1,68 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-lone-blocks */
 import React, { useEffect } from 'react'
 import { Navbar } from '../Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsByType } from '../../store/slices/thunks'
+import { getcardsByTypeLOCAL, reinicio } from '../../store/slices/thunks'
 import { CardGrid } from '../../store/slices/helpers/CardGrid'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import Pagination from '@mui/material/Pagination'
 import '@fontsource/roboto/500.css'
+import { redirect } from 'react-router-dom'
 
 export const MonsterScreen = () => {
-  const dispatch = useDispatch()
-  const { isLoading, page = 0 } = useSelector(state => state.cards)
+	const dispatch = useDispatch()
+	const { cards = [], isLoading, page = 0 } = useSelector(state => state.cards)
+	console.log('🚀 ~ MonsterScreen ~ cards:', cards)
 
-  const type = ['Normal Monster', 'Spirit Monster', 'Fusion Monster', 'Effect Monster', 'Tuner Monster', 'Union Effect Monster', 'Synchro Monster', 'Ritual Monster', 'XYZ Monster', 'Normal Tuner Monster', 'Ritual Effect Monster', 'Toon Monster', 'Flip Effect Monster']
+	const type = 'Normal Monster'
 
-  useEffect(() => {
-    dispatch(getcardsByType(type))
-  }, [])
+	useEffect(() => {
+		dispatch(getcardsByTypeLOCAL(type))
+		return () => {
+			dispatch(reinicio())
+			console.log('esta paja se reinicio en teoria list')
+		}
+	}, [])
 
-  const handlePrevPage = () => {
-    if (page > 0) {
-      { dispatch(getcardsByType(type, page - 2)) }
-      console.log(page)
-    } else {
-      dispatch(getcardsByType(type, page))
-    }
-  }
-  const handleNextpage = () => {
-    if (page > 0) {
-      { dispatch(getcardsByType(type, page)) }
-    } else {
-      dispatch(getcardsByType(type, page))
-    }
-  }
-  console.log(page)
-  return (
-    <div className='general'>
-        <Navbar/>
+	const handlePrevPage = () => {
+		{
+			dispatch(getcardsByTypeLOCAL(type, page - 2))
+		}
+		console.log(page)
+	}
+	const handleNextpage = () => {
+		dispatch(getcardsByTypeLOCAL(type, page))
+	}
+	console.log(page)
 
-          <CardGrid/>
+	return (
+		<div className='general'>
+			<Navbar />
 
-            <Stack spacing={2} direction="row">
-            <Button variant="outlined" className='butonspage' size="large"
-            disabled={isLoading}
-            onClick={handlePrevPage}>
-              PREV
-            </Button>
-            <Button variant="outlined" className='butonspage' size="large"
-            disabled={isLoading}
-            onClick={handleNextpage}>
-              NEXT
-            </Button>
-            </Stack>
-            </div>
-  )
+			<CardGrid />
+
+			<Stack spacing={2} direction='row' justifyContent='center'>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					size='large'
+					disabled={isLoading || page <= 2}
+					onClick={handlePrevPage}
+				>
+					PREV
+				</Button>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					size='large'
+					disabled={isLoading || cards.length < 12}
+					onClick={handleNextpage}
+				>
+					NEXT
+				</Button>
+			</Stack>
+		</div>
+	)
 }

@@ -5,5 +5,9 @@ import axios from 'axios'
 // })
 
 export const cardsApi = axios.create({
-  baseURL: 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
+	baseURL: 'https://db.ygoprodeck.com/api/v7/cardinfo.php',
+})
+
+export const cardsApiLocal = axios.create({
+	baseURL: 'http://localhost:3030/',
 })

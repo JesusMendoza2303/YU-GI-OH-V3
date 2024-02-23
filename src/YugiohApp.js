@@ -3,92 +3,112 @@
 import React, { useEffect, useState } from 'react'
 import { Navbar } from './components/Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsByName } from './store/slices/thunks'
+import { getcardsByNameLocal2, reinicio } from './store/slices/thunks'
 import { CardGrid } from './store/slices/helpers/CardGrid'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { Typography } from '@mui/material'
+
 import '@fontsource/roboto/500.css'
 
 export const YugiohApp = () => {
-  const dispatch = useDispatch()
-  const [search, setsearch] = useState('')
-  const { isLoading, page, msgError } = useSelector(state => state.cards)
+	const dispatch = useDispatch()
+	const [search, setsearch] = useState('')
+	const {
+		cards = [],
+		isLoading,
+		page,
+		msgError,
+	} = useSelector(state => state.cards)
+	console.log('🚀 ~ YugiohApp ~ cards:', cards)
 
-  useEffect(() => {
-    dispatch(getcardsByName(search))
-  }, [])
+	useEffect(() => {
+		dispatch(getcardsByNameLocal2(search))
+		// return () => {
+		// 	dispatch(reinicio())
+		// 	console.log('esta paja se reinicio en teoria')
+		// }
+	}, [])
 
-  const handlePrevPage = () => {
-    if (page > 0) {
-      { dispatch(getcardsByName(search, page - 2)) }
-      console.log(page)
-    } else { dispatch(getcardsByName(search, page)) }
-    console.log(page)
-  }
+	const handleInputChange = e => {
+		setsearch(e.target.value)
+	}
 
-  const handleNextpage = () => {
-    if (page > 0) {
-      { dispatch(getcardsByName(search, page)) }
-    } else { dispatch(getcardsByName(search, page)) }
-  }
+	const handleSubmit = e => {
+		e.preventDefault()
 
-  const handleInputChange = (e) => {
-    setsearch(e.target.value)
-  }
+		if (search.trim()) {
+			dispatch(getcardsByNameLocal2(search))
+		}
+	}
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+	const handlePrevPage = () => {
+		{
+			dispatch(getcardsByNameLocal2(search, page - 2))
+		}
+		console.log(page)
+	}
+	const handleNextpage = () => {
+		dispatch(getcardsByNameLocal2(search, page))
+	}
+	console.log(page)
 
-    if (search.trim()) {
-      dispatch(getcardsByName(search))
-    }
-  }
+	console.log(search)
 
-  console.log(search)
-  console.log(msgError)
+	return (
+		<div className='general'>
+			<Navbar />
+			<Typography variant='h2' component='h3' className='principalTitle'>
+				Which card do you want to search?
+			</Typography>
+			<div>
+				<Box
+					className='inputbusqueda'
+					onSubmit={handleSubmit}
+					component='form'
+					sx={{
+						'& > :not(style)': { m: 1, width: '25ch' },
+					}}
+					noValidate
+					autoComplete='off'
+				>
+					<TextField
+						id='outlined-basic'
+						label='Search a Card'
+						variant='outlined'
+						margin='normal'
+						onChange={e => {
+							setsearch(e.target.value)
+						}}
+					/>
+				</Box>
 
-  return (
-    <div className='general'>
-        <Navbar/>
-        <Typography variant="h2" component="h3" className='principalTitle'>
-           Which card do you want to search?
-        </Typography>
-        <div>
+				<CardGrid />
+			</div>
 
-      <Box
-      className='inputbusqueda'
-      onSubmit={handleSubmit}
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' }
-      }}
-      noValidate
-      autoComplete="off"
-       >
-      <TextField id="outlined-basic" label="Search a Card" variant="outlined" margin="normal"
-      onChange={(e) => { setsearch(e.target.value) }}/>
-
-      </Box>
-
-                <CardGrid/>
-        </div>
-        <Stack spacing={2} direction="row">
-            <Button variant="outlined" className='butonspage' size="large"
-            disabled={isLoading}
-            onClick={handlePrevPage}>
-              PREV
-            </Button>
-            <Button variant="outlined" className='butonspage' size="large"
-            disabled={isLoading}
-            onClick={handleNextpage}>
-              NEXT
-            </Button>
-            </Stack>
-            </div>
-            // </div>
-
-  )
+			<Stack spacing={2} direction='row' justifyContent='center'>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					size='large'
+					disabled={isLoading || page <= 2}
+					onClick={handlePrevPage}
+				>
+					PREV
+				</Button>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					size='large'
+					disabled={isLoading || cards.length < 12}
+					onClick={handleNextpage}
+				>
+					NEXT
+				</Button>
+			</Stack>
+		</div>
+		// </div>
+	)
 }

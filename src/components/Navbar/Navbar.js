@@ -9,86 +9,68 @@ import MenuItem from '@mui/material/MenuItem'
 import HomeIcon from '@mui/icons-material/Home'
 import '@fontsource/roboto/700.css'
 export const Navbar = () => {
-  return (
+	return (
+		<nav>
+			<AppBar position='static'>
+				<Container>
+					<Toolbar>
+						<HomeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+						<MenuItem>
+							<Typography
+								textAlign='center'
+								variant='h6'
+								noWrap
+								component='a'
+								sx={{
+									mr: 2,
+									display: { xs: 'none', md: 'flex' },
+									fontFamily: 'monospace',
+									fontWeight: 700,
+									letterSpacing: '.3rem',
+									color: 'inherit',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbar' to='/'>
+									Yugioh
+								</Link>
+							</Typography>
+						</MenuItem>
 
-    <nav>
-     <AppBar position="static" >
-      <Container maxWidth="xl" >
-        <Toolbar >
-          <HomeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/>
-          <MenuItem >
-          <Typography
-          textAlign="center"
-            variant="h6"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
-            }}
-          >
-            <Link
-            className="linkNavbar"
-        to="/"
-    >
-            Yugioh
-            </Link>
-          </Typography>
-          </MenuItem>
+						<MenuItem>
+							<Typography textAlign='center' className=' bottonMenu'>
+								<Link className='linkNavbar' to={'/monsters_cards'}>
+									Monsters Cards
+								</Link>
+							</Typography>
+						</MenuItem>
 
-                <MenuItem >
-                <Typography textAlign="center" className=' bottonMenu'>
-                <Link
-                className="linkNavbar"
-                to={'/monsters_cards'}
-            >
-                    Monsters Cards
-                    </Link>
-                    </Typography>
-                </MenuItem>
+						<MenuItem>
+							<Typography textAlign='center' className=' bottonMenu'>
+								<Link className='linkNavbar' to={'/trap_cards'}>
+									Trap Cards
+								</Link>
+							</Typography>
+						</MenuItem>
 
-                <MenuItem >
-                <Typography textAlign="center" className=' bottonMenu'>
-                <Link
-                className="linkNavbar"
-                to={'/trap_cards'}
-            >
-                    Trap Cards
-                    </Link>
-                    </Typography>
-                </MenuItem>
+						<MenuItem>
+							<Typography textAlign='center' className=' bottonMenu'>
+								<Link className='linkNavbar' to={'/spell_cards'}>
+									Spells Cards
+								</Link>
+							</Typography>
+						</MenuItem>
 
-                <MenuItem >
-                <Typography textAlign="center" className=' bottonMenu'>
-                <Link
-                className="linkNavbar"
-                to={'/spell_cards'}
-            >
-                    Spells Cards
-                    </Link>
-                    </Typography>
-                </MenuItem>
-
-                <MenuItem >
-                <Typography textAlign="center" className=' bottonMenu'>
-                <Link
-                className="linkNavbar"
-                to={'/new_card'}
-            >
-                    Create New Cards
-                    </Link>
-                    </Typography>
-                </MenuItem>
-
-        </Toolbar>
-      </Container>
-    </AppBar>
-    </nav>
-
-  )
+						<MenuItem>
+							<Typography textAlign='center' className=' bottonMenu'>
+								<Link className='linkNavbar' to={'/new_card'}>
+									Create New Cards
+								</Link>
+							</Typography>
+						</MenuItem>
+					</Toolbar>
+				</Container>
+			</AppBar>
+		</nav>
+	)
 }
