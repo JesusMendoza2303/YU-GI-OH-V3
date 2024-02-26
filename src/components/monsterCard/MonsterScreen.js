@@ -22,7 +22,6 @@ export const MonsterScreen = () => {
 		dispatch(getcardsByTypeLOCAL(type))
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria list')
 		}
 	}, [])
 
@@ -47,6 +46,7 @@ export const MonsterScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || page <= 2}
 					onClick={handlePrevPage}
@@ -56,6 +56,7 @@ export const MonsterScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || cards.length < 12}
 					onClick={handleNextpage}

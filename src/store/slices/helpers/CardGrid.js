@@ -9,12 +9,17 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Box } from '@mui/material'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import VisibilityIcon from '@mui/icons-material/Visibility'
 
 export const CardGrid = () => {
 	const { cards = [], isLoading } = useSelector(state => state.cards)
 
 	return (
 		<div className='general'>
+
+				{/* circular progress */}
+
 			{isLoading ? (
 				<Box sx={{ display: 'flex' }} justifyContent='center'>
 					<CircularProgress />
@@ -22,26 +27,30 @@ export const CardGrid = () => {
 			) : (
 				''
 			)}
-			<ul className='general'>
+
+				{/* visual part */}
+
+			<ul >
 				<div className='card'>
 					{cards.map(cards => (
 						<div key={cards.id}>
 							<CardMedia
+							className='imagegrid'
 								component='img'
 								alt={cards.name}
 								image={cards.card_images[0]?.image_url}
 							/>
-							<CardContent className='content'>
+							<CardContent className='content' >
 								<Typography gutterBottom variant='h5' component='div'>
 									{cards.name}
 								</Typography>
 								<Typography variant='body2' color='white'>
-									{cards.desc}
+									{cards.desc.slice(0, 80) } ...
 								</Typography>
 								<CardActions>
 									<Button size='small'>
-										<Link to={`/${cards.id}`} className='linkCards'>
-											More...
+										<Link to={`/${cards.id}`} className='linkCards' >
+											<VisibilityIcon/> <MoreHorizIcon/>
 										</Link>
 									</Button>
 								</CardActions>

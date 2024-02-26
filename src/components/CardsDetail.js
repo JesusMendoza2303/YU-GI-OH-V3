@@ -5,10 +5,8 @@
 import React, { useEffect, useState } from 'react'
 import { Navbar } from './Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsLocalByid, reinicio } from '../store/slices/thunks'
 import { useNavigate, useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
@@ -32,20 +30,21 @@ import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import CloseIcon from '@mui/icons-material/Close';
 
 import axios from 'axios'
+import { editCard, getcardsLocalByid, reinicio, remove } from '../store/slices/thunks'
 
 export const CardsDetail = () => {
 	const dispatch = useDispatch()
 	const { cardsid } = useParams()
 	const { cards } = useSelector(state => state.cards)
+	console.log('🚀 ~ CardsDetail ~ cards:', cards)
 
 	const [id] = useState(0)
 	const [open, openchange] = useState(false)
 	const [agreeterm] = useState(true)
-	const [card_images, setCard_images] = useState(
-		cards?.[0]?.card_images[0]?.image_url,
-	)
+	const [card_images, setCard_images] = useState('')
 	const [edit, setedit] = useState(false)
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
@@ -54,21 +53,44 @@ export const CardsDetail = () => {
 	const [values, setValues] = useState({
 		name: '',
 		desc: '',
-		atk: '',
-		def: '',
-		level: '',
+		atk: 0,
+		def: 0,
+		level: 1,
 		race: '',
 		type: '',
 	})
 
-	console.log('esta es cards:', cards)
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		dispatch(getcardsLocalByid(cardsid, navigate))
+
+		axios
+			.get(`http://localhost:3030/data?id=${cardsid}`)
+			.then(response => {
+				if (!response.data.length) {
+					navigate('/')
+				}
+
+				const cardsdetaild = response.data[0]
+
+				setCard_images(cardsdetaild.card_images[0]?.image_url)
+
+				setValues(preValues => ({
+					...preValues,
+					name: cardsdetaild.name,
+					desc: cardsdetaild.desc,
+					atk: cardsdetaild.atk,
+					def: cardsdetaild.def,
+					level: cardsdetaild.level,
+					race: cardsdetaild.race,
+					type: cardsdetaild.type,
+				}))
+			})
+
+			.catch(error => console.error(error))
+
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
 		}
 	}, [])
 
@@ -92,41 +114,25 @@ export const CardsDetail = () => {
 
 		naipe.card_images = imagesArray
 
-		axios
-			.put(`http://localhost:3030/data/${cardsid}`, naipe)
+		dispatch(editCard(cardsid, naipe))
 
 			.then(res => {
 				dispatch(getcardsLocalByid(cardsid))
 				closepopup()
-				console.log('esta es la carta que se acaba de editar:', cards)
 			})
 	}
 
 	const handleDeleteClick = () => {
-		axios
-			.delete(`http://localhost:3030/data/${cardsid}`)
+		if (confirm('are you sure to delete this card?') === true) {
+			
+			dispatch(remove(cardsid))
 
 			.then(res => {
 				navigate('/')
-				console.log('esta es la carta que se acaba de eliminar:', cardsid)
 				dispatch(reinicio())
 			})
-	}
-
-	const buttonSx = {
-		...(success && {
-			bgcolor: green[500],
-			'&:hover': {
-				bgcolor: green[700],
-			},
-		}),
-	}
-
-	useEffect(() => {
-		return () => {
-			clearTimeout(timer.current)
 		}
-	}, [])
+	}
 
 	const addCard = () => {
 		setedit(false)
@@ -150,10 +156,28 @@ export const CardsDetail = () => {
 		openchange(true)
 	}
 
+	const buttonSx = {
+		...(success && {
+			bgcolor: green[500],
+			'&:hover': {
+				bgcolor: green[700],
+			},
+		}),
+	}
+
+	useEffect(() => {
+		return () => {
+			clearTimeout(timer.current)
+		}
+	}, [])
+
 	return (
-		<>
+		<div>
 			<Navbar />
-			<Card sx={{ display: 'flex' }} className='cardDetail'>
+
+			{/* parte visual */}
+
+			<Box sx={{ display: 'flex' }} className='cardDetail'>
 				<Box
 					sx={{ display: 'flex', flexDirection: 'column' }}
 					className='cardDetail'
@@ -162,37 +186,41 @@ export const CardsDetail = () => {
 					<CardContent sx={{ flex: '1 0 auto' }}>
 						<div>
 							<Typography component='div' variant='h3'>
-								{cards[0]?.name}
+								{values.name}
 							</Typography>
 							<br />
 							<Typography variant='h5' color='white' component='div'>
-								{cards[0]?.desc}
+								{values.desc}
 							</Typography>
 
 							<Typography variant='h6' color='white'>
-								<p className='parrafo'>ID: {cards[0]?.id}</p>
-								<p className='parrafo'>Type: {cards[0]?.type}</p>
+								<p className='parrafo'>ID: {cardsid}</p>
+								<p className='parrafo'>Type: {values.type}</p>
 								<p className='parrafo'>
-									{!cards[0]?.race
+									{!values.race
 										? 'this card dont have race'
-										: `race: ${cards[0]?.race}`}
+										: `race: ${values.race}`}
 								</p>
 								<p className='parrafo'>
-									{!cards[0]?.level
+									{!values.level
 										? 'this card dont have level'
-										: `level: ${cards[0]?.level}`}
+										: `level: ${values.level}`}
 								</p>
 								<p className='parrafo'>
-									{!cards[0]?.atk ? undefined : `atk: ${cards[0]?.atk} `}
+									{!values.atk ? undefined : `atk: ${values.atk} `}
 								</p>
 								<p className='parrafo'>
-									{!cards[0]?.def ? undefined : `def: ${cards[0]?.def}`}
+									{!values.def ? undefined : `def: ${values.def}`}
 								</p>
 							</Typography>
+
+							{/* botones */}
+
 							<Stack spacing={2} direction='row' justifyContent='center'>
 								<Button
 									variant='contained'
 									startIcon={<EditIcon />}
+									style={{ backgroundColor: '#9E5AFF' }}
 									onClick={addCard}
 								>
 									Edit Card
@@ -200,8 +228,8 @@ export const CardsDetail = () => {
 
 								<Button
 									variant='contained'
-									color='error'
 									startIcon={<DeleteIcon />}
+									style={{ backgroundColor: '#D92579' }}
 									onClick={handleDeleteClick}
 								>
 									Delete Card
@@ -214,15 +242,26 @@ export const CardsDetail = () => {
 					<CardMedia
 						component='img'
 						sx={{ width: 350 }}
-						image={cards[0]?.card_images[0]?.image_url}
-						alt={cards[0]?.name}
+						image={card_images}
+						alt={values.name}
 					/>
 				</div>
-			</Card>
+			</Box>
+
+			{/* formulario de edicion */}
 
 			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
 				<DialogTitle>
 					{<EditIcon />} <span>Edit this Card</span>
+					<Button 
+					color='secondary'
+					// ariant='contained'
+					style={{left: 330}}
+					onClick={ closepopup }> 
+						
+						<CloseIcon/>
+
+					</Button>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
@@ -263,7 +302,7 @@ export const CardsDetail = () => {
 							<TextField
 								required
 								type='number'
-								error={values.level < 0}
+								error={values.level < 1}
 								value={values.level}
 								name='level'
 								onChange={e => {
@@ -315,7 +354,7 @@ export const CardsDetail = () => {
 									}}
 									control={<Radio></Radio>}
 									label='Trap Card'
-								></FormControlLabel>
+								/>
 							</RadioGroup>
 							<TextField
 								type='number'
@@ -330,7 +369,7 @@ export const CardsDetail = () => {
 								}}
 								variant='outlined'
 								label='atk'
-							></TextField>
+							/>
 							<TextField
 								type='number'
 								name='def'
@@ -363,14 +402,14 @@ export const CardsDetail = () => {
 										disabled={
 											!agreeterm ||
 											values.atk < 0 ||
-											values.level < 0 ||
+											values.level < 1 ||
 											values.def < 0 ||
 											values.name.trim().length < 2 ||
 											values.desc.trim().length < 2 ||
 											loading ||
 											values.type.trim().length === 0
 										}
-										color='primary'
+										color='secondary'
 										sx={buttonSx}
 										onClick={handlesubmit}
 									>
@@ -389,44 +428,11 @@ export const CardsDetail = () => {
 										/>
 									)}
 								</Box>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Button
-										disabled={
-											!agreeterm ||
-											values.atk < 0 ||
-											values.def < 0 ||
-											values.level < 0 ||
-											values.name.trim().length < 2 ||
-											values.desc.trim().length < 2 ||
-											loading ||
-											values.type.trim().length === 0
-										}
-										variant='contained'
-										type='submit'
-										sx={buttonSx}
-									>
-										Submit
-									</Button>
-
-									{loading && (
-										<CircularProgress
-											size={24}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: '50%',
-												left: '50%',
-												marginTop: '-12px',
-												marginLeft: '-12px',
-											}}
-										/>
-									)}
-								</Box>
 							</Box>
 						</Stack>
 					</form>
 				</DialogContent>
 			</Dialog>
-		</>
+		</div>
 	)
 }

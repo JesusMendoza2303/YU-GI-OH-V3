@@ -8,10 +8,11 @@ import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import HomeIcon from '@mui/icons-material/Home'
 import '@fontsource/roboto/700.css'
+import { Image } from '@mui/icons-material'
 export const Navbar = () => {
 	return (
-		<nav>
-			<AppBar position='static'>
+		
+			<AppBar position='static'  style={{backgroundColor: '#5A2CA3'}}>
 				<Container>
 					<Toolbar>
 						<HomeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -71,6 +72,6 @@ export const Navbar = () => {
 					</Toolbar>
 				</Container>
 			</AppBar>
-		</nav>
+		
 	)
 }

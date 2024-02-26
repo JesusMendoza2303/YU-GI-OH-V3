@@ -5,10 +5,9 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { getcardsLocal, reinicio } from '../../store/slices/thunks'
+import { createCard, getcardsLocal, reinicio } from '../../store/slices/thunks'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
-import DeleteIcon from '@mui/icons-material/Delete'
 import {
 	Checkbox,
 	Dialog,
@@ -32,11 +31,11 @@ import Fab from '@mui/material/Fab'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import { green } from '@mui/material/colors'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import axios from 'axios'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useNavigate, Link, Outlet } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close';
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 
 export const NewCardScreen = () => {
@@ -44,23 +43,8 @@ export const NewCardScreen = () => {
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
 
-	const buttonSx = {
-		...(success && {
-			bgcolor: green[500],
-			'&:hover': {
-				bgcolor: green[700],
-			},
-		}),
-	}
-
 	const [rowId, setRowId] = useState(null)
 	console.log('🚀 ~ NewCardScreen ~ rowId:', rowId)
-
-	React.useEffect(() => {
-		return () => {
-			clearTimeout(timer.current)
-		}
-	}, [])
 
 	const dispatch = useDispatch()
 	const { cards = [], isLoading } = useSelector(state => state.cards)
@@ -81,10 +65,26 @@ export const NewCardScreen = () => {
 		desc: '',
 		atk: 0,
 		def: 0,
-		level: 0,
+		level: 1,
 		race: '',
 		type: '',
 	})
+
+
+	const buttonSx = {
+		...(success && {
+			bgcolor: green[500],
+			'&:hover': {
+				bgcolor: green[700],
+			},
+		}),
+	}
+
+	React.useEffect(() => {
+		return () => {
+			clearTimeout(timer.current)
+		}
+	}, [])
 
 	const handleChange = e => {
 		e.preventDefault()
@@ -100,13 +100,12 @@ export const NewCardScreen = () => {
 		dispatch(getcardsLocal())
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
+
 		}
 	}, [])
 
 	const addCard = () => {
 		setedit(false)
-		settitle('Create a card')
 		openpopup()
 	}
 
@@ -139,7 +138,7 @@ export const NewCardScreen = () => {
 		naipe.card_images = imagesArray
 
 		axios
-			.post('http://localhost:3030/data', naipe)
+			dispatch(createCard(naipe))
 
 			.then(res => {
 				dispatch(getcardsLocal())
@@ -150,11 +149,10 @@ export const NewCardScreen = () => {
 						</Snackbar>
 					</Box>
 				}
-				console.log('esta es la carta que se acaba de crear:', naipe)
+
 				closepopup()
 			})
 	}
-
 	const columns = useMemo(
 		() => [
 			{
@@ -216,8 +214,7 @@ export const NewCardScreen = () => {
 						<Button
 							id='demo-positioned-button'
 							aria-haspopup='true'
-							// onClick={handleViewClick}
-							startIcon={<VisibilityIcon />}
+							startIcon={<VisibilityIcon  color='secondary'/>}
 						>
 							<Link to={`/${params.row.id}`} className='viewcard'>
 								view...
@@ -241,7 +238,7 @@ export const NewCardScreen = () => {
 			desc: '',
 			atk: 0,
 			def: 0,
-			level: 0,
+			level: 1,
 			race: '',
 			type: '',
 		}))
@@ -249,6 +246,7 @@ export const NewCardScreen = () => {
 
 	return (
 		<div>
+			 {/* validar si esta cargando o no */}
 			<Navbar />
 			{isLoading ? (
 				<Box sx={{ display: 'flex' }} className='circularProgress'>
@@ -262,9 +260,12 @@ export const NewCardScreen = () => {
 				</Box>
 			)}
 
-			<Paper sx={{ margin: '1%' }}>
-				<div style={{ margin: '1%' }}>
-					<Button
+			{/* boton de creacion */}
+
+			<Paper sx={{ margin: '1%' }} >
+				<div style={{ margin: '1%' }}  >
+					<Button 
+					  className='createboton'
 						onClick={addCard}
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
@@ -272,8 +273,12 @@ export const NewCardScreen = () => {
 						Create a Card
 					</Button>
 				</div>
+
+					{/* Data grid */}
+
 				<DataGrid
 					columns={columns}
+					className='datagrid'
 					rows={cards}
 					getRowId={row => {
 						return row.id
@@ -282,19 +287,32 @@ export const NewCardScreen = () => {
 					initialState={{
 						pagination: {
 							paginationModel: {
-								pageSize: 5,
+								pageSize: 10,
 							},
 						},
 					}}
-					pageSizeOptions={[5, 10, 50, 100]}
+					slots={{ toolbar: GridToolbar }}
 					disableRowSelectionOnClick
 				/>
 			</Paper>
 
+					{/* formulario */}
+
 			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
 				<DialogTitle>
 					{<AddReactionIcon />}
-					<span>{title}</span>
+					<span>Create a new card!</span>
+
+					<Button 
+					color='secondary'
+					// ariant='contained'
+					style={{left: 300}}
+					onClick={ closepopup }> 
+						
+						<CloseIcon/>
+
+					</Button>
+
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
@@ -335,7 +353,7 @@ export const NewCardScreen = () => {
 							<TextField
 								required
 								type='number'
-								error={values.level < 0}
+								error={values.level < 1}
 								value={values.level}
 								name='level'
 								onChange={e => {
@@ -436,13 +454,13 @@ export const NewCardScreen = () => {
 											!agreeterm ||
 											values.atk < 0 ||
 											values.def < 0 ||
-											values.level < 0 ||
+											values.level < 1 ||
 											values.name.trim().length < 2 ||
 											values.desc.trim().length < 2 ||
 											loading ||
 											values.type.trim().length === 0
 										}
-										color='primary'
+										color='secondary'
 										sx={buttonSx}
 										onClick={handlesubmit}
 									>
@@ -457,39 +475,7 @@ export const NewCardScreen = () => {
 												top: -6,
 												left: -6,
 												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Button
-										disabled={
-											!agreeterm ||
-											values.atk < 0 ||
-											values.def < 0 ||
-											values.level < 0 ||
-											values.name.trim().length < 2 ||
-											values.desc.trim().length < 2 ||
-											loading ||
-											values.type.trim().length === 0
-										}
-										variant='contained'
-										type='submit'
-										sx={buttonSx}
-									>
-										Submit
-									</Button>
-
-									{loading && (
-										<CircularProgress
-											size={24}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: '50%',
-												left: '50%',
-												marginTop: '-12px',
-												marginLeft: '-12px',
+												
 											}}
 										/>
 									)}

@@ -53,6 +53,7 @@ export const TrapScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || page <= 2}
 					onClick={handlePrevPage}
@@ -62,6 +63,7 @@ export const TrapScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || cards.length < 12}
 					onClick={handleNextpage}

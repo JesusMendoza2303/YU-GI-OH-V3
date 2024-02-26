@@ -38,7 +38,6 @@ export const Router = () => {
 					element={<CardsDetail />}
 					errorElement={<Error />}
 				/>
-				<Route path='*' element={<Error />} />
 			</Routes>
 		</BrowserRouter>
 	)

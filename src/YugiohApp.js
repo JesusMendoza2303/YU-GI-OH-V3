@@ -19,17 +19,16 @@ export const YugiohApp = () => {
 	const {
 		cards = [],
 		isLoading,
-		page,
 		msgError,
 	} = useSelector(state => state.cards)
 	console.log('🚀 ~ YugiohApp ~ cards:', cards)
 
 	useEffect(() => {
 		dispatch(getcardsByNameLocal2(search))
-		// return () => {
-		// 	dispatch(reinicio())
-		// 	console.log('esta paja se reinicio en teoria')
-		// }
+		return () => {
+			dispatch(reinicio())
+			console.log('esta paja se reinicio en teoria')
+		}
 	}, [])
 
 	const handleInputChange = e => {
@@ -44,16 +43,6 @@ export const YugiohApp = () => {
 		}
 	}
 
-	const handlePrevPage = () => {
-		{
-			dispatch(getcardsByNameLocal2(search, page - 2))
-		}
-		console.log(page)
-	}
-	const handleNextpage = () => {
-		dispatch(getcardsByNameLocal2(search, page))
-	}
-	console.log(page)
 
 	console.log(search)
 
@@ -68,6 +57,12 @@ export const YugiohApp = () => {
 					className='inputbusqueda'
 					onSubmit={handleSubmit}
 					component='form'
+					style={{
+						backgroundColor:'#2D2A36',
+						color:'white',
+						
+				
+				}}
 					sx={{
 						'& > :not(style)': { m: 1, width: '25ch' },
 					}}
@@ -77,37 +72,24 @@ export const YugiohApp = () => {
 					<TextField
 						id='outlined-basic'
 						label='Search a Card'
-						variant='outlined'
+						variant='standard'
 						margin='normal'
+						style={{
+							backgroundColor:'#2D2A36',
+							color:'white'
+					
+					}}
+						
 						onChange={e => {
 							setsearch(e.target.value)
 						}}
 					/>
 				</Box>
-
+				
 				<CardGrid />
 			</div>
 
-			<Stack spacing={2} direction='row' justifyContent='center'>
-				<Button
-					variant='outlined'
-					className='butonspage'
-					size='large'
-					disabled={isLoading || page <= 2}
-					onClick={handlePrevPage}
-				>
-					PREV
-				</Button>
-				<Button
-					variant='outlined'
-					className='butonspage'
-					size='large'
-					disabled={isLoading || cards.length < 12}
-					onClick={handleNextpage}
-				>
-					NEXT
-				</Button>
-			</Stack>
+			
 		</div>
 		// </div>
 	)

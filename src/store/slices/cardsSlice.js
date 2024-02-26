@@ -16,21 +16,10 @@ export const cardsSlice = createSlice({
 			state.cards = action.payload.cards
 			state.page = action.payload.page
 		},
-		addcards: (state, action) => {
-			state.isLoading = false
-			state.cards = action.payload.cards
-			state.page = action.payload.page
-		},
-		restart: (state, action) => {
-			state.isLoading = false
-			state.cards = action.payload.cards
-			state.page = action.payload.page
-		},
 	},
 })
 
 // esto es un action creator, osea aqui creo las acciones
-export const { startLoadingCards, setCards, addcards, restart } =
-	cardsSlice.actions
+export const { startLoadingCards, setCards } = cardsSlice.actions
 
 // export default cardsSlice.reducer

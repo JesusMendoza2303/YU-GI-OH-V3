@@ -19,7 +19,6 @@ export const MagicScreen = () => {
 		dispatch(getcardsByTypeLOCAL(type))
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
 		}
 	}, [])
 
@@ -53,6 +52,7 @@ export const MagicScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || page <= 2}
 					onClick={handlePrevPage}
@@ -62,6 +62,7 @@ export const MagicScreen = () => {
 				<Button
 					variant='outlined'
 					className='butonspage'
+					color='secondary'
 					size='large'
 					disabled={isLoading || cards.length < 12}
 					onClick={handleNextpage}
