@@ -6,6 +6,8 @@ export const cardsSlice = createSlice({
 		page: 0,
 		cards: [],
 		isLoading: false,
+		count: 0,
+		tarjeta: [],
 	},
 	reducers: {
 		startLoadingCards: state => {
@@ -15,22 +17,13 @@ export const cardsSlice = createSlice({
 			state.isLoading = false
 			state.cards = action.payload.cards
 			state.page = action.payload.page
-		},
-		addcards: (state, action) => {
-			state.isLoading = false
-			state.cards = action.payload.cards
-			state.page = action.payload.page
-		},
-		restart: (state, action) => {
-			state.isLoading = false
-			state.cards = action.payload.cards
-			state.page = action.payload.page
+			state.tarjeta = action.payload.tarjeta
+			state.count = action.payload.count
 		},
 	},
 })
 
 // esto es un action creator, osea aqui creo las acciones
-export const { startLoadingCards, setCards, addcards, restart } =
-	cardsSlice.actions
+export const { startLoadingCards, setCards } = cardsSlice.actions
 
 // export default cardsSlice.reducer

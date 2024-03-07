@@ -12,8 +12,8 @@ import { Box } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 
-export const CardGrid = () => {
-	const { cards = [], isLoading } = useSelector(state => state.cards)
+export const CardGridTarjeta = () => {
+	const { tarjeta = [], isLoading } = useSelector(state => state.cards)
 
 	return (
 		<div className='general'>
@@ -31,13 +31,13 @@ export const CardGrid = () => {
 
 			<ul>
 				<div className='card'>
-					{cards.map(cards => (
-						<div key={cards.id}>
+					{tarjeta.map(tarjeta => (
+						<div key={tarjeta.id}>
 							<CardMedia
 								className='imagegrid'
 								component='img'
-								alt={cards.name}
-								image={cards.card_images[0]?.image_url}
+								alt={tarjeta.name}
+								image={tarjeta.card_images[0]?.image_url}
 							/>
 							<CardContent className='content'>
 								<Typography
@@ -48,19 +48,20 @@ export const CardGrid = () => {
 										fontFamily: 'Bebas Neue',
 									}}
 								>
-									{cards.name}
+									{tarjeta.name}
 								</Typography>
 								<Typography
 									variant='h7'
 									sx={{
 										fontFamily: 'Dosis',
+										width: 150,
 									}}
 								>
-									{cards.desc.slice(0, 80)} ...
+									{tarjeta.desc.slice(0, 80)} ...
 								</Typography>
 								<CardActions>
 									<Button size='small'>
-										<Link to={`/${cards.id}`} className='linkCards'>
+										<Link to={`/${tarjeta.id}`} className='linkCards'>
 											<VisibilityIcon /> <MoreHorizIcon />
 										</Link>
 									</Button>

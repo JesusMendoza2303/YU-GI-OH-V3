@@ -7,6 +7,8 @@ import { TrapScreen } from '../components/trapCard/TrapScreen'
 import { CardsDetail } from '../components/CardsDetail'
 import { NewCardScreen } from '../components/new card/NewCardScreen'
 import Error from '../components/Error'
+import { RaceScreen } from '../components/RaceCards/RaceScreen'
+import { AttributesScreen } from '../components/AttributesCards/AttributesScreen'
 
 export const Router = () => {
 	return (
@@ -33,12 +35,17 @@ export const Router = () => {
 					element={<MagicScreen />}
 					errorElement={<Error />}
 				/>
+				<Route path='/race' element={<RaceScreen />} errorElement={<Error />} />
+				<Route
+					path='/attributes'
+					element={<AttributesScreen />}
+					errorElement={<Error />}
+				/>
 				<Route
 					path='/:cardsid'
 					element={<CardsDetail />}
 					errorElement={<Error />}
 				/>
-				<Route path='*' element={<Error />} />
 			</Routes>
 		</BrowserRouter>
 	)

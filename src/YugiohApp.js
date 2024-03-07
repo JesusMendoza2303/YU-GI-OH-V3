@@ -10,26 +10,27 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { Typography } from '@mui/material'
+import { useTranslation, Trans, i18n } from 'react-i18next'
 
-import '@fontsource/roboto/500.css'
+
+const lngs = {
+	en: { nativeName: 'English' },
+	es: { nativeName: 'Spanish' },
+}
 
 export const YugiohApp = () => {
+	const { t, i18n } = useTranslation()
+
 	const dispatch = useDispatch()
 	const [search, setsearch] = useState('')
-	const {
-		cards = [],
-		isLoading,
-		page,
-		msgError,
-	} = useSelector(state => state.cards)
-	console.log('🚀 ~ YugiohApp ~ cards:', cards)
+	const { cards = [], isLoading, msgError } = useSelector(state => state.cards)
 
 	useEffect(() => {
 		dispatch(getcardsByNameLocal2(search))
-		// return () => {
-		// 	dispatch(reinicio())
-		// 	console.log('esta paja se reinicio en teoria')
-		// }
+		return () => {
+			dispatch(reinicio())
+			console.log('esta paja se reinicio en teoria')
+		}
 	}, [])
 
 	const handleInputChange = e => {
@@ -44,40 +45,64 @@ export const YugiohApp = () => {
 		}
 	}
 
-	const handlePrevPage = () => {
-		{
-			dispatch(getcardsByNameLocal2(search, page - 2))
-		}
-		console.log(page)
-	}
-	const handleNextpage = () => {
-		dispatch(getcardsByNameLocal2(search, page))
-	}
-	console.log(page)
-
 	console.log(search)
 
 	return (
 		<div className='general'>
 			<Navbar />
-			<Typography variant='h2' component='h3' className='principalTitle'>
-				Which card do you want to search?
+
+			<div>
+				{Object.keys(lngs).map(lng => (
+					<Button
+						type='submit'
+						key={lng}
+						onClick={() => i18n.changeLanguage(lng)}
+						disabled={i18n.resolvedLanguage === lng}
+					>
+						{lngs[lng].nativeName}
+					</Button>
+				))}
+			</div>
+
+			<Typography
+				justifyContent={'center'}
+				variant='h3'
+				component='h3'
+				className='principalTitle'
+				sx={{
+					mr: 2,
+					display: { xs: 'none', md: 'flex' },
+					fontFamily: 'Namdhinggo',
+					fontWeight: 500,
+					letterSpacing: '.3rem',
+					textDecoration: 'none',
+				}}
+			>
+				<Trans i18nKey='which'>WHICH CARD DO YOU WANT TO SEARCH?</Trans>
+
 			</Typography>
+
 			<div>
 				<Box
-					className='inputbusqueda'
 					onSubmit={handleSubmit}
 					component='form'
 					sx={{
-						'& > :not(style)': { m: 1, width: '25ch' },
+						padding: '7px 10px 7px 10px',
+						margin: 3,
+						width: 500,
+						maxWidth: '100%',
+						backgroundColor: 'white',
+						color: 'white',
+						borderRadius: '3px',
 					}}
 					noValidate
 					autoComplete='off'
 				>
 					<TextField
-						id='outlined-basic'
+						fullWidth
+						id='fullWidth'
 						label='Search a Card'
-						variant='outlined'
+						variant='standard'
 						margin='normal'
 						onChange={e => {
 							setsearch(e.target.value)
@@ -87,27 +112,6 @@ export const YugiohApp = () => {
 
 				<CardGrid />
 			</div>
-
-			<Stack spacing={2} direction='row' justifyContent='center'>
-				<Button
-					variant='outlined'
-					className='butonspage'
-					size='large'
-					disabled={isLoading || page <= 2}
-					onClick={handlePrevPage}
-				>
-					PREV
-				</Button>
-				<Button
-					variant='outlined'
-					className='butonspage'
-					size='large'
-					disabled={isLoading || cards.length < 12}
-					onClick={handleNextpage}
-				>
-					NEXT
-				</Button>
-			</Stack>
 		</div>
 		// </div>
 	)

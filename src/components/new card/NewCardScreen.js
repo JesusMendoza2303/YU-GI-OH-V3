@@ -5,10 +5,9 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { getcardsLocal, reinicio } from '../../store/slices/thunks'
+import { createCard, getcardsLocal, reinicio } from '../../store/slices/thunks'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
-import DeleteIcon from '@mui/icons-material/Delete'
 import {
 	Checkbox,
 	Dialog,
@@ -24,6 +23,10 @@ import {
 	Box,
 	Avatar,
 	Snackbar,
+	MenuItem,
+	Menu,
+	Autocomplete,
+	createFilterOptions,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -32,39 +35,34 @@ import Fab from '@mui/material/Fab'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import { green } from '@mui/material/colors'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import axios from 'axios'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import { useNavigate, Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import { DateField, Label, DateInput, DateSegment } from 'react-aria-components'
+import { getRaces } from '../../store/slices/RacesThunks'
+import { getAttributes } from '../../store/slices/AttributesThunk'
+
+const filter = createFilterOptions()
 
 export const NewCardScreen = () => {
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
-
-	const buttonSx = {
-		...(success && {
-			bgcolor: green[500],
-			'&:hover': {
-				bgcolor: green[700],
-			},
-		}),
-	}
+	const { races = [] } = useSelector(state => state.races)
+	console.log('🚀 ~ NewCardScreen ~ races:', races)
+	const { attributes = [] } = useSelector(state => state.attributes)
+	console.log('🚀 ~ NewCardScreen ~ attributes:', attributes)
 
 	const [rowId, setRowId] = useState(null)
-	console.log('🚀 ~ NewCardScreen ~ rowId:', rowId)
-
-	React.useEffect(() => {
-		return () => {
-			clearTimeout(timer.current)
-		}
-	}, [])
 
 	const dispatch = useDispatch()
 	const { cards = [], isLoading } = useSelector(state => state.cards)
-	console.log('🚀 ~ NewCardScreen ~ cards:', cards)
 
 	const navigate = useNavigate()
 
@@ -81,10 +79,51 @@ export const NewCardScreen = () => {
 		desc: '',
 		atk: 0,
 		def: 0,
-		level: 0,
+		level: 1,
 		race: '',
 		type: '',
+		attribute: '',
+		firstdate: '',
+		lastdate: '',
 	})
+
+	// esto es el apartado visual del boton de carga
+
+	const buttonSx = {
+		...(success && {
+			bgcolor: green[500],
+			'&:hover': {
+				bgcolor: green[700],
+			},
+		}),
+	}
+
+	// esto es para el nuevo menu
+
+	const [anchorEl, setAnchorEl] = React.useState(null)
+	const openMenu = Boolean(anchorEl)
+	const handleClick = event => {
+		setAnchorEl(event.currentTarget)
+	}
+	const handleClose = () => {
+		console.log('cerrado')
+		setAnchorEl(null)
+	}
+	// const handleView = (params) => {
+	// 	useEffect(() => {
+	// 		console.log(params.row.id)
+	// 	}, [])
+
+	// 	// navigate(`/${params.row.id}`)
+	// 	setAnchorEl(null);
+	// }
+	// //
+
+	React.useEffect(() => {
+		return () => {
+			clearTimeout(timer.current)
+		}
+	}, [])
 
 	const handleChange = e => {
 		e.preventDefault()
@@ -97,16 +136,28 @@ export const NewCardScreen = () => {
 	}
 
 	useEffect(() => {
+		dispatch(getRaces())
+		return () => {
+			dispatch(reinicio())
+		}
+	}, [])
+
+	useEffect(() => {
+		dispatch(getAttributes())
+		return () => {
+			dispatch(reinicio())
+		}
+	}, [])
+
+	useEffect(() => {
 		dispatch(getcardsLocal())
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
 		}
 	}, [])
 
 	const addCard = () => {
 		setedit(false)
-		settitle('Create a card')
 		openpopup()
 	}
 
@@ -119,6 +170,7 @@ export const NewCardScreen = () => {
 	}
 
 	const handlesubmit = e => {
+		// vaina que carga
 		e.preventDefault()
 		if (!loading) {
 			setSuccess(false)
@@ -128,110 +180,165 @@ export const NewCardScreen = () => {
 				setLoading(false)
 			}, 2000)
 		}
-		const { name, desc, atk, def, level, race, type } = values
+		// logica
+		const {
+			name,
+			desc,
+			atk,
+			def,
+			level,
+			race,
+			type,
+			firstdate,
+			lastdate,
+			attribute,
+		} = values
+
 		const imagesArray = []
 		imagesArray.push({
 			image_url: card_images,
 		})
 
-		const naipe = { id, name, desc, atk, def, level, race, type }
+		const naipe = {
+			id,
+			name,
+			desc,
+			atk,
+			def,
+			level,
+			race,
+			attribute,
+			type,
+			firstdate,
+			lastdate,
+		}
 
 		naipe.card_images = imagesArray
 
-		axios
-			.post('http://localhost:3030/data', naipe)
+		dispatch(createCard(naipe)).then(res => {
+			dispatch(getcardsLocal())
 
-			.then(res => {
-				dispatch(getcardsLocal())
-				{
-					;<Box>
-						<Snackbar open={true} autoHideDuration={1000}>
-							<Alert severity='success'>Card created succesfully.</Alert>
-						</Snackbar>
-					</Box>
-				}
-				console.log('esta es la carta que se acaba de crear:', naipe)
-				closepopup()
-			})
+			closepopup()
+		})
 	}
 
-	const columns = useMemo(
-		() => [
-			{
-				field: 'id',
-				headerName: 'ID',
-				width: 90,
-			},
-			{
-				field: 'card_images',
-				headerName: 'image',
-				width: 90,
-				renderCell: params => (
-					<Avatar src={params.row.card_images[0]?.image_url} />
-				),
-				sortable: false,
-				filterable: false,
-			},
-			{
-				field: 'name',
-				headerName: 'name',
-				width: 300,
-				editable: true,
-			},
-			{
-				field: 'type',
-				headerName: 'type',
-				type: 'singleSelect',
-				width: 130,
-				valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
-				editable: true,
-			},
-			{
-				field: 'desc',
-				headerName: 'desc',
-				width: 500,
-				editable: true,
-			},
-			{
-				field: 'atk',
-				headerName: 'atk',
-				type: 'number',
-				width: 110,
-			},
-			{
-				field: 'def',
-				headerName: 'def',
-				type: 'number',
-				width: 110,
-				editable: true,
-			},
-			{
-				field: 'actions',
-				headerName: ' ',
-				sortable: false,
-				width: 160,
-				cellClassName: 'actions',
-				renderCell: params => (
-					<Box>
-						<Button
-							id='demo-positioned-button'
-							aria-haspopup='true'
-							// onClick={handleViewClick}
-							startIcon={<VisibilityIcon />}
-						>
-							<Link to={`/${params.row.id}`} className='viewcard'>
-								view...
-							</Link>
-							<Outlet />
+	const columns = useMemo(() => [
+		{
+			field: 'id',
+			headerName: 'ID',
+			width: 90,
+		},
+		{
+			field: 'card_images',
+			headerName: 'image',
+			width: 90,
+			renderCell: params => (
+				<Avatar src={params.row.card_images[0]?.image_url} />
+			),
+			sortable: false,
+			filterable: false,
+		},
+		{
+			field: 'name',
+			headerName: 'name',
+			width: 300,
+			editable: true,
+		},
+		{
+			field: 'type',
+			headerName: 'type',
+			type: 'singleSelect',
+			width: 130,
+			valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
+			editable: true,
+		},
+		{
+			field: 'desc',
+			headerName: 'desc',
+			width: 500,
+			editable: true,
+		},
+		{
+			field: 'atk',
+			headerName: 'atk',
+			type: 'number',
+			width: 110,
+		},
+		{
+			field: 'def',
+			headerName: 'def',
+			type: 'number',
+			width: 110,
+			editable: true,
+		},
+		{
+			field: 'firstdate',
+			headerName: 'creation date',
+			type: 'Date',
+			width: 110,
+			editable: true,
+		},
+		{
+			field: 'lastdate',
+			headerName: 'first appearance in anime',
+			type: 'Date',
+			width: 130,
+			editable: true,
+		},
+		{
+			field: 'actions',
+			headerName: 'actions',
+			sortable: false,
+			width: 160,
+			cellClassName: 'actions',
+			renderCell: params => (
+				<div>
+					<Button
+						id='basic-button'
+						aria-controls={openMenu ? 'basic-menu' : undefined}
+						aria-haspopup='true'
+						aria-expanded={openMenu ? 'true' : undefined}
+						onClick={handleClick}
+					>
+						<ArrowDropDownIcon />
+					</Button>
+					<Menu
+						id='basic-menu'
+						anchorEl={anchorEl}
+						open={openMenu}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button',
+						}}
+					>
+						<MenuItem onClick={handleClose}>
+							<EditIcon
+								color='warning'
+								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+							/>
+							Edit
+						</MenuItem>
+						<MenuItem onClick={handleClose}>
+							<DeleteIcon
+								color='error'
+								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+							/>
+							Delete
+						</MenuItem>
+						<Button onClick={handleClose}>
+							<RemoveRedEyeIcon
+								color='warning'
+								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+							/>
+							Read
 						</Button>
-					</Box>
-				),
+					</Menu>
+				</div>
+			),
 
-				filterable: false,
-			},
-		],
-		[],
-	)
+			filterable: false,
+		},
+	])
 
 	const clearstate = () => {
 		setCard_images('')
@@ -241,14 +348,17 @@ export const NewCardScreen = () => {
 			desc: '',
 			atk: 0,
 			def: 0,
-			level: 0,
+			level: 1,
 			race: '',
 			type: '',
+			firstdate: '',
+			lastdate: '',
 		}))
 	}
 
 	return (
 		<div>
+			{/* validar si esta cargando o no */}
 			<Navbar />
 			{isLoading ? (
 				<Box sx={{ display: 'flex' }} className='circularProgress'>
@@ -262,9 +372,12 @@ export const NewCardScreen = () => {
 				</Box>
 			)}
 
-			<Paper sx={{ margin: '1%' }}>
+			{/* boton de creacion */}
+
+			<Box sx={{ margin: '1%' }}>
 				<div style={{ margin: '1%' }}>
 					<Button
+						className='createboton'
 						onClick={addCard}
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
@@ -272,8 +385,12 @@ export const NewCardScreen = () => {
 						Create a Card
 					</Button>
 				</div>
+
+				{/* Data grid */}
+
 				<DataGrid
 					columns={columns}
+					className='datagrid'
 					rows={cards}
 					getRowId={row => {
 						return row.id
@@ -282,23 +399,36 @@ export const NewCardScreen = () => {
 					initialState={{
 						pagination: {
 							paginationModel: {
-								pageSize: 5,
+								pageSize: 10,
 							},
 						},
 					}}
-					pageSizeOptions={[5, 10, 50, 100]}
+					slots={{ toolbar: GridToolbar }}
 					disableRowSelectionOnClick
 				/>
-			</Paper>
+			</Box>
+
+			{/* formulario */}
 
 			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
 				<DialogTitle>
 					{<AddReactionIcon />}
-					<span>{title}</span>
+					<span>Create a new card!</span>
+
+					<Button
+						color='secondary'
+						// ariant='contained'
+						style={{ left: 300 }}
+						onClick={closepopup}
+					>
+						<CloseIcon />
+					</Button>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
 						<Stack spacing={2} margin={2}>
+							{/* formulario de nombre */}
+
 							<TextField
 								required
 								error={values.name.trim().length < 2}
@@ -311,6 +441,8 @@ export const NewCardScreen = () => {
 								label='name'
 							></TextField>
 
+							{/* formulario de descripcion */}
+
 							<TextField
 								required
 								error={values.desc.trim().length < 2}
@@ -322,6 +454,9 @@ export const NewCardScreen = () => {
 								variant='outlined'
 								label='dec'
 							></TextField>
+
+							{/* formulario de imagenes */}
+
 							<TextField
 								required
 								value={card_images}
@@ -332,10 +467,13 @@ export const NewCardScreen = () => {
 								variant='outlined'
 								label='incerta la url de la imagen'
 							></TextField>
+
+							{/* formulario de nivel */}
+
 							<TextField
 								required
 								type='number'
-								error={values.level < 0}
+								error={values.level < 1}
 								value={values.level}
 								name='level'
 								onChange={e => {
@@ -344,16 +482,9 @@ export const NewCardScreen = () => {
 								variant='outlined'
 								label='level'
 							></TextField>
-							<TextField
-								required
-								value={values.race}
-								name='race'
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='race'
-							></TextField>
+
+							{/* formulario de tipos */}
+
 							<RadioGroup required>
 								<Typography variant='h6' textAlign={'center'}>
 									What type of card is it?
@@ -389,6 +520,136 @@ export const NewCardScreen = () => {
 									label='Trap Card'
 								></FormControlLabel>
 							</RadioGroup>
+
+							{/* formulario de raza */}
+
+							<Autocomplete
+								required
+								value={values.race}
+								name='race'
+								onChange={e => {
+									handleChange(e)
+								}}
+								filterOptions={(options, params) => {
+									const filtered = filter(options, params)
+
+									const { inputValue } = params
+									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
+
+									// Suggest the creation of a new value
+									// const isExisting = options.some((option) => inputValue === option.title);
+									// if (inputValue !== '' && !isExisting) {
+									//   filtered.push({
+									//     inputValue,
+									//     title: `Add "${inputValue}"`,
+									//   });
+									// }
+
+									return filtered
+								}}
+								selectOnFocus
+								clearOnBlur
+								handleHomeEndKeys
+								id='free-solo-with-text-demo'
+								options={races}
+								getOptionLabel={option => {
+									// Value selected with enter, right from the input
+									if (typeof option === 'string') {
+										return option
+									}
+									// Add "xxx" option created dynamically
+									if (option.inputValue) {
+										return option.inputValue
+									}
+									// Regular option
+
+									return option.name
+								}}
+								renderOption={(props, option) => (
+									<li {...props}>{option.name}</li>
+								)}
+								freeSolo
+								renderInput={params => (
+									<TextField
+										{...params}
+										label='Race'
+										variant='outlined'
+										fullWidth
+										id='fullWidth'
+										onChange={e => {
+											handleChange(e)
+										}}
+									/>
+								)}
+							/>
+
+							{/* formulario de atributo */}
+
+							<Autocomplete
+								required
+								disabled={
+									values.type === 'Spell Card' || values.type === 'Trap Card'
+								}
+								value={values.attribute}
+								name='attribute'
+								onChange={e => {
+									handleChange(e)
+								}}
+								filterOptions={(options, params) => {
+									const filtered = filter(options, params)
+
+									const { inputValue } = params
+									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
+
+									// Suggest the creation of a new value
+									// const isExisting = options.some((option) => inputValue === option.title);
+									// if (inputValue !== '' && !isExisting) {
+									//   filtered.push({
+									//     inputValue,
+									//     title: `Add "${inputValue}"`,
+									//   });
+									// }
+
+									return filtered
+								}}
+								selectOnFocus
+								clearOnBlur
+								handleHomeEndKeys
+								id='free-solo-with-text-demo'
+								options={attributes}
+								getOptionLabel={option => {
+									// Value selected with enter, right from the input
+									if (typeof option === 'string') {
+										return option
+									}
+									// Add "xxx" option created dynamically
+									if (option.inputValue) {
+										return option.inputValue
+									}
+									// Regular option
+
+									return option.name
+								}}
+								renderOption={(props, option) => (
+									<li {...props}>{option.name}</li>
+								)}
+								freeSolo
+								renderInput={params => (
+									<TextField
+										{...params}
+										label='Attribute'
+										variant='outlined'
+										fullWidth
+										id='fullWidth'
+										onChange={e => {
+											handleChange(e)
+										}}
+									/>
+								)}
+							/>
+
+							{/* formulario de ataque */}
+
 							<TextField
 								type='number'
 								name='atk'
@@ -403,6 +664,9 @@ export const NewCardScreen = () => {
 								variant='outlined'
 								label='atk'
 							></TextField>
+
+							{/* formulario de defensa */}
+
 							<TextField
 								type='number'
 								name='def'
@@ -416,16 +680,62 @@ export const NewCardScreen = () => {
 									handleChange(e)
 								}}
 								variant='outlined'
-								label='def'
 							></TextField>
+
+							{/* inputs de fecha */}
+
+							<Typography variant='h6' textAlign={'center'}>
+								Creation date
+							</Typography>
+
+							{/* primera fecha */}
+
+							<TextField
+								type='Date'
+								name='firstdate'
+								required
+								// disabled={
+								// 	values.type === 'Spell Card' || values.type === 'Trap Card'
+								// }
+								// required={values.def > 0}
+								value={values.firsdate}
+								error={values.firstdate > values.lastdate}
+								onChange={e => {
+									handleChange(e)
+								}}
+								variant='outlined'
+							></TextField>
+
+							<Typography variant='h6' textAlign={'center'}>
+								First appearance in anime
+							</Typography>
+
+							{/* ultima fecha */}
+
+							<TextField
+								type='Date'
+								required
+								name='lastdate'
+								value={values.lastdate}
+								error={values.lastdate < values.firstdate}
+								onChange={e => {
+									handleChange(e)
+								}}
+								variant='outlined'
+							></TextField>
+
+							{/* formulario de terminos y condiciones */}
+
 							<FormControlLabel
 								checked={agreeterm}
 								onChange={e => {
-									handleChange(e)
+									agreetermchange(e.target.checked)
 								}}
 								control={<Checkbox></Checkbox>}
 								label='Agree Terms & Conditions'
 							></FormControlLabel>
+
+							{/* boton de guardado */}
 
 							<Box sx={{ display: 'flex', alignItems: 'center' }}>
 								<Box sx={{ m: 1, position: 'relative' }}>
@@ -436,13 +746,16 @@ export const NewCardScreen = () => {
 											!agreeterm ||
 											values.atk < 0 ||
 											values.def < 0 ||
-											values.level < 0 ||
+											values.level < 1 ||
 											values.name.trim().length < 2 ||
 											values.desc.trim().length < 2 ||
-											loading ||
+											values.firstdate.trim().length === 0 ||
+											values.lastdate.trim().length === 0 ||
+											values.lastdate < values.firstdate ||
+											values.firstdate > values.lastdate ||
 											values.type.trim().length === 0
 										}
-										color='primary'
+										color='secondary'
 										sx={buttonSx}
 										onClick={handlesubmit}
 									>
@@ -457,39 +770,6 @@ export const NewCardScreen = () => {
 												top: -6,
 												left: -6,
 												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Button
-										disabled={
-											!agreeterm ||
-											values.atk < 0 ||
-											values.def < 0 ||
-											values.level < 0 ||
-											values.name.trim().length < 2 ||
-											values.desc.trim().length < 2 ||
-											loading ||
-											values.type.trim().length === 0
-										}
-										variant='contained'
-										type='submit'
-										sx={buttonSx}
-									>
-										Submit
-									</Button>
-
-									{loading && (
-										<CircularProgress
-											size={24}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: '50%',
-												left: '50%',
-												marginTop: '-12px',
-												marginLeft: '-12px',
 											}}
 										/>
 									)}

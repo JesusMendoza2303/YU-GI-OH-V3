@@ -1,145 +1,16 @@
 {
 	"data": [
 		{
-			"id": 86198326,
 			"name": "7 Completed",
-			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Activate this card by choosing ATK or DEF; equip only to a Machine monster. It gains 700 ATK or DEF, depending on the choice.",
 			"race": "Equip",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/7-completed-7222",
-			"card_sets": [
-				{
-					"set_name": "Battle Pack 3: Monster League",
-					"set_code": "BP03-EN135",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Battle Pack 3: Monster League",
-					"set_code": "BP03-EN135",
-					"set_rarity": "Shatterfoil Rare",
-					"set_rarity_code": "(SHR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Duel Terminal 2",
-					"set_code": "DT02-EN038",
-					"set_rarity": "Duel Terminal Normal Parallel Rare",
-					"set_rarity_code": "(DNPR)",
-					"set_price": "0.00"
-				},
-				{
-					"set_name": "Pharaoh's Servant",
-					"set_code": "PSV-004",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "2.19"
-				},
-				{
-					"set_name": "Pharaoh's Servant",
-					"set_code": "PSV-E004",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "7.38"
-				},
-				{
-					"set_name": "Pharaoh's Servant",
-					"set_code": "PSV-EN004",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel: Scars of Battle",
-					"set_code": "SBSC-EN029",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.24"
-				},
-				{
-					"set_name": "Speed Duel: Scars of Battle",
-					"set_code": "SBSC-EN029",
-					"set_rarity": "Common;  Speed Duel debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				}
-			],
-			"card_images": [
-				{
-					"id": 86198326,
-					"image_url": "https://images.ygoprodeck.com/images/cards/86198326.jpg",
-					"image_url_small": "https://images.ygoprodeck.com/images/cards_small/86198326.jpg",
-					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/86198326.jpg"
-				}
-			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.27",
-					"tcgplayer_price": "0.10",
-					"ebay_price": "0.99",
-					"amazon_price": "1.15",
-					"coolstuffinc_price": "0.25"
-				}
-			]
-		},
-		{
-			"id": 6850209,
-			"name": "A Deal with Dark Ruler",
 			"type": "Spell Card",
-			"frameType": "spell",
-			"desc": "(This card is always treated as an \"Archfiend\" card.)\nIf a Level 8 or higher monster under your control was sent to the Graveyard this turn: Special Summon 1 \"Berserk Dragon\" from your hand or Deck.",
-			"race": "Quick-Play",
-			"archetype": "Archfiend",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-deal-with-dark-ruler-591",
-			"card_sets": [
-				{
-					"set_name": "Dark Crisis",
-					"set_code": "DCR-030",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.87"
-				},
-				{
-					"set_name": "Dark Crisis",
-					"set_code": "DCR-EN030",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0.00"
-				},
-				{
-					"set_name": "Dark Revelation Volume 1",
-					"set_code": "DR1-EN192",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Collection 4: Joey's World Mega Pack",
-					"set_code": "LCJW-EN241",
-					"set_rarity": "Rare",
-					"set_rarity_code": "(R)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
-					"id": 6850209,
-					"image_url": "https://images.ygoprodeck.com/images/cards/6850209.jpg",
-					"image_url_small": "https://images.ygoprodeck.com/images/cards_small/6850209.jpg",
-					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/6850209.jpg"
+					"image_url": "https://images.ygoprodeck.com/images/cards/86198326.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.12",
-					"tcgplayer_price": "0.17",
-					"ebay_price": "1.95",
-					"amazon_price": "0.93",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 86198326
 		},
 		{
 			"id": 49140998,
@@ -10559,107 +10430,19 @@
 			]
 		},
 		{
-			"id": 99785935,
 			"name": "Alpha The Magnet Warrior",
-			"type": "Normal Monster",
-			"frameType": "normal",
 			"desc": "''Alpha, Beta, and Gamma meld as one to form a powerful monster.''",
 			"atk": 1400,
 			"def": 1700,
 			"level": 4,
 			"race": "Rock",
-			"attribute": "EARTH",
-			"archetype": "Magnet Warrior",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/alpha-the-magnet-warrior-8284",
-			"card_sets": [
-				{
-					"set_name": "Legendary Collection 3: Yugi's World Mega Pack",
-					"set_code": "LCYW-EN012",
-					"set_rarity": "C|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Collection 3: Yugi's World Mega Pack",
-					"set_code": "LCYW-EN012",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.18"
-				},
-				{
-					"set_name": "Retro Pack 2",
-					"set_code": "RP02-EN089",
-					"set_rarity": "Rare",
-					"set_rarity_code": "(R)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel: Battle City Box",
-					"set_code": "SBCB-EN023",
-					"set_rarity": "C|print=Speed Duel debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel: Battle City Box",
-					"set_code": "SBCB-EN023",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.19"
-				},
-				{
-					"set_name": "Structure Deck: Yugi Muto",
-					"set_code": "SDMY-EN007",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Yu-Gi-Oh! The Duelists of the Roses promotional cards",
-					"set_code": "DOR-001",
-					"set_rarity": "Prismatic Secret Rare",
-					"set_rarity_code": "(PScR)",
-					"set_price": "8.32"
-				},
-				{
-					"set_name": "Yu-Gi-Oh! The Duelists of the Roses promotional cards",
-					"set_code": "DOR-E001",
-					"set_rarity": "Prismatic Secret Rare",
-					"set_rarity_code": "(PScR)",
-					"set_price": "13.57"
-				},
-				{
-					"set_name": "Yugi's Legendary Decks",
-					"set_code": "YGLD-ENB11",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.59"
-				},
-				{
-					"set_name": "Yugi's Legendary Decks",
-					"set_code": "YGLD-ENB11",
-					"set_rarity": "Common|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				}
-			],
+			"type": "Normal Monster",
 			"card_images": [
 				{
-					"id": 99785935,
-					"image_url": "https://images.ygoprodeck.com/images/cards/99785935.jpg",
-					"image_url_small": "https://images.ygoprodeck.com/images/cards_small/99785935.jpg",
-					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/99785935.jpg"
+					"image_url": "https://images.ygoprodeck.com/images/cards/99785935.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.11",
-					"tcgplayer_price": "0.25",
-					"ebay_price": "1.95",
-					"amazon_price": "9.93",
-					"coolstuffinc_price": "0.39"
-				}
-			]
+			"id": 99785935
 		},
 		{
 			"id": 17968114,
@@ -10842,71 +10625,19 @@
 			]
 		},
 		{
-			"id": 93221206,
 			"name": "Ancient Elf",
-			"type": "Normal Monster",
-			"frameType": "normal",
 			"desc": "This elf is rumored to have lived for thousands of years. He leads an army of spirits against his enemies.",
 			"atk": 1450,
 			"def": 1200,
 			"level": 4,
 			"race": "Spellcaster",
-			"attribute": "LIGHT",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/ancient-elf-7760",
-			"card_sets": [
-				{
-					"set_name": "Metal Raiders",
-					"set_code": "MRD-037",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.48"
-				},
-				{
-					"set_name": "Metal Raiders",
-					"set_code": "MRD-E037",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "2.31"
-				},
-				{
-					"set_name": "Metal Raiders",
-					"set_code": "MRD-EN037",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "3.55"
-				},
-				{
-					"set_name": "Starter Deck: Yugi",
-					"set_code": "SDY-024",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "2.08"
-				},
-				{
-					"set_name": "Starter Deck: Yugi",
-					"set_code": "SDY-E022",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "3.39"
-				}
-			],
+			"type": "Normal Monster",
 			"card_images": [
 				{
-					"id": 93221206,
-					"image_url": "https://images.ygoprodeck.com/images/cards/93221206.jpg",
-					"image_url_small": "https://images.ygoprodeck.com/images/cards_small/93221206.jpg",
-					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/93221206.jpg"
+					"image_url": "https://images.ygoprodeck.com/images/cards/93221206.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.10",
-					"tcgplayer_price": "0.11",
-					"ebay_price": "1.00",
-					"amazon_price": "0.25",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 93221206
 		},
 		{
 			"id": 81492226,
@@ -16335,9 +16066,10 @@
 		{
 			"name": "Corvus Corax",
 			"desc": "Primarca de la guardia del cuervo",
-			"atk": "2350",
-			"def": "2350",
+			"atk": "2400",
+			"def": "2400",
 			"level": "5",
+			"attribute": "DARK",
 			"race": "Primarca",
 			"type": "Normal Monster",
 			"card_images": [
@@ -16354,6 +16086,7 @@
 			"desc": "yo soy el warhammer 40k",
 			"type": "Normal Monster",
 			"race": "humanity",
+			"attribute": "LIGHT",
 			"level": "5",
 			"name": "el emperador de la humanidad",
 			"card_images": [
@@ -16363,11 +16096,11 @@
 			]
 		},
 		{
-			"id": 99927999,
-			"name": "Sanguinius",
+			"name": "Sanguinius ",
 			"desc": "el primarca de los angeles sangrientos",
 			"atk": "2500",
 			"def": "2500",
+			"attribute": "LIGHT",
 			"level": "5",
 			"race": "Primarca",
 			"type": "Normal Monster",
@@ -16375,7 +16108,8 @@
 				{
 					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
 				}
-			]
+			],
+			"id": 99927999
 		},
 		{
 			"id": 99928000,
@@ -16384,6 +16118,7 @@
 			"atk": "2700",
 			"def": "2700",
 			"level": "5",
+			"attribute": "EARTH",
 			"race": "Primarca",
 			"type": "Normal Monster",
 			"card_images": [
@@ -16400,6 +16135,7 @@
 			"def": "2000",
 			"level": "5",
 			"race": "Primarca",
+			"attribute": "WIND",
 			"type": "Normal Monster",
 			"card_images": [
 				{
@@ -16408,26 +16144,27 @@
 			]
 		},
 		{
-			"id": 99928004,
 			"name": "Jaghatai Khan",
-			"desc": "el primarca mas bad ass",
+			"desc": "el primarca de los sicatrices blancas",
 			"atk": "2800",
 			"def": "2800",
 			"level": "5",
+			"attribute": "EARTH",
 			"race": "Primarca",
 			"type": "Normal Monster",
 			"card_images": [
 				{
 					"image_url": "https://i.pinimg.com/originals/7e/25/ad/7e25adb6f83a6060919a624578dc8789.jpg"
 				}
-			]
+			],
+			"id": 99928004
 		},
 		{
-			"id": 99928006,
 			"name": "Leman Russ",
 			"desc": "primarca de los lobos lunares",
-			"atk": "2500",
-			"def": "2500",
+			"atk": "2450",
+			"def": "2450",
+			"attribute": "EARTH",
 			"level": "5",
 			"race": "Primarca",
 			"type": "Normal Monster",
@@ -16435,7 +16172,8 @@
 				{
 					"image_url": "https://pm1.aminoapps.com/8630/90c03c6d2270f30e251c2b14ee24e30899f188ebr1-1425-1900v2_uhq.jpg"
 				}
-			]
+			],
+			"id": 99928006
 		},
 		{
 			"id": 99928007,
@@ -16443,6 +16181,7 @@
 			"desc": "el primarca de los hijos del emperador",
 			"atk": "2000",
 			"def": "2000",
+			"attribute": "LIGHT",
 			"level": "5",
 			"race": "Primarca",
 			"type": "Normal Monster",
@@ -16453,19 +16192,20 @@
 			]
 		},
 		{
-			"id": 99928008,
 			"name": "Rogal Dorn",
-			"desc": "primarca de los pu;os imperiales",
-			"atk": "2450",
-			"def": "2450",
+			"desc": "primarca de los punos imperiales",
+			"atk": "2550",
+			"def": "2550",
 			"level": "5",
 			"race": "Primarca",
 			"type": "Normal Monster",
+			"attribute": "WIND",
 			"card_images": [
 				{
 					"image_url": "https://64.media.tumblr.com/db35930dce7f75e97bedfe8656947f94/7b6e45414830d1e9-fe/s1280x1920/4a396d9981eddcc9f748dc5ee5755bb8fcda854a.jpg"
 				}
-			]
+			],
+			"id": 99928008
 		},
 		{
 			"name": "Vulkan ",
@@ -16475,6 +16215,7 @@
 			"level": "5",
 			"race": "Primarca",
 			"type": "Normal Monster",
+			"attribute": "EARTH",
 			"card_images": [
 				{
 					"image_url": "https://cdnb.artstation.com/p/assets/images/images/035/913/191/large/johannes-helgeson-vulkan.jpg"
@@ -16498,34 +16239,325 @@
 			"id": 99928010
 		},
 		{
-			"name": "Sanguinius",
-			"desc": "Primarca de la guardia del cuervo",
-			"atk": 0,
-			"def": 0,
-			"level": 0,
-			"race": "pirate",
-			"type": "Spell Card",
-			"card_images": [
-				{
-					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
-				}
-			],
-			"id": 99928011
-		},
-		{
-			"name": "monkey d luffy",
+			"name": "monkey D. luffy",
 			"desc": "next king of pirates",
-			"atk": "2000",
-			"def": "2000",
+			"atk": "1000",
+			"def": "1000",
 			"level": "09",
 			"race": "pirate",
 			"type": "Normal Monster",
+			"attribute": "EARTH",
 			"card_images": [
 				{
 					"image_url": "https://i.blogs.es/3194cd/one-piece/500_333.jpeg"
 				}
 			],
 			"id": 99928012
+		},
+		{
+			"id": 99928013,
+			"name": "luffy",
+			"desc": "Primarca de la guardia del cuervo",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "humanity",
+			"type": "Normal Monster",
+			"lastdate": "2024-03-21",
+			"card_images": [
+				{
+					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
+				}
+			]
+		},
+		{
+			"id": 99928014,
+			"name": "prueba",
+			"desc": "prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "humanity",
+			"type": "Trap Card",
+			"lastdate": "2024-03-12",
+			"card_images": [
+				{
+					"image_url": "https://static.wikia.nocookie.net/ficcion-sin-limites/images/8/83/Guilliman.jpg/revision/latest/scale-to-width-down/1200?cb=20230127011003&path-prefix=es"
+				}
+			]
+		},
+		{
+			"id": 99928015,
+			"name": "prueba",
+			"desc": "carta prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "humano",
+			"type": "Trap Card",
+			"lastdate": "2024-03-20",
+			"card_images": [
+				{
+					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
+				}
+			]
+		},
+		{
+			"id": 99928016,
+			"name": "pruu=eba",
+			"desc": "carta prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "pirate",
+			"type": "Normal Monster",
+			"firstdate": "2024-03-13",
+			"lastdate": "2024-03-21",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
+		},
+		{
+			"id": 99928017,
+			"name": "Corvus Corax",
+			"desc": "el primarca de los angeles sangrientos",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "humanity",
+			"type": "Spell Card",
+			"firstdate": "2024-03-14",
+			"lastdate": "2024-03-29",
+			"card_images": [
+				{
+					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
+				}
+			]
+		},
+		{
+			"name": "luffy prueba prueba",
+			"desc": "prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"type": "Normal Monster",
+			"race": "Primarca",
+			"card_images": [
+				{
+					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
+				}
+			],
+			"id": 99928018
+		},
+		{
+			"id": 99928019,
+			"name": "Corvus Corax",
+			"desc": "Primarca de la guardia del cuervo",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "pirate",
+			"type": "Spell Card",
+			"firstdate": "2024-03-13",
+			"lastdate": "2024-03-29",
+			"card_images": [
+				{
+					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
+				}
+			]
+		},
+		{
+			"id": 99928020,
+			"name": "prueba modngondo",
+			"desc": "Primarca de la guardia del cuervo",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "pirate",
+			"type": "Spell Card",
+			"firstdate": "2024-03-07",
+			"lastdate": "2024-03-27",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
+		},
+		{
+			"id": 99928021,
+			"name": "prueba atributos y raza",
+			"desc": "el primarca de los angeles sangrientos",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "",
+			"attribute": "",
+			"type": "Normal Monster",
+			"firstdate": "2024-03-01",
+			"lastdate": "2024-03-14",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
+		}
+	],
+	"races": [
+		{
+			"id": 1,
+			"name": "Normal"
+		},
+		{
+			"id": 2,
+			"name": "Dragon"
+		},
+		{
+			"id": 3,
+			"name": "Beast"
+		},
+		{
+			"id": 4,
+			"name": "Reptile"
+		},
+		{
+			"id": 5,
+			"name": "Insect"
+		},
+		{
+			"id": 6,
+			"name": "Machine"
+		},
+		{
+			"id": 7,
+			"name": "Rock"
+		},
+		{
+			"id": 8,
+			"name": "Fish"
+		},
+		{
+			"id": 9,
+			"name": "Fiend"
+		},
+		{
+			"id": 10,
+			"name": "Spellcaster"
+		},
+		{
+			"id": 11,
+			"name": "Plant"
+		},
+		{
+			"id": 12,
+			"name": "Warrior"
+		},
+		{
+			"id": 13,
+			"name": "Dinosaur"
+		},
+		{
+			"id": 14,
+			"name": "Aqua"
+		},
+		{
+			"id": 15,
+			"name": "Zombie"
+		},
+		{
+			"id": 16,
+			"name": "Sea Serpent"
+		},
+		{
+			"id": 17,
+			"name": "Beast-Warrior"
+		},
+		{
+			"id": 18,
+			"name": "Fairy"
+		},
+		{
+			"id": 19,
+			"name": "Cyberse"
+		},
+		{
+			"id": 20,
+			"name": "Pyro"
+		},
+		{
+			"id": 21,
+			"name": "Winged Beast"
+		},
+		{
+			"id": 22,
+			"name": "Thunder"
+		},
+		{
+			"id": 23,
+			"name": "Psychic"
+		},
+		{
+			"id": 24,
+			"name": "primarca"
+		},
+		{
+			"id": 25,
+			"name": "pirate"
+		},
+		{
+			"id": 26,
+			"name": "ramera"
+		}
+	],
+	"attributes": [
+		{
+			"id": 1,
+			"name": "LIGHT"
+		},
+		{
+			"id": 2,
+			"name": "EARTH"
+		},
+		{
+			"id": 3,
+			"name": "DARK"
+		},
+		{
+			"id": 4,
+			"name": "WATER"
+		},
+		{
+			"id": 5,
+			"name": "WIND"
+		},
+		{
+			"id": 6,
+			"name": "FIRE"
+		},
+		{
+			"id": 7,
+			"name": "VENEZUELA"
+		},
+		{
+			"id": 8,
+			"name": "TUCUPITA"
+		},
+		{
+			"id": 9,
+			"name": "CARACAS"
+		},
+		{
+			"id": 10,
+			"name": "MEDELLLIN"
+		},
+		{
+			"id": 11,
+			"name": "JUNCO"
+		},
+		{
+			"id": 12,
+			"name": "LA GUAIRA"
 		}
 	]
 }
