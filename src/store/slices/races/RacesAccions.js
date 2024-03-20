@@ -1,16 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { cardsApiLocal } from '../../api/cardsApi'
+import { cardsApiLocal } from '../../../api/cardsApi'
 import { setRaces, startLoadingRaces } from './raceSlice'
 
 export const getRaces = () => {
 	return async (dispatch, getState) => {
 		const races = await cardsApiLocal.get(`races`)
 		dispatch(setRaces({ races: races.data }))
-		console.log('THUNK races:', races)
 	}
 }
 export const createRace = newRace => {
-	console.log('🚀 ~ createRace ~ newraces:', newRace)
 	return async (dispatch, getState) => {
 		const racess = await cardsApiLocal.post(
 			'http://localhost:3030/races',
@@ -19,10 +17,20 @@ export const createRace = newRace => {
 	}
 }
 
-export const removeRaces = cardsid => {
+export const removeRaces = raceId => {
 	return async (dispatch, getState) => {
 		const cards = await cardsApiLocal.delete(
-			`http://localhost:3030/data/${cardsid}`,
+			`http://localhost:3030/races/${raceId}`,
+		)
+	}
+}
+
+export const editRaces = (idrow, race) => {
+	console.log('🚀 ~ editCardGrid ~ params:', idrow)
+	return async (dispatch, getState) => {
+		const cards = await cardsApiLocal.put(
+			`http://localhost:3030/races/${idrow}`,
+			race,
 		)
 	}
 }

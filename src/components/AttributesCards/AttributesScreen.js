@@ -2,82 +2,57 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { reinicio, remove } from '../../store/slices/thunks'
+import { reinicio, remove } from '../../store/slices/cards/CardsAccions'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
+
+import {
+	Box,
+	Checkbox,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Fab,
+	FormControlLabel,
+	Menu,
+	MenuItem,
+	Paper,
+	Stack,
+	TextField,
+	Typography,
+	createFilterOptions,
+} from '@mui/material'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useNavigate } from 'react-router-dom'
-import {
-	createAttribute,
-	getAttributes,
-	removeAttribute,
-} from '../../store/slices/AttributesThunk'
-import { attributes } from '../data/Attributes'
+import { green } from '@mui/material/colors'
+import { createRace, getRaces } from '../../store/slices/races/RacesAccions'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import CloseIcon from '@mui/icons-material/Close'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
-import { green } from '@mui/material/colors'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useTranslation, Trans, i18n } from 'react-i18next'
 import {
-	createFilterOptions,
-	Checkbox,
-	Dialog,
-	DialogContent,
-	DialogTitle,
-	FormControlLabel,
-	Paper,
-	Radio,
-	RadioGroup,
-	Stack,
-	TextField,
-	Typography,
-	Box,
-	Avatar,
-	Snackbar,
-	MenuItem,
-	Menu,
-	Fab,
-} from '@mui/material'
+	createAttribute,
+	getAttributes,
+} from '../../store/slices/attributes/AttributesAccions'
+import { AttributtesAccions } from './atribbuttesaccions/AttributtesAccions'
+import Draggable from 'react-draggable'
 
 const filter = createFilterOptions()
 
 export const AttributesScreen = () => {
+	const { t, i18n } = useTranslation()
 	// const [value, setValue] = useState('')
 	const { attributes = [] } = useSelector(state => state.attributes)
-	console.log('🚀 ~ attributes:', attributes)
 
 	const dispatch = useDispatch()
-
-	const [loading, setLoading] = useState(false)
-	const [success, setSuccess] = useState(false)
-	const timer = React.useRef()
-	const [agreeterm, agreetermchange] = useState(true)
-
-	const [open2, openchange] = useState(false)
-
-	const [anchorEl, setAnchorEl] = useState(null)
-	const open = Boolean(anchorEl)
-
-	const [title, setTitle] = useState('')
-	const [id, setId] = useState(0)
-
-	const handleClick = event => {
-		setAnchorEl(event.currentTarget)
-	}
-
-	const navigate = useNavigate()
-
-	// cierre del menu
-
-	const handleClose = () => {
-		setAnchorEl(null)
-	}
 
 	useEffect(() => {
 		dispatch(getAttributes())
@@ -86,13 +61,25 @@ export const AttributesScreen = () => {
 		}
 	}, [])
 
-	// manejar la opcion de borrado
+	// estados
+	const [rowId, setRowId] = useState(null)
+	const [id, setId] = useState(0)
+	const [loading, setLoading] = useState(false)
+	const [success, setSuccess] = useState(false)
+	const timer = React.useRef()
+	const [agreeterm, agreetermchange] = useState(false)
+	const [open2, openchange] = useState(false)
+	const [name, setName] = useState('')
+
+	const navigate = useNavigate()
+
+	// manejar el boton de borrado
 
 	const handleDeleteClick = () => {
 		if (confirm('are you sure to delete this card?') === true) {
-			//	dispatch(removeAttribute())
+			dispatch(remove())
 			console.log('borrado').then(res => {
-				dispatch(getAttributes())
+				dispatch(getRaces())
 			})
 		}
 	}
@@ -101,12 +88,19 @@ export const AttributesScreen = () => {
 
 	const addAttribute = () => {
 		openpopup()
+		clearState()
 	}
 	const closepopup = () => {
 		openchange(false)
 	}
 	const openpopup = () => {
 		openchange(true)
+	}
+
+	// limpiar le estado para que el formulario aparezca vacio
+
+	const clearState = () => {
+		setName('')
 	}
 
 	// esto es el apartado visual del boton de carga
@@ -119,8 +113,6 @@ export const AttributesScreen = () => {
 			},
 		}),
 	}
-
-	// columns
 
 	const columns = useMemo(() => [
 		{
@@ -137,46 +129,12 @@ export const AttributesScreen = () => {
 		},
 		{
 			field: 'actions',
-			headerName: 'actions',
-			sortable: false,
-			width: 160,
+			type: 'actions',
+			headerName: 'Actions',
+			width: 300,
 			cellClassName: 'actions',
 			renderCell: params => (
-				<div>
-					<Button
-						id='basic-button'
-						aria-controls={open ? 'basic-menu' : undefined}
-						aria-haspopup='true'
-						aria-expanded={open ? 'true' : undefined}
-						onClick={handleClick}
-					>
-						<ArrowDropDownIcon />
-					</Button>
-					<Menu
-						id='basic-menu'
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button',
-						}}
-					>
-						<MenuItem onClick={handleClose}>
-							<EditIcon
-								color='warning'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Edit
-						</MenuItem>
-						<MenuItem onClick={handleDeleteClick}>
-							<DeleteIcon
-								color='error'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Delete
-						</MenuItem>
-					</Menu>
-				</div>
+				<AttributtesAccions {...{ params, rowId, setRowId }} />
 			),
 
 			filterable: false,
@@ -185,21 +143,32 @@ export const AttributesScreen = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		const name = title.toLocaleUpperCase()
 		const newAttribute = { id, name }
+
 		dispatch(createAttribute(newAttribute)).then(res => {
 			dispatch(getAttributes())
 			closepopup()
 		})
 	}
 
+	function PaperComponent(props) {
+		return (
+			<Draggable
+				handle='#draggable-dialog-title'
+				cancel={'[class*="MuiDialogContent-root"]'}
+			>
+				<Paper {...props} />
+			</Draggable>
+		)
+	}
+
 	return (
-		<div className='general'>
+		<div>
 			<Navbar />
 
 			{/* boton de creacion */}
 
-			<Box sx={{ margin: '1%' }}>
+			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
 					<Button
 						className='createboton'
@@ -207,56 +176,63 @@ export const AttributesScreen = () => {
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
 					>
-						Create a Card
+						<Typography
+							sx={{
+								fontFamily: 'Nunito Sans',
+								fontWeight: 600,
+							}}
+						>
+							<Trans i18nKey='crateAttribute'>Create a attribute</Trans>
+						</Typography>
 					</Button>
 				</div>
-			</Box>
 
-			<DataGrid
-				columns={columns}
-				className='datagrid'
-				rows={attributes}
-				getRowId={row => {
-					return row.id
-				}}
-				//	onCellEditCommit={params => setRowId(params.row.id)}
-				initialState={{
-					pagination: {
-						paginationModel: {
-							pageSize: 10,
+				{/* datagrid */}
+
+				<DataGrid
+					columns={columns}
+					className='datagrid'
+					rows={attributes}
+					getRowId={row => row.id}
+					onRowClick={params => setRowId(params.id)}
+					initialState={{
+						pagination: {
+							paginationModel: {
+								pageSize: 10,
+							},
 						},
-					},
-				}}
-				slots={{ toolbar: GridToolbar }}
-				disableRowSelectionOnClick
-			/>
+					}}
+					slots={{ toolbar: GridToolbar }}
+					// sdisableRowSelectionOnClick
+				/>
+			</Box>
 
 			{/* formulario */}
 
-			<Dialog open={open2} onClose={closepopup} fullWidth maxWidth='sm'>
-				<DialogTitle>
+			<Dialog
+				open={open2}
+				onClose={closepopup}
+				fullWidth
+				maxWidth='sm'
+				aria-labelledby='draggable-dialog-title'
+				PaperComponent={PaperComponent}
+			>
+				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
 					{<AddReactionIcon />}
-					<span>Create a new attribute!</span>
-
-					<Button
-						color='secondary'
-						// ariant='contained'
-						style={{ left: 250 }}
-						onClick={closepopup}
-					>
-						<CloseIcon />
-					</Button>
+					<span>
+						<Trans i18nKey='formRaceTitle'>Create a new race!</Trans>
+					</span>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handleSubmit}>
 						<Stack spacing={2} margin={2}>
 							<TextField
 								required
-								error={title.trim().length < 2}
+								error={name.trim().length < 2}
 								name='name'
-								value={title}
+								value={name}
 								onChange={e => {
-									setTitle(e.target.value)
+									setName(e.target.value.toUpperCase())
 								}}
 								variant='outlined'
 								label='name'
@@ -273,12 +249,12 @@ export const AttributesScreen = () => {
 
 							{/* boton de guardado */}
 
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
+							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
 								<Box sx={{ m: 1, position: 'relative' }}>
 									<Fab
 										aria-label='save'
 										type='submit'
-										disabled={!agreeterm || title.trim().length < 2}
+										disabled={!agreeterm || name.trim().length < 2}
 										color='secondary'
 										sx={buttonSx}
 										onClick={handleSubmit}
@@ -298,10 +274,26 @@ export const AttributesScreen = () => {
 										/>
 									)}
 								</Box>
-							</Box>
+							</Box> */}
 						</Stack>
 					</form>
 				</DialogContent>
+
+				{/* nuevos botones de guardado y cierre */}
+
+				<DialogActions>
+					<Button
+						onClick={handleSubmit}
+						disabled={!agreeterm || name.trim().length < 2}
+						color='secondary'
+						type='submit'
+						aria-label='save'
+						sx={buttonSx}
+					>
+						Submit
+					</Button>
+					<Button onClick={closepopup}>Cancel</Button>
+				</DialogActions>
 			</Dialog>
 		</div>
 	)

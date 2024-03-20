@@ -1,10 +1,11 @@
 {
 	"data": [
 		{
-			"name": "7 Completed",
+			"name": "7 completed",
+			"type": "Spell Card",
 			"desc": "Activate this card by choosing ATK or DEF; equip only to a Machine monster. It gains 700 ATK or DEF, depending on the choice.",
 			"race": "Equip",
-			"type": "Spell Card",
+			"level": 0,
 			"card_images": [
 				{
 					"image_url": "https://images.ygoprodeck.com/images/cards/86198326.jpg"
@@ -13,71 +14,10 @@
 			"id": 86198326
 		},
 		{
-			"id": 49140998,
 			"name": "A Feather of the Phoenix",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Discard 1 card, then target 1 card in your GY; return that target to the top of your Deck.",
 			"race": "Normal",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-feather-of-the-phoenix-4192",
-			"card_sets": [
-				{
-					"set_name": "Champion Pack: Game Three",
-					"set_code": "CP03-EN018",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Dark Revelation Volume 3",
-					"set_code": "DR3-EN157",
-					"set_rarity": "Super Rare",
-					"set_rarity_code": "(SR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Flaming Eternity",
-					"set_code": "FET-EN037",
-					"set_rarity": "Super Rare",
-					"set_rarity_code": "(SR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Flaming Eternity",
-					"set_code": "FET-EN037",
-					"set_rarity": "Ultimate Rare",
-					"set_rarity_code": "(UtR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Collection 3: Yugi's World Mega Pack",
-					"set_code": "LCYW-EN280",
-					"set_rarity": "Secret Rare",
-					"set_rarity_code": "(ScR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Hero Decks",
-					"set_code": "LEHD-ENA26",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.54"
-				},
-				{
-					"set_name": "Starter Deck: Syrus Truesdale",
-					"set_code": "YSDS-EN029",
-					"set_rarity": "C|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Starter Deck: Syrus Truesdale",
-					"set_code": "YSDS-EN029",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.94"
-				}
-			],
 			"card_images": [
 				{
 					"id": 49140998,
@@ -86,132 +26,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/49140998.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.14",
-					"tcgplayer_price": "0.28",
-					"ebay_price": "0.99",
-					"amazon_price": "0.65",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 49140998
 		},
 		{
-			"id": 8949584,
 			"name": "A Hero Lives",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "If you control no face-up monsters: Pay half your LP; Special Summon 1 Level 4 or lower \"Elemental HERO\" monster from your Deck.",
 			"race": "Normal",
-			"archetype": "Elemental HERO",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-hero-lives-757",
-			"card_sets": [
-				{
-					"set_name": "Battles of Legend: Chapter 1",
-					"set_code": "BLC1-EN158",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Duelist Saga",
-					"set_code": "DUSA-EN087",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "16.71"
-				},
-				{
-					"set_name": "Duelist Saga",
-					"set_code": "DUSA-EN087",
-					"set_rarity": "Ultra Rare|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Generation Force",
-					"set_code": "GENF-EN098",
-					"set_rarity": "Ultimate Rare",
-					"set_rarity_code": "(UtR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Generation Force",
-					"set_code": "GENF-EN098",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "HERO Strike Structure Deck",
-					"set_code": "SDHS-EN026",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Duelists: Magical Hero",
-					"set_code": "LED6-EN022",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Duelists: Season 3",
-					"set_code": "LDS3-EN112",
-					"set_rarity": "C|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Duelists: Season 3",
-					"set_code": "LDS3-EN112",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0.99"
-				},
-				{
-					"set_name": "Magnificent Mavens",
-					"set_code": "MAMA-EN081",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Magnificent Mavens",
-					"set_code": "MAMA-EN081",
-					"set_rarity": "UR|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENA16",
-					"set_rarity": "C|qty=1|print=Speed Duel debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENA16",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENA16",
-					"set_rarity": "ScR|print=Speed Duel debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENA16",
-					"set_rarity": "Secret Rare",
-					"set_rarity_code": "(ScR)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 8949584,
@@ -220,153 +41,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/8949584.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.11",
-					"tcgplayer_price": "0.16",
-					"ebay_price": "1.28",
-					"amazon_price": "20.00",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 8949584
 		},
 		{
-			"id": 295517,
 			"name": "A Legendary Ocean",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "(This card's name is always treated as \"Umi\".)\r\nAll WATER monsters on the field gain 200 ATK/DEF. Reduce the Level of all WATER monsters in both players' hands and on the field by 1.",
 			"race": "Field",
-			"archetype": "Umi",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-legendary-ocean-31",
-			"card_sets": [
-				{
-					"set_name": "Dark Beginning 2",
-					"set_code": "DB-EN66",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Dark Beginning 2",
-					"set_code": "DB2-EN187",
-					"set_rarity": "C; European debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Dark Beginning 2",
-					"set_code": "DB2-EN187",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.48"
-				},
-				{
-					"set_name": "Hobby League 1 participation cards B",
-					"set_code": "HL1-EN003",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "11.44"
-				},
-				{
-					"set_name": "Legacy of Darkness",
-					"set_code": "LOD-078",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.48"
-				},
-				{
-					"set_name": "Legacy of Darkness",
-					"set_code": "LOD-EN078",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "12.87"
-				},
-				{
-					"set_name": "Legendary Duelists",
-					"set_code": "LEDU-EN021",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Duelists: Season 1",
-					"set_code": "LDS1-EN029",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Magnificent Mavens",
-					"set_code": "MAMA-EN079",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Magnificent Mavens",
-					"set_code": "MAMA-EN079",
-					"set_rarity": "UR|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Realm of the Sea Emperor Structure Deck",
-					"set_code": "SDRE-EN024",
-					"set_rarity": "C;; 2",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Realm of the Sea Emperor Structure Deck",
-					"set_code": "SDRE-EN024",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.25"
-				},
-				{
-					"set_name": "Retro Pack 2",
-					"set_code": "RP02-EN062",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENC13",
-					"set_rarity": "C|qty=1|print=Speed Duel debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel GX: Midterm Paradox",
-					"set_code": "SGX2-ENC13",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel: Streets of Battle City",
-					"set_code": "SBC1-ENI27",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Structure Deck: Fury from the Deep",
-					"set_code": "SD4-EN020",
-					"set_rarity": "C;; 3",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Structure Deck: Fury from the Deep",
-					"set_code": "SD4-EN020",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.24"
-				}
-			],
 			"card_images": [
 				{
 					"id": 295517,
@@ -375,47 +56,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/295517.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.10",
-					"tcgplayer_price": "0.17",
-					"ebay_price": "0.99",
-					"amazon_price": "1.33",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 295517
 		},
 		{
-			"id": 23587624,
 			"name": "A Wild Monster Appears!",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "If your opponent controls a monster and you control no monsters: Special Summon from your hand, 1 monster with an original Level of 10 or lower that cannot be Normal Summoned/Set, ignoring its Summoning conditions. It is unaffected by the effects of your cards, except for its own effects and this card's, also shuffle it into the Deck during your opponent's next End Phase. For the rest of this turn, you cannot Normal Summon/Set or Special Summon monsters, and your opponent takes no damage.",
 			"race": "Normal",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-wild-monster-appears-2034",
-			"card_sets": [
-				{
-					"set_name": "2015 Mega-Tin Mega Pack",
-					"set_code": "MP15-EN234",
-					"set_rarity": "Secret Rare",
-					"set_rarity_code": "(ScR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legendary Duelists: Rage of Ra",
-					"set_code": "LED7-EN052",
-					"set_rarity": "Rare",
-					"set_rarity_code": "(R)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Secrets of Eternity",
-					"set_code": "SECE-EN064",
-					"set_rarity": "Secret Rare",
-					"set_rarity_code": "(ScR)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 23587624,
@@ -424,96 +71,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/23587624.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.07",
-					"tcgplayer_price": "0.08",
-					"ebay_price": "0.99",
-					"amazon_price": "0.45",
-					"coolstuffinc_price": "0.39"
-				}
-			]
+			"id": 23587624
 		},
 		{
-			"id": 28596933,
 			"name": "A Wingbeat of Giant Dragon",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Return 1 Level 5 or higher Dragon-Type monster you control to the hand, and if you do, destroy all Spell and Trap Cards on the field.",
 			"race": "Normal",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-wingbeat-of-giant-dragon-2435",
-			"card_sets": [
-				{
-					"set_name": "Dark Beginning 2",
-					"set_code": "DB2-EN159",
-					"set_rarity": "C; European debut",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Dark Beginning 2",
-					"set_code": "DB2-EN159",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.27"
-				},
-				{
-					"set_name": "Dragons Collide Structure Deck",
-					"set_code": "SDDC-EN028",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Legacy of Darkness",
-					"set_code": "LOD-044",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.63"
-				},
-				{
-					"set_name": "Legacy of Darkness",
-					"set_code": "LOD-EN044",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "2.9"
-				},
-				{
-					"set_name": "Rise of the Dragon Lords Structure Deck",
-					"set_code": "SDRL-EN025",
-					"set_rarity": "C|qty=1",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Rise of the Dragon Lords Structure Deck",
-					"set_code": "SDRL-EN025",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.51"
-				},
-				{
-					"set_name": "Rise of the True Dragons Structure Deck",
-					"set_code": "SR02-EN027",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Saga of Blue-Eyes White Dragon Structure Deck",
-					"set_code": "SDBE-EN023",
-					"set_rarity": "C|qty=1|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Saga of Blue-Eyes White Dragon Structure Deck",
-					"set_code": "SDBE-EN023",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.26"
-				}
-			],
 			"card_images": [
 				{
 					"id": 28596933,
@@ -522,41 +86,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/28596933.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.06",
-					"tcgplayer_price": "0.13",
-					"ebay_price": "0.99",
-					"amazon_price": "0.50",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 28596933
 		},
 		{
-			"id": 10493654,
 			"name": "A.I. Contact",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "If \"Ignister A.I.Land\" is in your Field Zone: Reveal 1 \"Ignister A.I.Land\" in your hand; place it on the bottom of the Deck, and if you do, draw 3 cards. You can only activate 1 \"A.I. Contact\" per turn.",
 			"race": "Normal",
-			"archetype": "@Ignister",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-i-contact-10726",
-			"card_sets": [
-				{
-					"set_name": "2021 Tin of Ancient Battles",
-					"set_code": "MP21-EN073",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Eternity Code",
-					"set_code": "ETCO-EN056",
-					"set_rarity": "Super Rare",
-					"set_rarity_code": "(SR)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 10493654,
@@ -565,48 +101,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/10493654.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.07",
-					"tcgplayer_price": "0.11",
-					"ebay_price": "0.99",
-					"amazon_price": "0.25",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 10493654
 		},
 		{
-			"id": 59332125,
 			"name": "A.I. Love Fusion",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Fusion Summon 1 Cyberse Fusion Monster from your Extra Deck, using monsters from your hand or field as Fusion Material. If you use your \"@Ignister\" monster as Fusion Material, you can also use 1 Link Monster your opponent controls as material. You can only activate 1 \"A.I. Love Fusion\" per turn.",
 			"race": "Normal",
-			"archetype": "@Ignister",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-i-love-fusion-10591",
-			"card_sets": [
-				{
-					"set_name": "2021 Tin of Ancient Battles",
-					"set_code": "MP21-EN024",
-					"set_rarity": "C|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "2021 Tin of Ancient Battles",
-					"set_code": "MP21-EN024",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0.88"
-				},
-				{
-					"set_name": "Ignition Assault",
-					"set_code": "IGAS-EN053",
-					"set_rarity": "Rare",
-					"set_rarity_code": "(R)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 59332125,
@@ -615,41 +116,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/59332125.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.08",
-					"tcgplayer_price": "0.03",
-					"ebay_price": "0.99",
-					"amazon_price": "0.25",
-					"coolstuffinc_price": "0.49"
-				}
-			]
+			"id": 59332125
 		},
 		{
-			"id": 6552971,
 			"name": "A.I. Meet You",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Reveal 1 Cyberse monster with 2300 ATK in your hand or Extra Deck, and add 1 \"@Ignister\" monster with the same Attribute from your Deck to your hand. During the End Phase of this turn, take 2300 damage if you did not Special Summon the revealed monster, or a monster with the same name, after you resolved this effect. You cannot activate monster effects for the rest of this turn after this card resolves, except Cyberse monsters. You can only activate 1 \"A.I. Meet You\" per turn.",
 			"race": "Normal",
-			"archetype": "A.I.",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-i-meet-you-11912",
-			"card_sets": [
-				{
-					"set_name": "2022 Tin of the Pharaoh's Gods",
-					"set_code": "MP22-EN095",
-					"set_rarity": "Ultra Rare",
-					"set_rarity_code": "(UR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Lightning Overdrive",
-					"set_code": "LIOV-EN060",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 6552971,
@@ -658,48 +131,13 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/6552971.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.06",
-					"tcgplayer_price": "0.10",
-					"ebay_price": "0.99",
-					"amazon_price": "1.00",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 6552971
 		},
 		{
-			"id": 85327820,
 			"name": "A.I.'s Ritual",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "This card can be used to Ritual Summon any Cyberse Ritual Monster. You must also Tribute \"@Ignister\" monsters from your hand or field whose total Levels equal or exceed the Level of the Ritual Monster you Ritual Summon. If you control an \"@Ignister\" monster when this effect is activated, you can also use \"@Ignister\" monster(s) in your GY, by banishing them.",
 			"race": "Ritual",
-			"archetype": "@Ignister",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/a-i-s-ritual-10593",
-			"card_sets": [
-				{
-					"set_name": "2021 Tin of Ancient Battles",
-					"set_code": "MP21-EN025",
-					"set_rarity": "C|print=Reprint",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "2021 Tin of Ancient Battles",
-					"set_code": "MP21-EN025",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0.88"
-				},
-				{
-					"set_name": "Ignition Assault",
-					"set_code": "IGAS-EN054",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				}
-			],
 			"card_images": [
 				{
 					"id": 85327820,
@@ -708,15 +146,7 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/85327820.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.04",
-					"tcgplayer_price": "0.05",
-					"ebay_price": "0.99",
-					"amazon_price": "0.25",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 85327820
 		},
 		{
 			"id": 22933016,
@@ -10192,50 +9622,19 @@
 			]
 		},
 		{
-			"id": 70924884,
 			"name": "Alinsection",
-			"type": "Normal Monster",
-			"frameType": "normal",
 			"desc": "A stag beetle with a saw-like head and arms.",
 			"atk": 950,
 			"def": 700,
 			"level": 3,
-			"race": "Insect",
-			"attribute": "EARTH",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/alinsection-5960",
-			"card_sets": [
-				{
-					"set_name": "Speed Duel Starter Decks: Ultimate Predators",
-					"set_code": "SS03-ENB07",
-					"set_rarity": "; New;",
-					"set_rarity_code": "",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Speed Duel Starter Decks: Ultimate Predators",
-					"set_code": "SS03-ENB07",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "1.07"
-				}
-			],
+			"type": "Normal Monster",
+			"race": "Plant",
 			"card_images": [
 				{
-					"id": 70924884,
-					"image_url": "https://images.ygoprodeck.com/images/cards/70924884.jpg",
-					"image_url_small": "https://images.ygoprodeck.com/images/cards_small/70924884.jpg",
-					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/70924884.jpg"
+					"image_url": "https://images.ygoprodeck.com/images/cards/70924884.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.12",
-					"tcgplayer_price": "0.15",
-					"ebay_price": "7.00",
-					"amazon_price": "1.29",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 70924884
 		},
 		{
 			"id": 64428736,
@@ -16097,13 +15496,12 @@
 		},
 		{
 			"name": "Sanguinius ",
-			"desc": "el primarca de los angeles sangrientos",
+			"desc": "el primarca de los angeles sangrientos equisde",
 			"atk": "2500",
 			"def": "2500",
-			"attribute": "LIGHT",
 			"level": "5",
-			"race": "Primarca",
 			"type": "Normal Monster",
+			"race": "Primarca",
 			"card_images": [
 				{
 					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
@@ -16239,111 +15637,13 @@
 			"id": 99928010
 		},
 		{
-			"name": "monkey D. luffy",
-			"desc": "next king of pirates",
-			"atk": "1000",
-			"def": "1000",
-			"level": "09",
-			"race": "pirate",
-			"type": "Normal Monster",
-			"attribute": "EARTH",
-			"card_images": [
-				{
-					"image_url": "https://i.blogs.es/3194cd/one-piece/500_333.jpeg"
-				}
-			],
-			"id": 99928012
-		},
-		{
-			"id": 99928013,
-			"name": "luffy",
-			"desc": "Primarca de la guardia del cuervo",
+			"name": "luffy prueba pruebad",
+			"desc": "pruebad",
 			"atk": 0,
 			"def": 0,
 			"level": 1,
-			"race": "humanity",
-			"type": "Normal Monster",
-			"lastdate": "2024-03-21",
-			"card_images": [
-				{
-					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
-				}
-			]
-		},
-		{
-			"id": 99928014,
-			"name": "prueba",
-			"desc": "prueba",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"race": "humanity",
-			"type": "Trap Card",
-			"lastdate": "2024-03-12",
-			"card_images": [
-				{
-					"image_url": "https://static.wikia.nocookie.net/ficcion-sin-limites/images/8/83/Guilliman.jpg/revision/latest/scale-to-width-down/1200?cb=20230127011003&path-prefix=es"
-				}
-			]
-		},
-		{
-			"id": 99928015,
-			"name": "prueba",
-			"desc": "carta prueba",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"race": "humano",
-			"type": "Trap Card",
-			"lastdate": "2024-03-20",
-			"card_images": [
-				{
-					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
-				}
-			]
-		},
-		{
-			"id": 99928016,
-			"name": "pruu=eba",
-			"desc": "carta prueba",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"race": "pirate",
-			"type": "Normal Monster",
-			"firstdate": "2024-03-13",
-			"lastdate": "2024-03-21",
-			"card_images": [
-				{
-					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
-				}
-			]
-		},
-		{
-			"id": 99928017,
-			"name": "Corvus Corax",
-			"desc": "el primarca de los angeles sangrientos",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"race": "humanity",
 			"type": "Spell Card",
-			"firstdate": "2024-03-14",
-			"lastdate": "2024-03-29",
-			"card_images": [
-				{
-					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
-				}
-			]
-		},
-		{
-			"name": "luffy prueba prueba",
-			"desc": "prueba",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"type": "Normal Monster",
-			"race": "Primarca",
+			"race": "Fiend",
 			"card_images": [
 				{
 					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
@@ -16352,56 +15652,89 @@
 			"id": 99928018
 		},
 		{
-			"id": 99928019,
-			"name": "Corvus Corax",
-			"desc": "Primarca de la guardia del cuervo",
+			"name": "prueba mondongo",
+			"type": "Normal Monter",
 			"atk": 0,
 			"def": 0,
-			"level": 1,
-			"race": "pirate",
-			"type": "Spell Card",
-			"firstdate": "2024-03-13",
-			"lastdate": "2024-03-29",
-			"card_images": [
-				{
-					"image_url": "https://cdnb.artstation.com/p/assets/images/images/024/622/933/large/johannes-helgeson-sanguinius03.jpg?1583009643"
-				}
-			]
-		},
-		{
-			"id": 99928020,
-			"name": "prueba modngondo",
 			"desc": "Primarca de la guardia del cuervo",
-			"atk": 0,
-			"def": 0,
-			"level": 1,
-			"race": "pirate",
-			"type": "Spell Card",
 			"firstdate": "2024-03-07",
 			"lastdate": "2024-03-27",
+			"race": "pirate",
+			"level": 1,
 			"card_images": [
 				{
 					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
 				}
-			]
+			],
+			"id": 99928020
 		},
 		{
-			"id": 99928021,
-			"name": "prueba atributos y raza",
-			"desc": "el primarca de los angeles sangrientos",
+			"name": "dsdsdsdsds",
+			"type": "Spell Card",
 			"atk": 0,
 			"def": 0,
+			"desc": "prueba",
+			"firstdate": "2024-03-04",
+			"lastdate": "2024-03-20",
+			"race": "Reptile",
 			"level": 1,
-			"race": "",
-			"attribute": "",
-			"type": "Normal Monster",
-			"firstdate": "2024-03-01",
-			"lastdate": "2024-03-14",
 			"card_images": [
 				{
 					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
 				}
-			]
+			],
+			"id": 99928021
+		},
+		{
+			"name": "prueba handles 1",
+			"type": "Spell Card",
+			"atk": 0,
+			"def": 0,
+			"desc": "prueba",
+			"firstdate": "2024-03-07",
+			"lastdate": "2024-03-26",
+			"race": "Reptile",
+			"level": 1,
+			"card_images": [
+				{
+					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
+				}
+			],
+			"id": 99928022
+		},
+		{
+			"name": "prueba botones ",
+			"type": "Trap Card",
+			"atk": 0,
+			"def": 0,
+			"desc": "carta prueba",
+			"firstdate": "2024-03-01",
+			"lastdate": "2024-03-28",
+			"race": "Normal",
+			"level": 1,
+			"card_images": [
+				{
+					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
+				}
+			],
+			"id": 99928023
+		},
+		{
+			"name": "prueba handles 3 submit",
+			"type": "Spell Card",
+			"atk": 0,
+			"def": 0,
+			"desc": "el primarca de",
+			"firstdate": "2024-03-01",
+			"lastdate": "2024-03-28",
+			"race": "Normal",
+			"level": 1,
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			],
+			"id": 99928025
 		}
 	],
 	"races": [
@@ -16502,12 +15835,32 @@
 			"name": "primarca"
 		},
 		{
-			"id": 25,
-			"name": "pirate"
+			"name": "prosti",
+			"id": 25
 		},
 		{
 			"id": 26,
-			"name": "ramera"
+			"name": "mano nose tengo hambre"
+		},
+		{
+			"id": 27,
+			"name": "dsdsdsds"
+		},
+		{
+			"id": 28,
+			"name": "sddsdsds"
+		},
+		{
+			"id": 29,
+			"name": "equisde"
+		},
+		{
+			"id": 30,
+			"name": "prueba raza"
+		},
+		{
+			"name": "alexa32",
+			"id": 32
 		}
 	],
 	"attributes": [
@@ -16548,16 +15901,16 @@
 			"name": "CARACAS"
 		},
 		{
-			"id": 10,
-			"name": "MEDELLLIN"
+			"name": "MOROCONDO",
+			"id": 12
 		},
 		{
-			"id": 11,
-			"name": "JUNCO"
+			"id": 16,
+			"name": "PROBEMOS OTRA VEZ"
 		},
 		{
-			"id": 12,
-			"name": "LA GUAIRA"
+			"id": 17,
+			"name": "AJA"
 		}
 	]
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, Outlet } from 'react-router-dom'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -11,22 +11,39 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { Box } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { getcardsByNameLocal2 } from '../../store/slices/cards/CardsAccions'
 
-export const CardGrid = () => {
-	const { cards = [], isLoading } = useSelector(state => state.cards)
+export const CardGridSearch = () => {
+	const {
+		cards = [],
+		isLoading,
+		tarjeta,
+		page,
+	} = useSelector(state => state.cards)
+	const dispatch = useDispatch()
+	const [search, setsearch] = useState('')
+	const [verMas, setVerMas] = useState(true)
+	const [offset, setOffset] = useState(0)
+
+	const nextCards = () => {
+		dispatch(getcardsByNameLocal2(search, page + 1))
+	}
+	useEffect(() => {
+		const handleScroll = e => {
+			const scrollHeight = e.target.documentElement.scrollHeight
+			const currentHeight =
+				e.target.documentElement.scrollTop + window.innerHeight
+			if (currentHeight + 1 >= scrollHeight) {
+				setOffset(offset + 18)
+			}
+		}
+		window.addEventListener('scroll', handleScroll)
+		return () => window.removeEventListener('scroll')
+	}, [offset])
 
 	return (
 		<div className='general'>
-			{/* circular progress */}
-
-			{isLoading ? (
-				<Box sx={{ display: 'flex' }} justifyContent='center'>
-					<CircularProgress />
-				</Box>
-			) : (
-				''
-			)}
-
 			{/* visual part */}
 
 			<ul>

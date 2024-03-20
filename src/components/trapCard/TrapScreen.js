@@ -3,17 +3,22 @@
 import React, { useEffect, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsByTypeLOCAL, reinicio } from '../../store/slices/thunks'
-import { CardGridTarjeta } from '../../store/slices/helpers/CardGridTarjeta'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
+import {
+	getcardsByTypeLOCAL,
+	reinicio,
+} from '../../store/slices/cards/CardsAccions'
+import { CardGrid } from '../CardGrid/CardGrid'
 
-import { Box, Pagination } from '@mui/material'
+import { Box, CircularProgress, Pagination } from '@mui/material'
 
 export const TrapScreen = () => {
 	const dispatch = useDispatch()
-	const { cards = [], tarjeta, count } = useSelector(state => state.cards)
-	console.log('🚀 ~ TrapScreen ~ cards:', cards)
+	const {
+		cards = [],
+		tarjeta,
+		count,
+		isLoading,
+	} = useSelector(state => state.cards)
 	const type = 'Trap Card'
 
 	const pageSize = 12
@@ -42,7 +47,15 @@ export const TrapScreen = () => {
 		<div className='general'>
 			<Navbar />
 
-			<CardGridTarjeta />
+			{/* circular progress */}
+
+			{isLoading ? (
+				<Box sx={{ display: 'flex' }} justifyContent='center'>
+					<CircularProgress />
+				</Box>
+			) : (
+				<CardGrid />
+			)}
 
 			<Box
 				className='pagination'

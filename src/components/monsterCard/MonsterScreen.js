@@ -3,23 +3,25 @@
 import React, { useEffect, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsByTypeLOCAL, reinicio } from '../../store/slices/thunks'
-import { CardGridTarjeta } from '../../store/slices/helpers/CardGridTarjeta'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
-import Pagination from '@mui/material/Pagination'
+import {
+	getcardsByTypeLOCAL,
+	reinicio,
+} from '../../store/slices/cards/CardsAccions'
+import { CardGrid } from '../CardGrid/CardGrid'
 
-import { redirect } from 'react-router-dom'
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Pagination } from '@mui/material'
 
 export const MonsterScreen = () => {
 	const dispatch = useDispatch()
-	const { cards = [], tarjeta, count } = useSelector(state => state.cards)
-	console.log('🚀 ~ MonsterScreen ~ count:', count)
-
-	console.log('🚀 ~ MonsterScreen ~ cards:', cards)
-
+	const {
+		cards = [],
+		tarjeta,
+		count,
+		isLoading,
+	} = useSelector(state => state.cards)
+	console.log('🚀 ~ TrapScreen ~ cards:', cards)
 	const type = 'Normal Monster'
+
 	const pageSize = 12
 
 	// esto es para la paginacion
@@ -42,12 +44,18 @@ export const MonsterScreen = () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
-
 	return (
 		<div className='general'>
 			<Navbar />
+			{/* circular progress */}
 
-			<CardGridTarjeta />
+			{isLoading ? (
+				<Box sx={{ display: 'flex' }} justifyContent='center'>
+					<CircularProgress />
+				</Box>
+			) : (
+				<CardGrid />
+			)}
 
 			<Box
 				className='pagination'

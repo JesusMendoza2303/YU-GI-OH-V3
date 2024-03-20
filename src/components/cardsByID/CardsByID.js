@@ -3,24 +3,25 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { Navbar } from './Navbar/Navbar'
+import { Navbar } from '../Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-
 import {
 	Autocomplete,
 	Button,
 	Checkbox,
 	CircularProgress,
 	Dialog,
+	DialogActions,
 	DialogContent,
 	DialogTitle,
 	Fab,
 	FormControlLabel,
+	Paper,
 	Radio,
 	RadioGroup,
 	Stack,
@@ -33,40 +34,55 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CloseIcon from '@mui/icons-material/Close'
-import { attributes } from './data/Attributes'
-
 import axios from 'axios'
 import {
 	editCard,
 	getcardsLocalByid,
 	reinicio,
 	remove,
-} from '../store/slices/thunks'
-import { getRaces } from '../store/slices/RacesThunks'
-import { getAttributes } from '../store/slices/AttributesThunk'
+} from '../../store/slices/cards/CardsAccions'
+import { getRaces } from '../../store/slices/races/RacesAccions'
+import { getAttributes } from '../../store/slices/attributes/AttributesAccions'
+import { useTranslation, Trans, i18n } from 'react-i18next'
+import Draggable from 'react-draggable'
+import allHandles from './handles/handles'
 
 const filter = createFilterOptions()
 
-export const CardsDetail = () => {
+export const CardsByID = () => {
+	// use states
+
+	const { t, i18n } = useTranslation()
 	const [value, setValue] = useState('')
 	const { races = [] } = useSelector(state => state.races)
 	const { attributes = [] } = useSelector(state => state.attributes)
-	console.log('🚀 ~ RaceScreen ~ races:', races)
 
 	const dispatch = useDispatch()
 	const { cardsid } = useParams()
 	const { cards } = useSelector(state => state.cards)
-	console.log('🚀 ~ CardsDetail ~ cards:', cards)
 
 	const [id] = useState(0)
 	const [open, openchange] = useState(false)
-	const [agreeterm] = useState(true)
+	const [agreeterm] = useState(false)
 	const [card_images, setCard_images] = useState('')
 	//	const [race, setRace] = useState('')
 	const [edit, setedit] = useState(false)
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
+
+	const navigate = useNavigate()
+
+	const [cardsForm, setCardsForm] = useState({
+		name: '',
+		desc: '',
+		atk: 0,
+		def: 0,
+		level: 1,
+		race: '',
+		attribute: '',
+		type: '',
+	})
 
 	const [values, setValues] = useState({
 		name: '',
@@ -78,6 +94,8 @@ export const CardsDetail = () => {
 		attribute: '',
 		type: '',
 	})
+
+	// llamadas de informacion
 
 	useEffect(() => {
 		dispatch(getRaces())
@@ -93,8 +111,6 @@ export const CardsDetail = () => {
 		}
 	}, [])
 
-	const navigate = useNavigate()
-
 	useEffect(() => {
 		axios
 			.get(`http://localhost:3030/data?id=${cardsid}`)
@@ -104,11 +120,12 @@ export const CardsDetail = () => {
 				}
 
 				const cardsdetaild = response.data[0]
+				console.log('🚀 ~ useEffect ~ cardsdetaild:', cardsdetaild)
 
 				setCard_images(cardsdetaild.card_images[0]?.image_url)
 
-				setValues(preValues => ({
-					...preValues,
+				setValues(setCardsForm => ({
+					...setCardsForm,
 					name: cardsdetaild.name,
 					desc: cardsdetaild.desc,
 					atk: cardsdetaild.atk,
@@ -126,6 +143,8 @@ export const CardsDetail = () => {
 			dispatch(reinicio())
 		}
 	}, [])
+
+	// handles
 
 	const handlesubmit = e => {
 		// parte visual del boton
@@ -152,7 +171,6 @@ export const CardsDetail = () => {
 		naipe.card_images = imagesArray
 
 		dispatch(editCard(cardsid, naipe)).then(res => {
-			console.log('🚀 ~ dispatch ~ naipe:', naipe)
 			dispatch(getcardsLocalByid(cardsid))
 			closepopup()
 		})
@@ -175,10 +193,17 @@ export const CardsDetail = () => {
 	const handleChange = e => {
 		e.preventDefault()
 		const { value, name } = e.target
-		console.log('🚀 ~ handleChange ~ e.target:', e.target)
 		setValues(preValues => ({
 			...preValues,
 			[name]: value,
+		}))
+	}
+
+	const handleChangeSelection = (field, value) => {
+		const { name } = value
+		setValues(preValues => ({
+			...preValues,
+			[field]: name,
 		}))
 	}
 
@@ -198,7 +223,23 @@ export const CardsDetail = () => {
 		}),
 	}
 
+	function PaperComponent(props) {
+		return (
+			<Draggable
+				handle='#draggable-dialog-title'
+				cancel={'[class*="MuiDialogContent-root"]'}
+			>
+				<Paper {...props} />
+			</Draggable>
+		)
+	}
+
+	// handles
+
+	const { ejemplo } = allHandles()
+
 	useEffect(() => {
+		ejemplo()
 		return () => {
 			clearTimeout(timer.current)
 		}
@@ -207,14 +248,12 @@ export const CardsDetail = () => {
 	return (
 		<div>
 			<Navbar />
-
-			{/* parte visual */}
-
 			<Box sx={{ display: 'flex' }} className='cardDetail'>
 				<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-					{console.log('🚀 ~ CardsDetail ~ values:', values)}
 					<CardContent sx={{ flex: '1 0 auto' }}>
 						<div>
+							{/* nombre */}
+
 							<Typography
 								component='div'
 								variant='h3'
@@ -228,6 +267,9 @@ export const CardsDetail = () => {
 								{values.name}
 							</Typography>
 							<br />
+
+							{/* descripcion */}
+
 							<Typography
 								variant='h4'
 								color='black'
@@ -240,6 +282,8 @@ export const CardsDetail = () => {
 								{values.desc}
 							</Typography>
 
+							{/* variables */}
+
 							<Typography
 								variant='h4'
 								color='black'
@@ -250,49 +294,67 @@ export const CardsDetail = () => {
 								}}
 							>
 								<p className='parrafo'>ID: {cardsid}</p>
-								<p className='parrafo'>Type: {values.type}</p>
 								<p className='parrafo'>
-									{!values.race
-										? 'this card dont have race'
-										: `race: ${values.race}`}
+									Type:
+									{values.type}
 								</p>
+
+								{/* atk */}
+
 								<p className='parrafo'>
-									{!values.level
-										? 'this card dont have level'
-										: `level: ${values.level}`}
+									{!values.atk ? (
+										<Trans i18nKey='atkmessage'>this card dont have atk</Trans>
+									) : (
+										`atk: ${values.atk} `
+									)}
 								</p>
+
+								{/* def */}
+
 								<p className='parrafo'>
-									{!values.atk ? undefined : `atk: ${values.atk} `}
+									{!values.def ? (
+										<Trans i18nKey='defmessage'>this card dont have def</Trans>
+									) : (
+										`def: ${values.def}`
+									)}
 								</p>
+
+								{/* raza */}
+
 								<p className='parrafo'>
-									{!values.def ? undefined : `def: ${values.def}`}
+									{!values.race ? (
+										<Trans i18nKey='racemessage'>
+											this card dont have race
+										</Trans>
+									) : (
+										`race: ${values.race}`
+									)}
 								</p>
-								{/* <p className='parrafo'>
-									{!values.attribute ? undefined : `attribute: ${values.attribute}`}
-								</p> */}
+
+								{/* nivel */}
+
+								<p className='parrafo'>
+									{!values.level ? (
+										<Trans i18nKey='levelmessage'>
+											this card dont have level
+										</Trans>
+									) : (
+										`level: ${values.level}`
+									)}
+								</p>
+
+								{/* attribute */}
+
+								<p className='parrafo'>
+									{!values.attribute ? (
+										<Trans i18nKey='attributemessage'>
+											this card dont have attribute
+										</Trans>
+									) : (
+										`attribute: ${values.attribute}`
+									)}
+								</p>
 							</Typography>
-
-							{/* botones */}
-
-							<Stack spacing={2} direction='row' justifyContent='center'>
-								<Button
-									variant='contained'
-									startIcon={<EditIcon />}
-									style={{ backgroundColor: '#9E5AFF' }}
-									onClick={addCard}
-								>
-									Edit Card
-								</Button>
-
-								<Button
-									variant='contained'
-									startIcon={<DeleteIcon />}
-									style={{ backgroundColor: '#D92579' }}
-									onClick={handleDeleteClick}
-								>
-									Delete Card
-								</Button>
-							</Stack>
 						</div>
 					</CardContent>
 				</Box>
@@ -308,19 +370,43 @@ export const CardsDetail = () => {
 				</div>
 			</Box>
 
+			{/* botones */}
+
+			<Stack spacing={2} direction='row' justifyContent='center'>
+				<Button
+					variant='contained'
+					startIcon={<EditIcon />}
+					style={{ backgroundColor: '#9E5AFF' }}
+					onClick={addCard}
+				>
+					<Trans i18nKey='editButton'>Edit Card</Trans>
+				</Button>
+
+				<Button
+					variant='contained'
+					startIcon={<DeleteIcon />}
+					style={{ backgroundColor: '#D92579' }}
+					onClick={handleDeleteClick}
+				>
+					<Trans i18nKey='deleteButton'>Delete Card</Trans>
+				</Button>
+			</Stack>
+
 			{/* formulario de edicion */}
 
-			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
-				<DialogTitle>
-					{<EditIcon />} <span>Edit this Card</span>
-					<Button
-						color='secondary'
-						// ariant='contained'
-						style={{ left: 330 }}
-						onClick={closepopup}
-					>
-						<CloseIcon />
-					</Button>
+			<Dialog
+				open={open}
+				onClose={closepopup}
+				fullWidth
+				maxWidth='sm'
+				aria-labelledby='draggable-dialog-title'
+				PaperComponent={PaperComponent}
+			>
+				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+					{<EditIcon />}
+					<span>
+						<Trans i18nKey='editForm'>Edit this Card </Trans>
+					</span>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
@@ -385,7 +471,7 @@ export const CardsDetail = () => {
 
 							<RadioGroup required>
 								<Typography variant='h6' textAlign={'center'}>
-									What type of card is it?
+									<Trans i18nKey='typeFormID'>What type of card is it? </Trans>
 								</Typography>
 
 								<FormControlLabel
@@ -425,8 +511,9 @@ export const CardsDetail = () => {
 								required
 								value={values.race}
 								name='race'
-								onChange={e => {
-									handleChange(e)
+								onChange={(e, value) => {
+									console.log('🚀 ~ CardsByID ~ value:', value)
+									handleChangeSelection('race', value)
 								}}
 								filterOptions={(options, params) => {
 									const filtered = filter(options, params)
@@ -474,9 +561,9 @@ export const CardsDetail = () => {
 										variant='outlined'
 										fullWidth
 										id='fullWidth'
-										onChange={e => {
-											handleChange(e)
-										}}
+										// onChange={e => {
+										// 	handleChange(e)
+										// }}
 									/>
 								)}
 							/>
@@ -490,8 +577,8 @@ export const CardsDetail = () => {
 								}
 								value={values.attribute}
 								name='attribute'
-								onChange={e => {
-									handleChange(e)
+								onChange={(e, value) => {
+									handleChangeSelection('attribute', value)
 								}}
 								filterOptions={(options, params) => {
 									const filtered = filter(options, params)
@@ -499,14 +586,14 @@ export const CardsDetail = () => {
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
 									console.log('🚀 ~ RaceScreen ~ value:', value)
-									// Suggest the creation of a new value
-									// const isExisting = options.some((option) => inputValue === option.title);
-									// if (inputValue !== '' && !isExisting) {
+									// // Suggest the creation of a new value
+									//  const isExisting = options.some((option) => inputValue === option.title);
+									//  if (inputValue !== '' && !isExisting) {
 									//   filtered.push({
-									//     inputValue,
-									//     title: `Add "${inputValue}"`,
-									//   });
-									// }
+									//      inputValue,
+									//      title: `Add "${inputValue}"`,
+									//    });
+									//  }
 
 									return filtered
 								}}
@@ -592,43 +679,33 @@ export const CardsDetail = () => {
 								label='Agree Terms & Conditions'
 							></FormControlLabel>
 
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Fab
-										aria-label='save'
-										type='submit'
-										disabled={
-											!agreeterm ||
-											values.atk < 0 ||
-											values.level < 1 ||
-											values.def < 0 ||
-											values.name.trim().length < 2 ||
-											values.desc.trim().length < 2 ||
-											values.race?.trim().length < 2 ||
-											values.attribute?.trim().length < 2 ||
-											loading ||
-											values.type.trim().length === 0
-										}
-										color='secondary'
-										sx={buttonSx}
-										onClick={handlesubmit}
-									>
-										{success ? <CheckIcon /> : <SaveIcon />}
-									</Fab>
-									{loading && (
-										<CircularProgress
-											size={68}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: -6,
-												left: -6,
-												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-							</Box>
+							{/* nuevos botones de guardado y cierre */}
+
+							<DialogActions>
+								<Button
+									onClick={handlesubmit}
+									size='large'
+									disabled={
+										!agreeterm ||
+										values.atk < 0 ||
+										values.level < 1 ||
+										values.def < 0 ||
+										values.name.trim().length < 2 ||
+										values.desc.trim().length < 2 ||
+										values.race?.trim().length < 2 ||
+										values.attribute?.trim().length < 2 ||
+										loading ||
+										values.type.trim().length === 0
+									}
+									color='secondary'
+									type='submit'
+									aria-label='save'
+									sx={buttonSx}
+								>
+									Submit
+								</Button>
+								<Button onClick={closepopup}>Cancel</Button>
+							</DialogActions>
 						</Stack>
 					</form>
 				</DialogContent>

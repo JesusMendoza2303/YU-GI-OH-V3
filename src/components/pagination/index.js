@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Box, Pagination } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { getcardsByTypeLOCAL } from '../../store/slices/thunks'
+import { getcardsByTypeLOCAL } from '../../store/slices/CardsAccions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const pageSize = 3

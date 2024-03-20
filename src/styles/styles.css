@@ -1,6 +1,14 @@
 body {
-	background-color: white;
+	background-image: url(manos.jpg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 }
+
+/* .background-image {
+	background-image: url("https://i.pinimg.com/736x/18/96/54/1896546dd8fbf327c7d4dd61c0b9676a.jpg");
+} */
 
 .formRace {
 	color: white;
@@ -78,7 +86,7 @@ body {
 }
 
 .general {
-	background-color: white;
+	/* background-color: white; */
 }
 
 .viewcard {
@@ -86,6 +94,6 @@ body {
 	text-decoration: none;
 }
 .createboton {
-	left: 1650px;
+	left: 1600px;
 	bottom: -10px;
 }

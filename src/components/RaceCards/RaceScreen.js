@@ -2,7 +2,7 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { getcardsByRace, reinicio, remove } from '../../store/slices/thunks'
+import { reinicio, remove } from '../../store/slices/cards/CardsAccions'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
 
@@ -10,14 +10,17 @@ import {
 	Box,
 	Checkbox,
 	Dialog,
+	DialogActions,
 	DialogContent,
 	DialogTitle,
 	Fab,
 	FormControlLabel,
 	Menu,
 	MenuItem,
+	Paper,
 	Stack,
 	TextField,
+	Typography,
 	createFilterOptions,
 } from '@mui/material'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
@@ -26,22 +29,24 @@ import EditIcon from '@mui/icons-material/Edit'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { useNavigate } from 'react-router-dom'
-import { races } from '../data/Races'
 import { green } from '@mui/material/colors'
-import { createRace, getRaces } from '../../store/slices/RacesThunks'
+import { createRace, getRaces } from '../../store/slices/races/RacesAccions'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import CloseIcon from '@mui/icons-material/Close'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useTranslation, Trans, i18n } from 'react-i18next'
+import { RaceAccions } from './raceAccions/RaceAccions'
+import Draggable from 'react-draggable'
 
 const filter = createFilterOptions()
 
 export const RaceScreen = () => {
+	const { t, i18n } = useTranslation()
 	// const [value, setValue] = useState('')
 	const { races = [] } = useSelector(state => state.races)
-	console.log('🚀 ~ RaceScreen ~ races:', races)
 
 	const dispatch = useDispatch()
 
@@ -53,11 +58,12 @@ export const RaceScreen = () => {
 	}, [])
 
 	// estados
+	const [rowId, setRowId] = useState(null)
 	const [id, setId] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const [success, setSuccess] = useState(false)
 	const timer = React.useRef()
-	const [agreeterm, agreetermchange] = useState(true)
+	const [agreeterm, agreetermchange] = useState(false)
 	const [open2, openchange] = useState(false)
 	const [name, setName] = useState('')
 
@@ -80,7 +86,7 @@ export const RaceScreen = () => {
 		if (confirm('are you sure to delete this card?') === true) {
 			dispatch(remove())
 			console.log('borrado').then(res => {
-				dispatch(getcardsByRace())
+				dispatch(getRaces())
 			})
 		}
 	}
@@ -89,12 +95,19 @@ export const RaceScreen = () => {
 
 	const addAttribute = () => {
 		openpopup()
+		clearState()
 	}
 	const closepopup = () => {
 		openchange(false)
 	}
 	const openpopup = () => {
 		openchange(true)
+	}
+
+	// limpiar le estado para que el formulario aparezca vacio
+
+	const clearState = () => {
+		setName('')
 	}
 
 	// esto es el apartado visual del boton de carga
@@ -123,47 +136,11 @@ export const RaceScreen = () => {
 		},
 		{
 			field: 'actions',
-			headerName: 'actions',
-			sortable: false,
-			width: 160,
+			type: 'actions',
+			headerName: 'Actions',
+			width: 300,
 			cellClassName: 'actions',
-			renderCell: params => (
-				<div>
-					<Button
-						id='basic-button'
-						aria-controls={open ? 'basic-menu' : undefined}
-						aria-haspopup='true'
-						aria-expanded={open ? 'true' : undefined}
-						onClick={handleClick}
-					>
-						<ArrowDropDownIcon />
-					</Button>
-					<Menu
-						id='basic-menu'
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button',
-						}}
-					>
-						<MenuItem onClick={handleClose}>
-							<EditIcon
-								color='warning'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Edit
-						</MenuItem>
-						<MenuItem onClick={handleDeleteClick}>
-							<DeleteIcon
-								color='error'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Delete
-						</MenuItem>
-					</Menu>
-				</div>
-			),
+			renderCell: params => <RaceAccions {...{ params, rowId, setRowId }} />,
 
 			filterable: false,
 		},
@@ -178,13 +155,24 @@ export const RaceScreen = () => {
 		})
 	}
 
+	function PaperComponent(props) {
+		return (
+			<Draggable
+				handle='#draggable-dialog-title'
+				cancel={'[class*="MuiDialogContent-root"]'}
+			>
+				<Paper {...props} />
+			</Draggable>
+		)
+	}
+
 	return (
 		<div className='general'>
 			<Navbar />
 
 			{/* boton de creacion */}
 
-			<Box sx={{ margin: '1%' }}>
+			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
 					<Button
 						className='createboton'
@@ -192,45 +180,50 @@ export const RaceScreen = () => {
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
 					>
-						Create a Card
+						<Typography
+							sx={{
+								fontFamily: 'Nunito Sans',
+								fontWeight: 600,
+							}}
+						>
+							<Trans i18nKey='crateRace'>Create a Race</Trans>
+						</Typography>
 					</Button>
 				</div>
-			</Box>
 
-			<DataGrid
-				columns={columns}
-				className='datagrid'
-				rows={races}
-				getRowId={row => {
-					return row.id
-				}}
-				//	onCellEditCommit={params => setRowId(params.row.id)}
-				initialState={{
-					pagination: {
-						paginationModel: {
-							pageSize: 10,
+				<DataGrid
+					columns={columns}
+					className='datagrid'
+					rows={races}
+					getRowId={row => row.id}
+					onRowClick={params => setRowId(params.id)}
+					initialState={{
+						pagination: {
+							paginationModel: {
+								pageSize: 10,
+							},
 						},
-					},
-				}}
-				slots={{ toolbar: GridToolbar }}
-				disableRowSelectionOnClick
-			/>
+					}}
+					slots={{ toolbar: GridToolbar }}
+					// disableRowSelectionOnClick
+				/>
+			</Box>
 
 			{/* formulario */}
 
-			<Dialog open={open2} onClose={closepopup} fullWidth maxWidth='sm'>
-				<DialogTitle>
+			<Dialog
+				open={open2}
+				onClose={closepopup}
+				fullWidth
+				maxWidth='sm'
+				aria-labelledby='draggable-dialog-title'
+				PaperComponent={PaperComponent}
+			>
+				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
 					{<AddReactionIcon />}
-					<span>Create a new race!</span>
-
-					<Button
-						color='secondary'
-						// ariant='contained'
-						style={{ left: 250 }}
-						onClick={closepopup}
-					>
-						<CloseIcon />
-					</Button>
+					<span>
+						<Trans i18nKey='formRaceTitle'>Create a new race!</Trans>
+					</span>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handleSubmit}>
@@ -258,7 +251,7 @@ export const RaceScreen = () => {
 
 							{/* boton de guardado */}
 
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
+							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
 								<Box sx={{ m: 1, position: 'relative' }}>
 									<Fab
 										aria-label='save'
@@ -283,10 +276,26 @@ export const RaceScreen = () => {
 										/>
 									)}
 								</Box>
-							</Box>
+							</Box> */}
 						</Stack>
 					</form>
 				</DialogContent>
+
+				{/* nuevos botones de guardado y cierre */}
+
+				<DialogActions>
+					<Button
+						onClick={handleSubmit}
+						disabled={!agreeterm || name.trim().length < 2}
+						color='secondary'
+						type='submit'
+						aria-label='save'
+						sx={buttonSx}
+					>
+						Submit
+					</Button>
+					<Button onClick={closepopup}>Cancel</Button>
+				</DialogActions>
 			</Dialog>
 		</div>
 	)

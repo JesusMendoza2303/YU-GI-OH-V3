@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { cardsSlice } from './slices/cardsSlice'
-import { raceSlice } from './slices/raceSlice'
-import { attributeSlice } from './slices/atrributeSlice'
+import { cardsSlice } from './slices/cards/cardsSlice'
+import { raceSlice } from './slices/races/raceSlice'
+import { attributeSlice } from './slices/attributes/atrributeSlice'
 
 // import cardsSlice from './slices/cardsSlice'
 

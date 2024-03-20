@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Router } from './routhes/Router'
+import { Router } from './routes/Router'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 import './styles/styles.css'

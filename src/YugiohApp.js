@@ -3,35 +3,48 @@
 import React, { useEffect, useState } from 'react'
 import { Navbar } from './components/Navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsByNameLocal2, reinicio } from './store/slices/thunks'
-import { CardGrid } from './store/slices/helpers/CardGrid'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
+import {
+	getcardsByNameLocal2,
+	reinicio,
+} from './store/slices/cards/CardsAccions'
+import { CardGrid } from './components/CardGrid/CardGrid'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { Typography } from '@mui/material'
+import { CircularProgress, Pagination, Typography } from '@mui/material'
 import { useTranslation, Trans, i18n } from 'react-i18next'
-
-
-const lngs = {
-	en: { nativeName: 'English' },
-	es: { nativeName: 'Spanish' },
-}
 
 export const YugiohApp = () => {
 	const { t, i18n } = useTranslation()
 
 	const dispatch = useDispatch()
 	const [search, setsearch] = useState('')
-	const { cards = [], isLoading, msgError } = useSelector(state => state.cards)
+	const {
+		cards = [],
+		isLoading,
+		msgError,
+		tarjeta,
+		count,
+	} = useSelector(state => state.cards)
+
+	const pageSize = 12
+
+	const handleChange = (event, page) => {
+		const from = (page - 1) * pageSize
+		const to = (page - 1) * pageSize + pageSize
+		setPagination({ ...pagination, from, to })
+	}
+
+	const [pagination, setPagination] = useState({
+		from: 0,
+		to: pageSize,
+	})
 
 	useEffect(() => {
-		dispatch(getcardsByNameLocal2(search))
+		dispatch(getcardsByNameLocal2(search, pagination))
 		return () => {
 			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
 		}
-	}, [])
+	}, [pagination.from, pagination.to])
 
 	const handleInputChange = e => {
 		setsearch(e.target.value)
@@ -41,28 +54,13 @@ export const YugiohApp = () => {
 		e.preventDefault()
 
 		if (search.trim()) {
-			dispatch(getcardsByNameLocal2(search))
+			dispatch(getcardsByNameLocal2(search, pagination))
 		}
 	}
-
-	console.log(search)
 
 	return (
 		<div className='general'>
 			<Navbar />
-
-			<div>
-				{Object.keys(lngs).map(lng => (
-					<Button
-						type='submit'
-						key={lng}
-						onClick={() => i18n.changeLanguage(lng)}
-						disabled={i18n.resolvedLanguage === lng}
-					>
-						{lngs[lng].nativeName}
-					</Button>
-				))}
-			</div>
 
 			<Typography
 				justifyContent={'center'}
@@ -79,7 +77,6 @@ export const YugiohApp = () => {
 				}}
 			>
 				<Trans i18nKey='which'>WHICH CARD DO YOU WANT TO SEARCH?</Trans>
-
 			</Typography>
 
 			<div>
@@ -110,9 +107,27 @@ export const YugiohApp = () => {
 					/>
 				</Box>
 
-				<CardGrid />
+				{/* circular progress */}
+
+				{isLoading ? (
+					<Box sx={{ display: 'flex' }} justifyContent='center'>
+						<CircularProgress />
+					</Box>
+				) : (
+					<CardGrid />
+				)}
+				<Box
+					className='pagination'
+					spacing={2}
+					sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+				>
+					<Pagination
+						color='warning'
+						count={Math.ceil(count / pageSize)}
+						onChange={handleChange}
+					/>
+				</Box>
 			</div>
 		</div>
-		// </div>
 	)
 }

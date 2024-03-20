@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-sequences */
 /* eslint-disable camelcase */
@@ -5,7 +6,11 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { createCard, getcardsLocal, reinicio } from '../../store/slices/thunks'
+import {
+	createCard,
+	getcardsGrid,
+	reinicio,
+} from '../../store/slices/cards/CardsAccions'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
 import {
@@ -27,6 +32,7 @@ import {
 	Menu,
 	Autocomplete,
 	createFilterOptions,
+	DialogActions,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -35,8 +41,14 @@ import Fab from '@mui/material/Fab'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import { green } from '@mui/material/colors'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
-import axios from 'axios'
+import {
+	DataGrid,
+	GridToolbar,
+	GridRowModes,
+	GridToolbarContainer,
+	GridActionsCellItem,
+	GridRowEditStopReasons,
+} from '@mui/x-data-grid'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
@@ -44,36 +56,33 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import { DateField, Label, DateInput, DateSegment } from 'react-aria-components'
-import { getRaces } from '../../store/slices/RacesThunks'
-import { getAttributes } from '../../store/slices/AttributesThunk'
+import { getRaces } from '../../store/slices/races/RacesAccions'
+import { getAttributes } from '../../store/slices/attributes/AttributesAccions'
+import { useTranslation, Trans, i18n } from 'react-i18next'
+import AddIcon from '@mui/icons-material/Add'
+import CancelIcon from '@mui/icons-material/Cancel'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import { NewCardAccions } from './NewCardAccions/NewCardAccions'
+import allHandles from './handles/handle'
+import Draggable from 'react-draggable'
 
 const filter = createFilterOptions()
 
 export const NewCardScreen = () => {
+	const { t, i18n } = useTranslation()
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
 	const { races = [] } = useSelector(state => state.races)
-	console.log('🚀 ~ NewCardScreen ~ races:', races)
 	const { attributes = [] } = useSelector(state => state.attributes)
-	console.log('🚀 ~ NewCardScreen ~ attributes:', attributes)
-
-	const [rowId, setRowId] = useState(null)
-
+	const [rowId, setRowId] = useState(0)
 	const dispatch = useDispatch()
 	const { cards = [], isLoading } = useSelector(state => state.cards)
-
-	const navigate = useNavigate()
-
 	const [id] = useState(0)
 	const [open, openchange] = useState(false)
-	const [agreeterm, agreetermchange] = useState(true)
+	const [agreeterm, agreetermchange] = useState(false)
 	const [card_images, setCard_images] = useState('')
-	const [edit, setedit] = useState(false)
-	const [remove, setremove] = useState(false)
-	const [title, settitle] = useState('create a card')
-
+	const [openSnack, setOpenSnack] = useState(true)
 	const [values, setValues] = useState({
 		name: '',
 		desc: '',
@@ -87,53 +96,7 @@ export const NewCardScreen = () => {
 		lastdate: '',
 	})
 
-	// esto es el apartado visual del boton de carga
-
-	const buttonSx = {
-		...(success && {
-			bgcolor: green[500],
-			'&:hover': {
-				bgcolor: green[700],
-			},
-		}),
-	}
-
-	// esto es para el nuevo menu
-
-	const [anchorEl, setAnchorEl] = React.useState(null)
-	const openMenu = Boolean(anchorEl)
-	const handleClick = event => {
-		setAnchorEl(event.currentTarget)
-	}
-	const handleClose = () => {
-		console.log('cerrado')
-		setAnchorEl(null)
-	}
-	// const handleView = (params) => {
-	// 	useEffect(() => {
-	// 		console.log(params.row.id)
-	// 	}, [])
-
-	// 	// navigate(`/${params.row.id}`)
-	// 	setAnchorEl(null);
-	// }
-	// //
-
-	React.useEffect(() => {
-		return () => {
-			clearTimeout(timer.current)
-		}
-	}, [])
-
-	const handleChange = e => {
-		e.preventDefault()
-		const { value, name } = e.target
-		console.log('🚀 ~ handleChange ~ e.target:', e.target)
-		setValues(preValues => ({
-			...preValues,
-			[name]: value,
-		}))
-	}
+	// llamada de la informacion de las razas
 
 	useEffect(() => {
 		dispatch(getRaces())
@@ -142,6 +105,8 @@ export const NewCardScreen = () => {
 		}
 	}, [])
 
+	// llamada de la informacion de los atributos
+
 	useEffect(() => {
 		dispatch(getAttributes())
 		return () => {
@@ -149,29 +114,166 @@ export const NewCardScreen = () => {
 		}
 	}, [])
 
+	// llamada de la informacion de las cartas
+
 	useEffect(() => {
-		dispatch(getcardsLocal())
+		dispatch(getcardsGrid())
 		return () => {
 			dispatch(reinicio())
 		}
 	}, [])
 
-	const addCard = () => {
-		setedit(false)
-		openpopup()
+	// manejar el cambio de los values
+
+	const handleChange = e => {
+		e.preventDefault()
+		const { value, name } = e.target
+
+		setValues(preValues => ({
+			...preValues,
+			[name]: value,
+		}))
 	}
+
+	const handleChangeSelection = (field, value) => {
+		const { name } = value
+		setValues(preValues => ({
+			...preValues,
+			[field]: name,
+		}))
+	}
+
+	// apertura y cierre del formulario
 
 	const closepopup = () => {
 		openchange(false)
 	}
+
 	const openpopup = () => {
 		openchange(true)
 		clearstate()
 	}
 
+	const hanldesnackclose = () => {
+		setOpenSnack(false)
+	}
+
+	const columns = useMemo(() => [
+		{
+			field: 'id',
+			headerName: 'ID',
+			width: 90,
+		},
+		{
+			field: 'card_images',
+			headerName: 'image',
+			width: 90,
+			renderCell: ({ row }) => <Avatar src={row.card_images[0]?.image_url} />,
+			sortable: false,
+			filterable: false,
+		},
+		{
+			field: 'name',
+			headerName: 'name',
+			width: 200,
+			editable: true,
+		},
+		{
+			field: 'type',
+			headerName: 'type',
+			type: 'singleSelect',
+			width: 130,
+			valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
+			editable: true,
+		},
+		{
+			field: 'desc',
+			headerName: 'desc',
+			width: 400,
+			editable: true,
+		},
+		{
+			field: 'level',
+			headerName: 'level',
+			type: 'number',
+			width: 50,
+			editable: true,
+		},
+		{
+			field: 'firstdate',
+			headerName: 'creation date',
+			type: 'Date',
+			width: 110,
+			editable: true,
+		},
+		{
+			field: 'lastdate',
+			headerName: 'first appearance in anime',
+			type: 'Date',
+			width: 130,
+			editable: true,
+		},
+		{
+			field: 'actions',
+			type: 'actions',
+			headerName: 'Actions',
+			width: 300,
+			cellClassName: 'actions',
+			renderCell: (params, rowId) => (
+				<NewCardAccions {...{ params, rowId, values }} />
+			),
+
+			filterable: false,
+		},
+	])
+
+	function PaperComponent(props) {
+		return (
+			<Draggable
+				handle='#draggable-dialog-title'
+				cancel={'[class*="MuiDialogContent-root"]'}
+			>
+				<Paper {...props} />
+			</Draggable>
+		)
+	}
+
+	// ejemplo handles
+
+	const { handleConsoleCustom, handleConsole, clearstate } = allHandles(
+		values,
+		setValues,
+		setCard_images,
+		loading,
+		setSuccess,
+		setLoading,
+		timer,
+		card_images,
+		id,
+		createCard,
+		dispatch,
+		getcardsGrid,
+		closepopup,
+	)
+
+	useEffect(() => {
+		clearstate()
+		return () => {
+			clearTimeout(timer.current)
+		}
+	}, [])
+
+	// useEffect(() => {
+	// 	handlesubmit ()
+	// 	return () => {
+	// 		clearTimeout(timer.current)
+	// 	}
+	// }, [])
+
 	const handlesubmit = e => {
-		// vaina que carga
-		e.preventDefault()
+		console.log('se ha enviado')
+		// boton de carga
+		e?.preventDefault()
 		if (!loading) {
 			setSuccess(false)
 			setLoading(true)
@@ -216,173 +318,55 @@ export const NewCardScreen = () => {
 		naipe.card_images = imagesArray
 
 		dispatch(createCard(naipe)).then(res => {
-			dispatch(getcardsLocal())
+			dispatch(getcardsGrid())
 
 			closepopup()
 		})
 	}
 
-	const columns = useMemo(() => [
-		{
-			field: 'id',
-			headerName: 'ID',
-			width: 90,
-		},
-		{
-			field: 'card_images',
-			headerName: 'image',
-			width: 90,
-			renderCell: params => (
-				<Avatar src={params.row.card_images[0]?.image_url} />
-			),
-			sortable: false,
-			filterable: false,
-		},
-		{
-			field: 'name',
-			headerName: 'name',
-			width: 300,
-			editable: true,
-		},
-		{
-			field: 'type',
-			headerName: 'type',
-			type: 'singleSelect',
-			width: 130,
-			valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
-			editable: true,
-		},
-		{
-			field: 'desc',
-			headerName: 'desc',
-			width: 500,
-			editable: true,
-		},
-		{
-			field: 'atk',
-			headerName: 'atk',
-			type: 'number',
-			width: 110,
-		},
-		{
-			field: 'def',
-			headerName: 'def',
-			type: 'number',
-			width: 110,
-			editable: true,
-		},
-		{
-			field: 'firstdate',
-			headerName: 'creation date',
-			type: 'Date',
-			width: 110,
-			editable: true,
-		},
-		{
-			field: 'lastdate',
-			headerName: 'first appearance in anime',
-			type: 'Date',
-			width: 130,
-			editable: true,
-		},
-		{
-			field: 'actions',
-			headerName: 'actions',
-			sortable: false,
-			width: 160,
-			cellClassName: 'actions',
-			renderCell: params => (
-				<div>
-					<Button
-						id='basic-button'
-						aria-controls={openMenu ? 'basic-menu' : undefined}
-						aria-haspopup='true'
-						aria-expanded={openMenu ? 'true' : undefined}
-						onClick={handleClick}
-					>
-						<ArrowDropDownIcon />
-					</Button>
-					<Menu
-						id='basic-menu'
-						anchorEl={anchorEl}
-						open={openMenu}
-						onClose={handleClose}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button',
-						}}
-					>
-						<MenuItem onClick={handleClose}>
-							<EditIcon
-								color='warning'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Edit
-						</MenuItem>
-						<MenuItem onClick={handleClose}>
-							<DeleteIcon
-								color='error'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Delete
-						</MenuItem>
-						<Button onClick={handleClose}>
-							<RemoveRedEyeIcon
-								color='warning'
-								sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-							/>
-							Read
-						</Button>
-					</Menu>
-				</div>
-			),
-
-			filterable: false,
-		},
-	])
-
-	const clearstate = () => {
-		setCard_images('')
-		setValues(preValues => ({
-			...preValues,
-			name: '',
-			desc: '',
-			atk: 0,
-			def: 0,
-			level: 1,
-			race: '',
-			type: '',
-			firstdate: '',
-			lastdate: '',
-		}))
-	}
+	console.log('row id', rowId)
 
 	return (
 		<div>
 			{/* validar si esta cargando o no */}
 			<Navbar />
+
 			{isLoading ? (
 				<Box sx={{ display: 'flex' }} className='circularProgress'>
 					<CircularProgress />
 				</Box>
 			) : (
 				<Box>
-					<Snackbar open={true} autoHideDuration={1000}>
-						<Alert severity='success'>Cards Loaded Succesfully.</Alert>
+					<Snackbar
+						open={openSnack}
+						autoHideDuration={3000}
+						onClose={hanldesnackclose}
+					>
+						<Alert severity='success' onClose={hanldesnackclose}>
+							<Trans i18nKey='cartasCargadas'>Cards Loaded Succesfully</Trans>
+						</Alert>
 					</Snackbar>
 				</Box>
 			)}
 
 			{/* boton de creacion */}
 
-			<Box sx={{ margin: '1%' }}>
+			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
 					<Button
 						className='createboton'
-						onClick={addCard}
+						onClick={openpopup}
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
 					>
-						Create a Card
+						<Typography
+							sx={{
+								fontFamily: 'Nunito Sans',
+								fontWeight: 600,
+							}}
+						>
+							<Trans i18nKey='crearCarta'>Create a Card</Trans>
+						</Typography>
 					</Button>
 				</div>
 
@@ -395,7 +379,6 @@ export const NewCardScreen = () => {
 					getRowId={row => {
 						return row.id
 					}}
-					onCellEditCommit={params => setRowId(params.row.id)}
 					initialState={{
 						pagination: {
 							paginationModel: {
@@ -404,25 +387,26 @@ export const NewCardScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
-					disableRowSelectionOnClick
+					onCellEditStart={params => setRowId(params.id)}
+					// onCellEditStop={params => setRowId(params.id)}
 				/>
 			</Box>
 
 			{/* formulario */}
 
-			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
-				<DialogTitle>
+			<Dialog
+				open={open}
+				onClose={closepopup}
+				fullWidth
+				maxWidth='sm'
+				aria-labelledby='draggable-dialog-title'
+				PaperComponent={PaperComponent}
+			>
+				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
 					{<AddReactionIcon />}
-					<span>Create a new card!</span>
-
-					<Button
-						color='secondary'
-						// ariant='contained'
-						style={{ left: 300 }}
-						onClick={closepopup}
-					>
-						<CloseIcon />
-					</Button>
+					<span>
+						<Trans i18nKey='crearFormCarta'>Create a new card!</Trans>
+					</span>
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
@@ -487,7 +471,7 @@ export const NewCardScreen = () => {
 
 							<RadioGroup required>
 								<Typography variant='h6' textAlign={'center'}>
-									What type of card is it?
+									<Trans i18nKey='TypeForm'>What type of card is it?</Trans>
 								</Typography>
 
 								<FormControlLabel
@@ -527,15 +511,15 @@ export const NewCardScreen = () => {
 								required
 								value={values.race}
 								name='race'
-								onChange={e => {
-									handleChange(e)
+								onChange={(e, value) => {
+									console.log('🚀 ~ CardsByID ~ value:', value)
+									handleChangeSelection('race', value)
 								}}
 								filterOptions={(options, params) => {
 									const filtered = filter(options, params)
 
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-
 									// Suggest the creation of a new value
 									// const isExisting = options.some((option) => inputValue === option.title);
 									// if (inputValue !== '' && !isExisting) {
@@ -576,9 +560,9 @@ export const NewCardScreen = () => {
 										variant='outlined'
 										fullWidth
 										id='fullWidth'
-										onChange={e => {
-											handleChange(e)
-										}}
+										// onChange={e => {
+										// 	handleChange(e)
+										// }}
 									/>
 								)}
 							/>
@@ -592,15 +576,14 @@ export const NewCardScreen = () => {
 								}
 								value={values.attribute}
 								name='attribute'
-								onChange={e => {
-									handleChange(e)
+								onChange={(e, value) => {
+									handleChangeSelection('attribute', value)
 								}}
 								filterOptions={(options, params) => {
 									const filtered = filter(options, params)
 
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-
 									// Suggest the creation of a new value
 									// const isExisting = options.some((option) => inputValue === option.title);
 									// if (inputValue !== '' && !isExisting) {
@@ -685,7 +668,7 @@ export const NewCardScreen = () => {
 							{/* inputs de fecha */}
 
 							<Typography variant='h6' textAlign={'center'}>
-								Creation date
+								<Trans i18nKey='dateForm1'>Creation date</Trans>
 							</Typography>
 
 							{/* primera fecha */}
@@ -707,7 +690,7 @@ export const NewCardScreen = () => {
 							></TextField>
 
 							<Typography variant='h6' textAlign={'center'}>
-								First appearance in anime
+								<Trans i18nKey='dateForm2'>First appearance in anime</Trans>
 							</Typography>
 
 							{/* ultima fecha */}
@@ -737,7 +720,7 @@ export const NewCardScreen = () => {
 
 							{/* boton de guardado */}
 
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
+							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
 								<Box sx={{ m: 1, position: 'relative' }}>
 									<Fab
 										aria-label='save'
@@ -774,10 +757,37 @@ export const NewCardScreen = () => {
 										/>
 									)}
 								</Box>
-							</Box>
+							</Box> */}
 						</Stack>
 					</form>
 				</DialogContent>
+
+				{/* nuevos botones de guardado y cierre */}
+
+				<DialogActions>
+					<Button
+						onClick={handlesubmit}
+						disabled={
+							!agreeterm ||
+							values.atk < 0 ||
+							values.def < 0 ||
+							values.level < 1 ||
+							values.name.trim().length < 2 ||
+							values.desc.trim().length < 2 ||
+							values.firstdate.trim().length === 0 ||
+							values.lastdate.trim().length === 0 ||
+							values.lastdate < values.firstdate ||
+							values.firstdate > values.lastdate ||
+							values.type.trim().length === 0
+						}
+						color='secondary'
+						type='submit'
+						aria-label='save'
+					>
+						Submit
+					</Button>
+					<Button onClick={closepopup}>Cancel</Button>
+				</DialogActions>
 			</Dialog>
 		</div>
 	)
