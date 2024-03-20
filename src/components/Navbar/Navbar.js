@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import HomeIcon from '@mui/icons-material/Home'
+<<<<<<< HEAD
 import { useTranslation, Trans, i18n } from 'react-i18next'
 import { Avatar, Box, Button, Menu, Stack } from '@mui/material'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -17,6 +18,10 @@ const lngs = {
 	es: { nativeName: 'Spanish' },
 }
 
+=======
+import '@fontsource/roboto/700.css'
+import { Image } from '@mui/icons-material'
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 export const Navbar = () => {
 	const { t, i18n } = useTranslation()
 	// esto es para el menu de idiomas
@@ -33,10 +38,39 @@ export const Navbar = () => {
 	}
 
 	return (
+<<<<<<< HEAD
 		<AppBar position='static' style={{ backgroundColor: '#1D1D1D' }}>
 			<Container>
 				<Toolbar>
 					{/* boton de idiomas */}
+=======
+		
+			<AppBar position='static'  style={{backgroundColor: '#5A2CA3'}}>
+				<Container>
+					<Toolbar>
+						<HomeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+						<MenuItem>
+							<Typography
+								textAlign='center'
+								variant='h6'
+								noWrap
+								component='a'
+								sx={{
+									mr: 2,
+									display: { xs: 'none', md: 'flex' },
+									fontFamily: 'monospace',
+									fontWeight: 700,
+									letterSpacing: '.3rem',
+									color: 'inherit',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbar' to='/'>
+									Yugioh
+								</Link>
+							</Typography>
+						</MenuItem>
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 
 					<Button
 						sx={{
@@ -66,6 +100,7 @@ export const Navbar = () => {
 
 					{/* logo */}
 
+<<<<<<< HEAD
 					<Box>
 						<img
 						src="../../styles/yugioh!.png"
@@ -219,5 +254,18 @@ export const Navbar = () => {
 				</Toolbar>
 			</Container>
 		</AppBar>
+=======
+						<MenuItem>
+							<Typography textAlign='center' className=' bottonMenu'>
+								<Link className='linkNavbar' to={'/new_card'}>
+									Create New Cards
+								</Link>
+							</Typography>
+						</MenuItem>
+					</Toolbar>
+				</Container>
+			</AppBar>
+		
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	)
 }

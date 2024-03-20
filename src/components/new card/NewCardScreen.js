@@ -6,11 +6,15 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useMemo, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
+<<<<<<< HEAD
 import {
 	createCard,
 	getcardsGrid,
 	reinicio,
 } from '../../store/slices/cards/CardsAccions'
+=======
+import { createCard, getcardsLocal, reinicio } from '../../store/slices/thunks'
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
 import {
@@ -41,6 +45,7 @@ import Fab from '@mui/material/Fab'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import { green } from '@mui/material/colors'
+<<<<<<< HEAD
 import {
 	DataGrid,
 	GridToolbar,
@@ -51,6 +56,13 @@ import {
 } from '@mui/x-data-grid'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
+=======
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import axios from 'axios'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import { useNavigate, Link, Outlet } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close';
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -73,9 +85,16 @@ export const NewCardScreen = () => {
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
+<<<<<<< HEAD
 	const { races = [] } = useSelector(state => state.races)
 	const { attributes = [] } = useSelector(state => state.attributes)
 	const [rowId, setRowId] = useState(0)
+=======
+
+	const [rowId, setRowId] = useState(null)
+	console.log('🚀 ~ NewCardScreen ~ rowId:', rowId)
+
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	const dispatch = useDispatch()
 	const { cards = [], isLoading } = useSelector(state => state.cards)
 	const [id] = useState(0)
@@ -96,6 +115,7 @@ export const NewCardScreen = () => {
 		lastdate: '',
 	})
 
+<<<<<<< HEAD
 	// llamada de la informacion de las razas
 
 	useEffect(() => {
@@ -125,6 +145,24 @@ export const NewCardScreen = () => {
 
 	// manejar el cambio de los values
 
+=======
+
+	const buttonSx = {
+		...(success && {
+			bgcolor: green[500],
+			'&:hover': {
+				bgcolor: green[700],
+			},
+		}),
+	}
+
+	React.useEffect(() => {
+		return () => {
+			clearTimeout(timer.current)
+		}
+	}, [])
+
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	const handleChange = e => {
 		e.preventDefault()
 		const { value, name } = e.target
@@ -135,12 +173,26 @@ export const NewCardScreen = () => {
 		}))
 	}
 
+<<<<<<< HEAD
 	const handleChangeSelection = (field, value) => {
 		const { name } = value
 		setValues(preValues => ({
 			...preValues,
 			[field]: name,
 		}))
+=======
+	useEffect(() => {
+		dispatch(getcardsLocal())
+		return () => {
+			dispatch(reinicio())
+
+		}
+	}, [])
+
+	const addCard = () => {
+		setedit(false)
+		openpopup()
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	}
 
 	// apertura y cierre del formulario
@@ -317,6 +369,7 @@ export const NewCardScreen = () => {
 
 		naipe.card_images = imagesArray
 
+<<<<<<< HEAD
 		dispatch(createCard(naipe)).then(res => {
 			dispatch(getcardsGrid())
 
@@ -329,6 +382,118 @@ export const NewCardScreen = () => {
 	return (
 		<div>
 			{/* validar si esta cargando o no */}
+=======
+		axios
+			dispatch(createCard(naipe))
+
+			.then(res => {
+				dispatch(getcardsLocal())
+				{
+					;<Box>
+						<Snackbar open={true} autoHideDuration={1000}>
+							<Alert severity='success'>Card created succesfully.</Alert>
+						</Snackbar>
+					</Box>
+				}
+
+				closepopup()
+			})
+	}
+	const columns = useMemo(
+		() => [
+			{
+				field: 'id',
+				headerName: 'ID',
+				width: 90,
+			},
+			{
+				field: 'card_images',
+				headerName: 'image',
+				width: 90,
+				renderCell: params => (
+					<Avatar src={params.row.card_images[0]?.image_url} />
+				),
+				sortable: false,
+				filterable: false,
+			},
+			{
+				field: 'name',
+				headerName: 'name',
+				width: 300,
+				editable: true,
+			},
+			{
+				field: 'type',
+				headerName: 'type',
+				type: 'singleSelect',
+				width: 130,
+				valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
+				editable: true,
+			},
+			{
+				field: 'desc',
+				headerName: 'desc',
+				width: 500,
+				editable: true,
+			},
+			{
+				field: 'atk',
+				headerName: 'atk',
+				type: 'number',
+				width: 110,
+			},
+			{
+				field: 'def',
+				headerName: 'def',
+				type: 'number',
+				width: 110,
+				editable: true,
+			},
+			{
+				field: 'actions',
+				headerName: ' ',
+				sortable: false,
+				width: 160,
+				cellClassName: 'actions',
+				renderCell: params => (
+					<Box>
+						<Button
+							id='demo-positioned-button'
+							aria-haspopup='true'
+							startIcon={<VisibilityIcon  color='secondary'/>}
+						>
+							<Link to={`/${params.row.id}`} className='viewcard'>
+								view...
+							</Link>
+							<Outlet />
+						</Button>
+					</Box>
+				),
+
+				filterable: false,
+			},
+		],
+		[],
+	)
+
+	const clearstate = () => {
+		setCard_images('')
+		setValues(preValues => ({
+			...preValues,
+			name: '',
+			desc: '',
+			atk: 0,
+			def: 0,
+			level: 1,
+			race: '',
+			type: '',
+		}))
+	}
+
+	return (
+		<div>
+			 {/* validar si esta cargando o no */}
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 			<Navbar />
 
 			{isLoading ? (
@@ -351,11 +516,19 @@ export const NewCardScreen = () => {
 
 			{/* boton de creacion */}
 
+<<<<<<< HEAD
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
 					<Button
 						className='createboton'
 						onClick={openpopup}
+=======
+			<Paper sx={{ margin: '1%' }} >
+				<div style={{ margin: '1%' }}  >
+					<Button 
+					  className='createboton'
+						onClick={addCard}
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 						startIcon={<AddCircleIcon />}
 						variant='cotained'
 					>
@@ -370,7 +543,11 @@ export const NewCardScreen = () => {
 					</Button>
 				</div>
 
+<<<<<<< HEAD
 				{/* Data grid */}
+=======
+					{/* Data grid */}
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 
 				<DataGrid
 					columns={columns}
@@ -387,11 +564,16 @@ export const NewCardScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
+<<<<<<< HEAD
 					onCellEditStart={params => setRowId(params.id)}
 					// onCellEditStop={params => setRowId(params.id)}
+=======
+					disableRowSelectionOnClick
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 				/>
 			</Box>
 
+<<<<<<< HEAD
 			{/* formulario */}
 
 			<Dialog
@@ -407,6 +589,25 @@ export const NewCardScreen = () => {
 					<span>
 						<Trans i18nKey='crearFormCarta'>Create a new card!</Trans>
 					</span>
+=======
+					{/* formulario */}
+
+			<Dialog open={open} onClose={closepopup} fullWidth maxWidth='sm'>
+				<DialogTitle>
+					{<AddReactionIcon />}
+					<span>Create a new card!</span>
+
+					<Button 
+					color='secondary'
+					// ariant='contained'
+					style={{left: 300}}
+					onClick={ closepopup }> 
+						
+						<CloseIcon/>
+
+					</Button>
+
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
@@ -753,11 +954,19 @@ export const NewCardScreen = () => {
 												top: -6,
 												left: -6,
 												zIndex: 1,
+<<<<<<< HEAD
+=======
+												
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 											}}
 										/>
 									)}
 								</Box>
+<<<<<<< HEAD
 							</Box> */}
+=======
+							</Box>
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 						</Stack>
 					</form>
 				</DialogContent>

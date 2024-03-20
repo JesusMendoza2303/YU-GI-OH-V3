@@ -49,6 +49,7 @@ export const TrapScreen = () => {
 
 			{/* circular progress */}
 
+<<<<<<< HEAD
 			{isLoading ? (
 				<Box sx={{ display: 'flex' }} justifyContent='center'>
 					<CircularProgress />
@@ -68,6 +69,30 @@ export const TrapScreen = () => {
 					onChange={handleChange}
 				/>
 			</Box>
+=======
+			<Stack spacing={2} direction='row' justifyContent='center'>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					color='secondary'
+					size='large'
+					disabled={isLoading || page <= 2}
+					onClick={handlePrevPage}
+				>
+					PREV
+				</Button>
+				<Button
+					variant='outlined'
+					className='butonspage'
+					color='secondary'
+					size='large'
+					disabled={isLoading || cards.length < 12}
+					onClick={handleNextpage}
+				>
+					NEXT
+				</Button>
+			</Stack>
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 		</div>
 	)
 }

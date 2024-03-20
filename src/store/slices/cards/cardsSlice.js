@@ -17,8 +17,11 @@ export const cardsSlice = createSlice({
 			state.isLoading = false
 			state.cards = action.payload.cards
 			state.page = action.payload.page
+<<<<<<< HEAD:src/store/slices/cards/cardsSlice.js
 			state.tarjeta = action.payload.tarjeta
 			state.count = action.payload.count
+=======
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8:src/store/slices/cardsSlice.js
 		},
 	},
 })

@@ -40,11 +40,20 @@ export const YugiohApp = () => {
 	})
 
 	useEffect(() => {
+<<<<<<< HEAD
 		dispatch(getcardsByNameLocal2(search, pagination))
 		return () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
+=======
+		dispatch(getcardsByNameLocal2(search))
+		return () => {
+			dispatch(reinicio())
+			console.log('esta paja se reinicio en teoria')
+		}
+	}, [])
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 
 	const handleInputChange = e => {
 		setsearch(e.target.value)
@@ -58,6 +67,12 @@ export const YugiohApp = () => {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+
+	console.log(search)
+
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	return (
 		<div className='general'>
 			<Navbar />
@@ -83,6 +98,12 @@ export const YugiohApp = () => {
 				<Box
 					onSubmit={handleSubmit}
 					component='form'
+					style={{
+						backgroundColor:'#2D2A36',
+						color:'white',
+						
+				
+				}}
 					sx={{
 						padding: '7px 10px 7px 10px',
 						margin: 3,
@@ -101,11 +122,18 @@ export const YugiohApp = () => {
 						label='Search a Card'
 						variant='standard'
 						margin='normal'
+						style={{
+							backgroundColor:'#2D2A36',
+							color:'white'
+					
+					}}
+						
 						onChange={e => {
 							setsearch(e.target.value)
 						}}
 					/>
 				</Box>
+<<<<<<< HEAD
 
 				{/* circular progress */}
 
@@ -128,6 +156,13 @@ export const YugiohApp = () => {
 					/>
 				</Box>
 			</div>
+=======
+				
+				<CardGrid />
+			</div>
+
+			
+>>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 		</div>
 	)
 }
