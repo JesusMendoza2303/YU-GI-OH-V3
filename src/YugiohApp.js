@@ -40,20 +40,11 @@ export const YugiohApp = () => {
 	})
 
 	useEffect(() => {
-<<<<<<< HEAD
 		dispatch(getcardsByNameLocal2(search, pagination))
 		return () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
-=======
-		dispatch(getcardsByNameLocal2(search))
-		return () => {
-			dispatch(reinicio())
-			console.log('esta paja se reinicio en teoria')
-		}
-	}, [])
->>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 
 	const handleInputChange = e => {
 		setsearch(e.target.value)
@@ -67,12 +58,6 @@ export const YugiohApp = () => {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-
-	console.log(search)
-
->>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 	return (
 		<div className='general'>
 			<Navbar />
@@ -133,7 +118,6 @@ export const YugiohApp = () => {
 						}}
 					/>
 				</Box>
-<<<<<<< HEAD
 
 				{/* circular progress */}
 
@@ -156,13 +140,6 @@ export const YugiohApp = () => {
 					/>
 				</Box>
 			</div>
-=======
-				
-				<CardGrid />
-			</div>
-
-			
->>>>>>> 760b6654d8c56877f9697261eaa9b5620de1d7c8
 		</div>
 	)
 }
