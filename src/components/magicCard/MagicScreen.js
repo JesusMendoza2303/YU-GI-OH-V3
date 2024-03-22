@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 
-import { Box, CircularProgress, Pagination } from '@mui/material'
+import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
+
+import { Index } from '../CardGrid/Index'
 
 export const MagicScreen = () => {
 	const dispatch = useDispatch()
@@ -23,6 +25,7 @@ export const MagicScreen = () => {
 	} = useSelector(state => state.cards)
 	const type = 'Spell Card'
 	const pageSize = 12
+	const [check, setCheck] = useState(true)
 
 	// esto es para la paginacion
 
@@ -47,28 +50,7 @@ export const MagicScreen = () => {
 
 	return (
 		<div className='general'>
-			<Navbar />
-			{/* circular progress */}
-
-			{isLoading ? (
-				<Box sx={{ display: 'flex' }} justifyContent='center'>
-					<CircularProgress />
-				</Box>
-			) : (
-				<CardGrid />
-			)}
-
-			<Box
-				className='pagination'
-				spacing={2}
-				sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-			>
-				<Pagination
-					color='warning'
-					count={Math.ceil(count / pageSize)}
-					onChange={handleChange}
-				/>
-			</Box>
+			<Index data={{ check, count, pageSize, handleChange }} />
 		</div>
 	)
 }

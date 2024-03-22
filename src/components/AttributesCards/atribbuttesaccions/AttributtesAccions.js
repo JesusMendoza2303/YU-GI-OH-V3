@@ -7,7 +7,7 @@ import {
 	Save,
 	Visibility,
 } from '@mui/icons-material'
-import { Box, CircularProgress, Fab, Tooltip } from '@mui/material'
+import { Box, CircularProgress, Fab, Tooltip, Grow } from '@mui/material'
 import { green } from '@mui/material/colors'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -30,7 +30,7 @@ export const AttributtesAccions = (params, rowId, setRowId) => {
 
 	const [loading, setLoading] = useState(false)
 	const [success, setSuccess] = useState(false)
-	const navigate = useNavigate()
+	const [checked, setChecked] = useState(true)
 
 	const handledelete = () => {
 		const { id } = params.params
@@ -71,65 +71,76 @@ export const AttributtesAccions = (params, rowId, setRowId) => {
 	return (
 		<div>
 			{/* boton de edicion */}
-
-			<Fab
-				color='info'
-				sx={{
-					width: 40,
-					height: 40,
-					margin: 1,
-				}}
+			<Grow
+				in={checked}
+				style={{ transformOrigin: '0 0 0' }}
+				{...(checked ? { timeout: 1000 } : {})}
 			>
-				{success ? (
-					<Fab
-						color='primary'
-						sx={{
-							width: 40,
-							height: 40,
-							bgcolor: green[500],
-							'&:hover': { bgcolor: green[700] },
-						}}
-					>
-						<Check />
-					</Fab>
-				) : (
-					<div
-						// disabled={params.params.id !== rowId || loading}
+				<Fab
+					color='info'
+					sx={{
+						width: 40,
+						height: 40,
+						margin: 1,
+					}}
+				>
+					{success ? (
+						<Fab
+							color='primary'
+							sx={{
+								width: 40,
+								height: 40,
+								bgcolor: green[500],
+								'&:hover': { bgcolor: green[700] },
+							}}
+						>
+							<Check />
+						</Fab>
+					) : (
+						<div
+							// disabled={params.params.id !== rowId || loading}
 
-						onClick={handleSubmit}
-					>
-						<Save />
-					</div>
-				)}
+							onClick={handleSubmit}
+						>
+							<Save />
+						</div>
+					)}
 
-				{loading && (
-					<CircularProgress
-						size={52}
-						sx={{
-							color: green[500],
-							position: 'absolute',
-							top: -6,
-							left: -6,
-							zIndex: 1,
-						}}
-					/>
-				)}
-			</Fab>
+					{loading && (
+						<CircularProgress
+							size={52}
+							sx={{
+								color: green[500],
+								position: 'absolute',
+								top: -6,
+								left: -6,
+								zIndex: 1,
+							}}
+						/>
+					)}
+				</Fab>
+			</Grow>
 
 			{/* boton de eliminacion */}
 
-			<Fab
-				color='error'
-				sx={{
-					width: 40,
-					height: 40,
-					margin: 1,
-				}}
-				// disabled={params.params.id !== rowId || loading}
-				onClick={handledelete}
+			<Grow
+				in={checked}
+				style={{ transformOrigin: '0 0 0' }}
+				{...(checked ? { timeout: 1500 } : {})}
 			>
-				<Delete />
-			</Fab>
+				<Fab
+					color='error'
+					sx={{
+						width: 40,
+						height: 40,
+						margin: 1,
+					}}
+					// disabled={params.params.id !== rowId || loading}
+					onClick={handledelete}
+				>
+					<Delete />
+				</Fab>
+			</Grow>
 		</div>
 	)
 }

@@ -79,14 +79,15 @@ body {
 	color: white;
 	text-decoration: none;
 }
+
+.linkNavbarMenus {
+	color: 'black';
+	text-decoration: none;
+}
 .principalTitle {
 	text-align: center;
 	padding: 20px 23px 20px 23px;
 	color: black;
-}
-
-.general {
-	/* background-color: white; */
 }
 
 .viewcard {
@@ -95,11 +96,6 @@ body {
 }
 .createboton {
 	left: 1600px;
+
 	bottom: -10px;
 }
-.createboton{
-	left: 1650px;
-	bottom: -10px
-
-}
-

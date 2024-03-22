@@ -15,6 +15,7 @@ import {
 	DialogTitle,
 	Fab,
 	FormControlLabel,
+	Grow,
 	Menu,
 	MenuItem,
 	Paper,
@@ -70,8 +71,7 @@ export const AttributesScreen = () => {
 	const [agreeterm, agreetermchange] = useState(false)
 	const [open2, openchange] = useState(false)
 	const [name, setName] = useState('')
-
-	const navigate = useNavigate()
+	const [checked, setChecked] = useState(true)
 
 	// manejar el boton de borrado
 
@@ -170,21 +170,27 @@ export const AttributesScreen = () => {
 
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
-					<Button
-						className='createboton'
-						onClick={addAttribute}
-						startIcon={<AddCircleIcon />}
-						variant='cotained'
+					<Grow
+						in={checked}
+						style={{ transformOrigin: '0 0 0' }}
+						{...(checked ? { timeout: 1000 } : {})}
 					>
-						<Typography
-							sx={{
-								fontFamily: 'Nunito Sans',
-								fontWeight: 600,
-							}}
+						<Button
+							className='createboton'
+							onClick={addAttribute}
+							startIcon={<AddCircleIcon />}
+							variant='cotained'
 						>
-							<Trans i18nKey='crateAttribute'>Create a attribute</Trans>
-						</Typography>
-					</Button>
+							<Typography
+								sx={{
+									fontFamily: 'Nunito Sans',
+									fontWeight: 600,
+								}}
+							>
+								<Trans i18nKey='crateAttribute'>Create a attribute</Trans>
+							</Typography>
+						</Button>
+					</Grow>
 				</div>
 
 				{/* datagrid */}

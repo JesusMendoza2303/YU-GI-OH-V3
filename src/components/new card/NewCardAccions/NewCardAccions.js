@@ -8,7 +8,7 @@ import {
 	Save,
 	Visibility,
 } from '@mui/icons-material'
-import { Box, CircularProgress, Fab, Tooltip } from '@mui/material'
+import { Box, CircularProgress, Fab, Grow, Tooltip } from '@mui/material'
 import { green } from '@mui/material/colors'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -22,18 +22,22 @@ import {
 } from '../../../store/slices/cards/CardsAccions'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
-export const NewCardAccions = (params, rowId, values) => {
-	console.log('params id:', params.params.id, 'rowid', rowId, 'values', values)
+export const NewCardAccions = data => {
+	const params = data.data.params
+
+	const rowId = data.data.rowId
 
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
 	const [success, setSuccess] = useState(false)
+	const [checked, setChecked] = useState(true)
 	const navigate = useNavigate()
 
 	const handleSubmit = () => {
 		setLoading(true)
 
-		const { id } = params.params
+		const id = params.id
+		console.log('🚀 ~ handleSubmit ~ id:', id)
 		const idrow = id
 		console.log('🚀 ~ handleSubmit ~ idrow:', idrow)
 
@@ -48,7 +52,7 @@ export const NewCardAccions = (params, rowId, values) => {
 			race,
 			level,
 			card_images,
-		} = params.params.row
+		} = params.row
 		console.log(card_images)
 
 		const naipe = {
@@ -64,10 +68,6 @@ export const NewCardAccions = (params, rowId, values) => {
 			card_images,
 		}
 
-		console.log('esto es params', params.params)
-		console.log('esto es rowId', rowId)
-		console.log('esto es naipe', naipe)
-
 		dispatch(editCardGrid(idrow, naipe))
 
 		setLoading(false)
@@ -76,8 +76,10 @@ export const NewCardAccions = (params, rowId, values) => {
 	}
 
 	const handledelete = () => {
-		const { id } = params.params
+		const id = params.id
+		console.log('🚀 ~ handledelete ~ id:', id)
 		const cardsid = id
+		console.log('🚀 ~ handledelete ~ cardsid:', cardsid)
 		if (confirm('are you sure to delete this card?') === true) {
 			dispatch(remove(cardsid)).then(res => {
 				dispatch(getcardsGrid())
@@ -86,9 +88,8 @@ export const NewCardAccions = (params, rowId, values) => {
 	}
 
 	const handleNavigate = () => {
-		console.log('rowid:', rowId)
-		console.log('navegar', params.params.id)
-		navigate(`/${params.params.id}`)
+		console.log('navegar', params.id)
+		navigate(`/${params.id}`)
 		dispatch(reinicio())
 	}
 
@@ -97,34 +98,45 @@ export const NewCardAccions = (params, rowId, values) => {
 			{/* boton de edicion */}
 
 			{success ? (
-				<Fab
-					color='primary'
-					sx={{
-						width: 40,
-						height: 40,
-						bgcolor: green[500],
-						'&:hover': { bgcolor: green[700] },
-					}}
+				<Grow
+					in={checked}
+					style={{ transformOrigin: '0 0 0' }}
+					{...(checked ? { timeout: 1000 } : {})}
 				>
-					<Check />
-				</Fab>
+					<Fab
+						color='primary'
+						sx={{
+							width: 40,
+							height: 40,
+							bgcolor: green[500],
+							'&:hover': { bgcolor: green[700] },
+						}}
+					>
+						<Check />
+					</Fab>
+				</Grow>
 			) : (
-				<Fab
-					color='info'
-					sx={{
-						width: 40,
-						height: 40,
-						margin: 1,
-					}}
-					// disabled={ loading || params.params.id !== rowId }
-
-					onClick={
-						// console.log ('this is paramsid:', params.params.id, 'this is rowid:', rowId)
-						handleSubmit
-					}
+				<Grow
+					in={checked}
+					style={{ transformOrigin: '0 0 0' }}
+					{...(checked ? { timeout: 1000 } : {})}
 				>
-					<Save />
-				</Fab>
+					<Fab
+						color='info'
+						sx={{
+							width: 40,
+							height: 40,
+							margin: 1,
+						}}
+						disabled={loading || params.id !== rowId}
+						onClick={
+							// console.log ('this is paramsid:', params.params.id, 'this is rowid:', rowId)
+							handleSubmit
+						}
+					>
+						<Save />
+					</Fab>
+				</Grow>
 			)}
 
 			{loading && (
@@ -142,34 +154,42 @@ export const NewCardAccions = (params, rowId, values) => {
 
 			{/* boton de view */}
 
-			<Fab
-				color='warning'
-				sx={{
-					width: 40,
-					height: 40,
-					margin: 1,
-				}}
-				onClick={handleNavigate}
+			<Grow
+				in={checked}
+				style={{ transformOrigin: '0 0 0' }}
+				{...(checked ? { timeout: 1500 } : {})}
 			>
-				{/* <Link to={`/${params.params.id}`} className='linkCards'> */}
-				<Visibility />
-				{/* </Link> */}
-			</Fab>
+				<Fab
+					color='warning'
+					sx={{
+						width: 40,
+						height: 40,
+						margin: 1,
+					}}
+					onClick={handleNavigate}
+				>
+					<Visibility />
+				</Fab>
+			</Grow>
 
 			{/* boton de eliminacion */}
-
-			<Fab
-				color='error'
-				sx={{
-					width: 40,
-					height: 40,
-					margin: 1,
-				}}
-				// disabled={params.params.id !== rowId || loading}
-				onClick={handledelete}
+			<Grow
+				in={checked}
+				style={{ transformOrigin: '0 0 0' }}
+				{...(checked ? { timeout: 2000 } : {})}
 			>
-				<Delete />
-			</Fab>
+				<Fab
+					color='error'
+					sx={{
+						width: 40,
+						height: 40,
+						margin: 1,
+					}}
+					onClick={handledelete}
+				>
+					<Delete />
+				</Fab>
+			</Grow>
 
 			<Outlet />
 		</div>

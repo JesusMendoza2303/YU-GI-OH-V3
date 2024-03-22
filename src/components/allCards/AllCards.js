@@ -9,6 +9,7 @@ import {
 	CardContent,
 	CardMedia,
 	CircularProgress,
+	Fade,
 	Snackbar,
 	TextField,
 	Typography,
@@ -16,7 +17,11 @@ import {
 
 import { Link, Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getcardsLocal, reinicio, getScrollingCardsLocal } from '../../store/slices/cards/CardsAccions'
+import {
+	getcardsLocal,
+	reinicio,
+	getScrollingCardsLocal,
+} from '../../store/slices/cards/CardsAccions'
 import { Trans, useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
@@ -32,6 +37,7 @@ export const AllCards = () => {
 	} = useSelector(state => state.cards)
 	const [hasMore, setHasMore] = useState(true)
 	const [openSnack, setOpenSnack] = useState(true)
+	const [checked, setChecked] = React.useState(true)
 
 	const { t, i18n } = useTranslation()
 
@@ -51,7 +57,7 @@ export const AllCards = () => {
 
 	const fetchMoreData = () => {
 		setTimeout(() => {
-			dispatch(getcardsLocal(page + 1, cards))
+			dispatch(getScrollingCardsLocal(page + 1, cards))
 		}, 1000)
 	}
 	return (
@@ -84,84 +90,77 @@ export const AllCards = () => {
 					</Box>
 				) : (
 					// <CardGridSearch/>
-					<InfiniteScroll
-						dataLength={cards.length} // This is important field to render the next data
-						next={fetchMoreData}
-						hasMore={hasMore}
-						loader={
-							<Box>
-								<Snackbar
-									open={openSnack}
-									autoHideDuration={3000}
-									onClose={hanldesnackclose}
-								>
-									<Alert severity='success' onClose={hanldesnackclose}>
-										<Trans i18nKey='Loading'>Loading...</Trans>
-									</Alert>
-								</Snackbar>
-							</Box>
-						}
-						// endMessage={
-						// 	<p style={{ textAlign: 'center' }}>
-						// 		<b>Yay! You have seen it all</b>
-						// 	</p>
-						// }
-						// below props only if you need pull down functionality
-						// refreshFunction={this.refresh}
-						// pullDownToRefresh
-						// pullDownToRefreshThreshold={50}
-						// pullDownToRefreshContent={
-						// 	<h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-						// }
-						// releaseToRefreshContent={
-						// 	<h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-						// }
-					>
-						<div className='general'>
-							<ul>
-								<div className='card'>
-									{cards.map(cards => (
-										<div key={cards.id}>
-											<CardMedia
-												className='imagegrid'
-												component='img'
-												alt={cards.name}
-												image={cards.card_images[0]?.image_url}
-											/>
-											<CardContent className='content'>
-												<Typography
-													gutterBottom
-													variant='h5'
-													component='div'
-													sx={{
-														fontFamily: 'Bebas Neue',
-													}}
-												>
-													{cards.name}
-												</Typography>
-												<Typography
-													variant='h7'
-													sx={{
-														fontFamily: 'Dosis',
-													}}
-												>
-													{cards.desc.slice(0, 80)} ...
-												</Typography>
-												<CardActions>
-													<Button size='small'>
-														<Link to={`/${cards.id}`} className='linkCards'>
-															<VisibilityIcon /> <MoreHorizIcon />
-														</Link>
-													</Button>
-												</CardActions>
-											</CardContent>
+					<div>
+						<InfiniteScroll
+							dataLength={cards.length} // This is important field to render the next data
+							next={fetchMoreData}
+							hasMore={hasMore}
+							loader={
+								<Box>
+									<Snackbar
+										open={openSnack}
+										autoHideDuration={3000}
+										onClose={hanldesnackclose}
+									>
+										<Alert severity='success' onClose={hanldesnackclose}>
+											<Trans i18nKey='Loading'>Loading...</Trans>
+										</Alert>
+									</Snackbar>
+								</Box>
+							}
+						>
+							<Fade
+								in={checked}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(checked ? { timeout: 1000 } : {})}
+							>
+								<div className='general'>
+									<ul>
+										<div className='card'>
+											{cards.map(cards => (
+												<div key={cards.id}>
+													<CardMedia
+														className='imagegrid'
+														component='img'
+														alt={cards.name}
+														image={cards.card_images[0]?.image_url}
+													/>
+													<CardContent className='content'>
+														<Typography
+															gutterBottom
+															variant='h5'
+															component='div'
+															sx={{
+																fontFamily: 'Bebas Neue',
+															}}
+														>
+															{cards.name}
+														</Typography>
+														<Typography
+															variant='h7'
+															sx={{
+																fontFamily: 'Dosis',
+															}}
+														>
+															{cards.desc.slice(0, 80)} ...
+														</Typography>
+														<CardActions>
+															<Button size='small'>
+																<Link to={`/${cards.id}`} className='linkCards'>
+																	<VisibilityIcon /> <MoreHorizIcon />
+																</Link>
+															</Button>
+														</CardActions>
+													</CardContent>
+												</div>
+											))}
 										</div>
-									))}
+									</ul>
+									<Outlet />
 								</div>
-							</ul>
-							<Outlet />
-						</div>
-					</InfiniteScroll>
+							</Fade>
+						</InfiniteScroll>
+					</div>
 				)}
 			</div>
 		</div>

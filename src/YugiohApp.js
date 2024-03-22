@@ -10,14 +10,23 @@ import {
 import { CardGrid } from './components/CardGrid/CardGrid'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { CircularProgress, Pagination, Typography } from '@mui/material'
+import {
+	Alert,
+	CircularProgress,
+	Grow,
+	Pagination,
+	Typography,
+} from '@mui/material'
 import { useTranslation, Trans, i18n } from 'react-i18next'
+import stiker2 from './styles/stiker2.png'
 
 export const YugiohApp = () => {
 	const { t, i18n } = useTranslation()
 
+	const [check, setCheck] = useState(false)
+
 	const dispatch = useDispatch()
-	const [search, setsearch] = useState('')
+	const [search, setsearch] = useState()
 	const {
 		cards = [],
 		isLoading,
@@ -58,6 +67,14 @@ export const YugiohApp = () => {
 		}
 	}
 
+	console.log(cards.length)
+
+	const checked = () => {
+		if (cards.length < 1) {
+			setCheck(true)
+		}
+	}
+
 	return (
 		<div className='general'>
 			<Navbar />
@@ -84,11 +101,9 @@ export const YugiohApp = () => {
 					onSubmit={handleSubmit}
 					component='form'
 					style={{
-						backgroundColor:'#2D2A36',
-						color:'white',
-						
-				
-				}}
+						backgroundColor: 'white',
+						color: 'white',
+					}}
 					sx={{
 						padding: '7px 10px 7px 10px',
 						margin: 3,
@@ -107,17 +122,52 @@ export const YugiohApp = () => {
 						label='Search a Card'
 						variant='standard'
 						margin='normal'
-						style={{
-							backgroundColor:'#2D2A36',
-							color:'white'
-					
-					}}
-						
 						onChange={e => {
 							setsearch(e.target.value)
 						}}
 					/>
 				</Box>
+
+				{/* ver si hay cartas o no */}
+
+				{cards.length < 1 ? (
+					<div>
+						{/* imagen */}
+
+						<Box
+							sx={{
+								textAlign: 'center',
+							}}
+						>
+							<Grow
+								in={checked}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(checked ? { timeout: 1000 } : {})}
+							>
+								<img className='imagenBusqueda' src={stiker2} alt='image' />
+							</Grow>
+						</Box>
+
+						{/* mensaje */}
+
+						<Typography
+							justifyContent={'center'}
+							variant='h5'
+							component='h5'
+							className='principalTitle'
+							sx={{
+								fontFamily: 'Nunito Sans',
+								fontWeight: 500,
+								letterSpacing: '.3rem',
+								textDecoration: 'none',
+							}}
+						>
+							<Trans i18nKey='missingCard'>There is no card</Trans>
+						</Typography>
+					</div>
+				) : (
+					''
+				)}
 
 				{/* circular progress */}
 
@@ -128,6 +178,9 @@ export const YugiohApp = () => {
 				) : (
 					<CardGrid />
 				)}
+
+				{/* paginacion  */}
+
 				<Box
 					className='pagination'
 					spacing={2}

@@ -9,7 +9,9 @@ import {
 } from '../../store/slices/cards/CardsAccions'
 import { CardGrid } from '../CardGrid/CardGrid'
 
-import { Box, CircularProgress, Pagination } from '@mui/material'
+import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
+
+import { Index } from '../CardGrid/Index'
 
 export const MonsterScreen = () => {
 	const dispatch = useDispatch()
@@ -21,6 +23,7 @@ export const MonsterScreen = () => {
 	} = useSelector(state => state.cards)
 	console.log('🚀 ~ TrapScreen ~ cards:', cards)
 	const type = 'Normal Monster'
+	const [check, setCheck] = useState(true)
 
 	const pageSize = 12
 
@@ -46,28 +49,7 @@ export const MonsterScreen = () => {
 	}, [pagination.from, pagination.to])
 	return (
 		<div className='general'>
-			<Navbar />
-			{/* circular progress */}
-
-			{isLoading ? (
-				<Box sx={{ display: 'flex' }} justifyContent='center'>
-					<CircularProgress />
-				</Box>
-			) : (
-				<CardGrid />
-			)}
-
-			<Box
-				className='pagination'
-				spacing={2}
-				sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-			>
-				<Pagination
-					color='warning'
-					count={Math.ceil(count / pageSize)}
-					onChange={handleChange}
-				/>
-			</Box>
+			<Index data={{ check, count, pageSize, handleChange }} />
 		</div>
 	)
 }

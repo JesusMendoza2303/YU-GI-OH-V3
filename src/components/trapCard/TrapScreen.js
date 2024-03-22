@@ -9,7 +9,9 @@ import {
 } from '../../store/slices/cards/CardsAccions'
 import { CardGrid } from '../CardGrid/CardGrid'
 
-import { Box, CircularProgress, Pagination } from '@mui/material'
+import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
+
+import { Index } from '../CardGrid/Index'
 
 export const TrapScreen = () => {
 	const dispatch = useDispatch()
@@ -20,6 +22,7 @@ export const TrapScreen = () => {
 		isLoading,
 	} = useSelector(state => state.cards)
 	const type = 'Trap Card'
+	const [check, setCheck] = useState(true)
 
 	const pageSize = 12
 
@@ -45,29 +48,7 @@ export const TrapScreen = () => {
 	}, [pagination.from, pagination.to])
 	return (
 		<div className='general'>
-			<Navbar />
-
-			{/* circular progress */}
-
-			{isLoading ? (
-				<Box sx={{ display: 'flex' }} justifyContent='center'>
-					<CircularProgress />
-				</Box>
-			) : (
-				<CardGrid />
-			)}
-
-			<Box
-				className='pagination'
-				spacing={2}
-				sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-			>
-				<Pagination
-					color='warning'
-					count={Math.ceil(count / pageSize)}
-					onChange={handleChange}
-				/>
-			</Box>
+			<Index data={{ check, count, pageSize, handleChange }} />
 		</div>
 	)
 }

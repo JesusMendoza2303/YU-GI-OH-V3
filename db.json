@@ -4184,43 +4184,10 @@
 			]
 		},
 		{
-			"id": 34236961,
 			"name": "Ante",
 			"type": "Spell Card",
-			"frameType": "spell",
 			"desc": "Each Player reveals 1 card from their hand. If one card is higher Level than the other, the card with the lower Level is sent to the Graveyard, and the player who revealed it takes 1000 damage. (Non-Monster Cards are treated as Level 0.)",
 			"race": "Normal",
-			"ygoprodeck_url": "https://ygoprodeck.com/card/ante-2908",
-			"card_sets": [
-				{
-					"set_name": "Battle Pack: Epic Dawn",
-					"set_code": "BP01-EN074",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Battle Pack: Epic Dawn",
-					"set_code": "BP01-EN074",
-					"set_rarity": "Starfoil Rare",
-					"set_rarity_code": "(SFR)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Dark Revelation Volume 1",
-					"set_code": "DR1-EN089",
-					"set_rarity": "Common",
-					"set_rarity_code": "(C)",
-					"set_price": "0"
-				},
-				{
-					"set_name": "Magician's Force",
-					"set_code": "MFC-034",
-					"set_rarity": "Rare",
-					"set_rarity_code": "(R)",
-					"set_price": "2.28"
-				}
-			],
 			"card_images": [
 				{
 					"id": 34236961,
@@ -4229,15 +4196,7 @@
 					"image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/34236961.jpg"
 				}
 			],
-			"card_prices": [
-				{
-					"cardmarket_price": "0.34",
-					"tcgplayer_price": "0.20",
-					"ebay_price": "0.99",
-					"amazon_price": "0.25",
-					"coolstuffinc_price": "0.25"
-				}
-			]
+			"id": 34236961
 		},
 		{
 			"id": 97120394,
@@ -15669,59 +15628,8 @@
 			"id": 99928020
 		},
 		{
-			"name": "dsdsdsdsds",
-			"type": "Spell Card",
-			"atk": 0,
-			"def": 0,
-			"desc": "prueba",
-			"firstdate": "2024-03-04",
-			"lastdate": "2024-03-20",
-			"race": "Reptile",
-			"level": 1,
-			"card_images": [
-				{
-					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
-				}
-			],
-			"id": 99928021
-		},
-		{
-			"name": "prueba handles 1",
-			"type": "Spell Card",
-			"atk": 0,
-			"def": 0,
-			"desc": "prueba",
-			"firstdate": "2024-03-07",
-			"lastdate": "2024-03-26",
-			"race": "Reptile",
-			"level": 1,
-			"card_images": [
-				{
-					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
-				}
-			],
-			"id": 99928022
-		},
-		{
-			"name": "prueba botones ",
-			"type": "Trap Card",
-			"atk": 0,
-			"def": 0,
-			"desc": "carta prueba",
-			"firstdate": "2024-03-01",
-			"lastdate": "2024-03-28",
-			"race": "Normal",
-			"level": 1,
-			"card_images": [
-				{
-					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
-				}
-			],
-			"id": 99928023
-		},
-		{
-			"name": "prueba handles 3 submit",
-			"type": "Spell Card",
+			"name": "prueba handles 3",
+			"type": "Normal Monter",
 			"atk": 0,
 			"def": 0,
 			"desc": "el primarca de",
@@ -15739,8 +15647,8 @@
 	],
 	"races": [
 		{
-			"id": 1,
-			"name": "Normal"
+			"name": "Normal",
+			"id": 1
 		},
 		{
 			"id": 2,
@@ -15903,14 +15811,6 @@
 		{
 			"name": "MOROCONDO",
 			"id": 12
-		},
-		{
-			"id": 16,
-			"name": "PROBEMOS OTRA VEZ"
-		},
-		{
-			"id": 17,
-			"name": "AJA"
 		}
 	]
 }

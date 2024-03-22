@@ -11,16 +11,11 @@ export const getcardsLocal = (page = 1) => {
 }
 
 export const getScrollingCardsLocal = (page = 1, prevCards = []) => {
-	console.log("🚀 ~ getScrollingCardsLocal ~ prevCards:", prevCards)
-	const cardsArray = [...prevCards]
-	console.log("🚀 ~ return ~ cardsArray 1:", cardsArray)
+	const prevCardsArray = [...prevCards]
 	return async (dispatch, getState) => {
-		dispatch(startLoadingCards())
 		const cards = await cardsApiLocal.get(`data?_limit=18&_page=${page}`)
-		cardsArray.concat(cards.data)
-		console.log("🚀 ~ return ~ cards.data:", cards.data)
-		console.log("🚀 ~ return ~ cardsArray 2:", cardsArray)
-		dispatch(setCards({ cards: cards.data, page }))
+		const arrayCards = prevCardsArray.concat(cards.data)
+		dispatch(setCards({ cards: arrayCards, page }))
 	}
 }
 
@@ -38,7 +33,7 @@ export const getcardsLocalByid = (cardsid, navigate) => {
 		const cards = await cardsApiLocal.get(`data?id=${cardsid}`)
 		dispatch(setCards({ cards: cards.data }))
 		if (!cards.data.length) {
-			navigate('/')
+			navigate('/error')
 		}
 	}
 }
@@ -65,7 +60,7 @@ export const getcardsByTypeLOCAL = (type, pagination, tarjeta, count) => {
 	return async (dispatch, getState, resolve, reject) => {
 		dispatch(startLoadingCards())
 		const tarjeta = await cardsApiLocal.get(`data?type=${type}`)
-		// .slice(pagination.from, pagination.to)
+
 		const cards = tarjeta.data.slice(pagination.from, pagination.to)
 		const count = tarjeta.data.length
 
@@ -88,16 +83,6 @@ export const getcardsByNameLocal2 = (search, pagination, tarjeta, count) => {
 			const msgError = 'Carta no encontrada'
 			dispatch(setCards({ msgError }))
 		}
-		console.log(
-			'count:',
-			count,
-			'tarjeta:',
-			tarjeta,
-			'pagination:',
-			pagination,
-			'search:',
-			search,
-		)
 	}
 }
 export const reinicio = () => {

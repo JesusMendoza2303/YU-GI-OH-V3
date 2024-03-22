@@ -14,7 +14,9 @@ import {
 	DialogContent,
 	DialogTitle,
 	Fab,
+	Fade,
 	FormControlLabel,
+	Grow,
 	Menu,
 	MenuItem,
 	Paper,
@@ -66,6 +68,7 @@ export const RaceScreen = () => {
 	const [agreeterm, agreetermchange] = useState(false)
 	const [open2, openchange] = useState(false)
 	const [name, setName] = useState('')
+	const [checked, setChecked] = useState(true)
 
 	// manejar el menu
 
@@ -77,8 +80,6 @@ export const RaceScreen = () => {
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
-
-	const navigate = useNavigate()
 
 	// manejar el boton de borrado
 
@@ -174,21 +175,27 @@ export const RaceScreen = () => {
 
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
-					<Button
-						className='createboton'
-						onClick={addAttribute}
-						startIcon={<AddCircleIcon />}
-						variant='cotained'
+					<Grow
+						in={checked}
+						style={{ transformOrigin: '0 0 0' }}
+						{...(checked ? { timeout: 1000 } : {})}
 					>
-						<Typography
-							sx={{
-								fontFamily: 'Nunito Sans',
-								fontWeight: 600,
-							}}
+						<Button
+							className='createboton'
+							onClick={addAttribute}
+							startIcon={<AddCircleIcon />}
+							variant='cotained'
 						>
-							<Trans i18nKey='crateRace'>Create a Race</Trans>
-						</Typography>
-					</Button>
+							<Typography
+								sx={{
+									fontFamily: 'Nunito Sans',
+									fontWeight: 600,
+								}}
+							>
+								<Trans i18nKey='crateRace'>Create a Race</Trans>
+							</Typography>
+						</Button>
+					</Grow>
 				</div>
 
 				<DataGrid
@@ -205,7 +212,6 @@ export const RaceScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
-					// disableRowSelectionOnClick
 				/>
 			</Box>
 

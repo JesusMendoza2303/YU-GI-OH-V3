@@ -33,6 +33,7 @@ import {
 	Autocomplete,
 	createFilterOptions,
 	DialogActions,
+	Grow,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -75,14 +76,18 @@ export const NewCardScreen = () => {
 	const timer = React.useRef()
 	const { races = [] } = useSelector(state => state.races)
 	const { attributes = [] } = useSelector(state => state.attributes)
+	// row ID:
 	const [rowId, setRowId] = useState(0)
+	//
 	const dispatch = useDispatch()
 	const { cards = [], isLoading } = useSelector(state => state.cards)
+
 	const [id] = useState(0)
 	const [open, openchange] = useState(false)
 	const [agreeterm, agreetermchange] = useState(false)
 	const [card_images, setCard_images] = useState('')
 	const [openSnack, setOpenSnack] = useState(true)
+	const [checked, setChecked] = useState(true)
 	const [values, setValues] = useState({
 		name: '',
 		desc: '',
@@ -158,74 +163,76 @@ export const NewCardScreen = () => {
 		setOpenSnack(false)
 	}
 
-	const columns = useMemo(() => [
-		{
-			field: 'id',
-			headerName: 'ID',
-			width: 90,
-		},
-		{
-			field: 'card_images',
-			headerName: 'image',
-			width: 90,
-			renderCell: ({ row }) => <Avatar src={row.card_images[0]?.image_url} />,
-			sortable: false,
-			filterable: false,
-		},
-		{
-			field: 'name',
-			headerName: 'name',
-			width: 200,
-			editable: true,
-		},
-		{
-			field: 'type',
-			headerName: 'type',
-			type: 'singleSelect',
-			width: 130,
-			valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
-			editable: true,
-		},
-		{
-			field: 'desc',
-			headerName: 'desc',
-			width: 400,
-			editable: true,
-		},
-		{
-			field: 'level',
-			headerName: 'level',
-			type: 'number',
-			width: 50,
-			editable: true,
-		},
-		{
-			field: 'firstdate',
-			headerName: 'creation date',
-			type: 'Date',
-			width: 110,
-			editable: true,
-		},
-		{
-			field: 'lastdate',
-			headerName: 'first appearance in anime',
-			type: 'Date',
-			width: 130,
-			editable: true,
-		},
-		{
-			field: 'actions',
-			type: 'actions',
-			headerName: 'Actions',
-			width: 300,
-			cellClassName: 'actions',
-			renderCell: (params, rowId) => (
-				<NewCardAccions {...{ params, rowId, values }} />
-			),
+	const columns = useMemo(
+		() => [
+			{
+				field: 'id',
+				headerName: 'ID',
+				width: 90,
+			},
+			{
+				field: 'card_images',
+				headerName: 'image',
+				width: 90,
+				renderCell: ({ row }) => <Avatar src={row.card_images[0]?.image_url} />,
 
-			filterable: false,
-		},
-	])
+				sortable: false,
+				filterable: false,
+			},
+			{
+				field: 'name',
+				headerName: 'name',
+				width: 200,
+				editable: true,
+			},
+			{
+				field: 'type',
+				headerName: 'type',
+				type: 'singleSelect',
+				width: 130,
+				valueOptions: ['Normal Monter', 'Spell Card', 'Trap Card'],
+				editable: true,
+			},
+			{
+				field: 'desc',
+				headerName: 'desc',
+				width: 400,
+				editable: true,
+			},
+			{
+				field: 'level',
+				headerName: 'level',
+				type: 'number',
+				width: 50,
+				editable: true,
+			},
+			{
+				field: 'firstdate',
+				headerName: 'creation date',
+				type: 'Date',
+				width: 110,
+				editable: true,
+			},
+			{
+				field: 'lastdate',
+				headerName: 'first appearance in anime',
+				type: 'Date',
+				width: 130,
+				editable: true,
+			},
+			{
+				field: 'actions',
+				type: 'actions',
+				headerName: 'Actions',
+				width: 300,
+				cellClassName: 'actions',
+				renderCell: params => <NewCardAccions data={{ params, rowId }} />,
+
+				filterable: false,
+			},
+		],
+		[rowId],
+	)
 
 	function PaperComponent(props) {
 		return (
@@ -263,16 +270,16 @@ export const NewCardScreen = () => {
 		}
 	}, [])
 
-	// useEffect(() => {
-	// 	handlesubmit ()
-	// 	return () => {
-	// 		clearTimeout(timer.current)
-	// 	}
-	// }, [])
+	//  useEffect(() => {
+	//  	handlesubmit ()
+	//  	return () => {
+	//  		clearTimeout(timer.current)
+	//  	}
+	//  }, [])
 
 	const handlesubmit = e => {
 		console.log('se ha enviado')
-		// boton de carga
+		//	 boton de carga
 		e?.preventDefault()
 		if (!loading) {
 			setSuccess(false)
@@ -324,22 +331,18 @@ export const NewCardScreen = () => {
 		})
 	}
 
-	console.log('row id', rowId)
-
 	return (
 		<div>
 			{/* validar si esta cargando o no */}
 			<Navbar />
 
 			{isLoading ? (
-				<Box sx={{ display: 'flex' }} className='circularProgress'>
-					<CircularProgress />
-				</Box>
+				''
 			) : (
 				<Box>
 					<Snackbar
 						open={openSnack}
-						autoHideDuration={3000}
+						autoHideDuration={2000}
 						onClose={hanldesnackclose}
 					>
 						<Alert severity='success' onClose={hanldesnackclose}>
@@ -353,21 +356,27 @@ export const NewCardScreen = () => {
 
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
 				<div style={{ margin: '1%' }}>
-					<Button
-						className='createboton'
-						onClick={openpopup}
-						startIcon={<AddCircleIcon />}
-						variant='cotained'
+					<Grow
+						in={checked}
+						style={{ transformOrigin: '0 0 0' }}
+						{...(checked ? { timeout: 1000 } : {})}
 					>
-						<Typography
-							sx={{
-								fontFamily: 'Nunito Sans',
-								fontWeight: 600,
-							}}
+						<Button
+							className='createboton'
+							onClick={openpopup}
+							startIcon={<AddCircleIcon />}
+							variant='cotained'
 						>
-							<Trans i18nKey='crearCarta'>Create a Card</Trans>
-						</Typography>
-					</Button>
+							<Typography
+								sx={{
+									fontFamily: 'Nunito Sans',
+									fontWeight: 600,
+								}}
+							>
+								<Trans i18nKey='crearCarta'>Create a Card</Trans>
+							</Typography>
+						</Button>
+					</Grow>
 				</div>
 
 				{/* Data grid */}
@@ -387,7 +396,9 @@ export const NewCardScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
-					onCellEditStart={params => setRowId(params.id)}
+					onCellEditStart={params => {
+						setRowId(params.id)
+					}}
 					// onCellEditStop={params => setRowId(params.id)}
 				/>
 			</Box>
@@ -520,14 +531,6 @@ export const NewCardScreen = () => {
 
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-									// Suggest the creation of a new value
-									// const isExisting = options.some((option) => inputValue === option.title);
-									// if (inputValue !== '' && !isExisting) {
-									//   filtered.push({
-									//     inputValue,
-									//     title: `Add "${inputValue}"`,
-									//   });
-									// }
 
 									return filtered
 								}}
@@ -560,9 +563,6 @@ export const NewCardScreen = () => {
 										variant='outlined'
 										fullWidth
 										id='fullWidth'
-										// onChange={e => {
-										// 	handleChange(e)
-										// }}
 									/>
 								)}
 							/>
@@ -584,14 +584,6 @@ export const NewCardScreen = () => {
 
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-									// Suggest the creation of a new value
-									// const isExisting = options.some((option) => inputValue === option.title);
-									// if (inputValue !== '' && !isExisting) {
-									//   filtered.push({
-									//     inputValue,
-									//     title: `Add "${inputValue}"`,
-									//   });
-									// }
 
 									return filtered
 								}}

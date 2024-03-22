@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,9 +8,19 @@ import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import HomeIcon from '@mui/icons-material/Home'
 import { useTranslation, Trans, i18n } from 'react-i18next'
-import { Avatar, Box, Button, Menu, Stack } from '@mui/material'
+import {
+	Avatar,
+	Box,
+	Button,
+	Divider,
+	Menu,
+	Stack,
+	Tab,
+	Tabs,
+} from '@mui/material'
 import RadioGroup from '@mui/material/RadioGroup'
 import TranslateIcon from '@mui/icons-material/Translate'
+import logo from '../../styles/logoyugi2.png'
 
 const lngs = {
 	en: { nativeName: 'English' },
@@ -21,15 +31,24 @@ export const Navbar = () => {
 	const { t, i18n } = useTranslation()
 	// esto es para el menu de idiomas
 
-	const [anchorEl, setAnchorEl] = React.useState(null)
+	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
-
 	const handleClose = () => {
 		console.log('cerrado')
 		setAnchorEl(null)
+	}
+
+	const [anchorElCards, setAnchorElCards] = useState(null)
+	const openCards = Boolean(anchorElCards)
+	const handleClickCards = event => {
+		setAnchorElCards(event.currentTarget)
+	}
+	const handleCloseCards = () => {
+		console.log('cerrado')
+		setAnchorElCards(null)
 	}
 
 	return (
@@ -67,23 +86,20 @@ export const Navbar = () => {
 					{/* logo */}
 
 					<Box>
-						<img
-						src="../../styles/yugioh!.png"
-						alt='yugioh!'
-						 />
+						<img src={logo} alt='yugioh!' height={40} />
 					</Box>
 
-					
+					{/* menu items */}
+
 					<MenuItem>
 						<Typography
 							textAlign='center'
 							variant='h5'
 							noWrap
-							
 							sx={{
 								mr: 2,
 								fontFamily: 'Nunito Sans',
-								
+
 								textDecoration: 'none',
 							}}
 						>
@@ -93,22 +109,96 @@ export const Navbar = () => {
 						</Typography>
 					</MenuItem>
 
-					<MenuItem>
+					{/* nuevo menu */}
+
+					<Button
+						id='basic-button'
+						aria-controls={openCards ? 'basic-menu' : undefined}
+						aria-haspopup='true'
+						aria-expanded={openCards ? 'true' : undefined}
+						onClick={handleClickCards}
+					>
 						<Typography
+							className='linkNavbar'
 							variant='h6'
 							sx={{
 								fontFamily: 'Nunito Sans',
-								
-								
-								color: 'inherit',
 								textDecoration: 'none',
 							}}
 						>
-							<Link className='linkNavbar' to={'/monsters_cards'}>
-								<Trans i18nKey='monster'>MONSTER CARDS</Trans>
-							</Link>
+							<Trans i18nKey='cards'>CARDS</Trans>
 						</Typography>
-					</MenuItem>
+					</Button>
+					<Menu
+						id='basic-menu'
+						anchorEl={anchorElCards}
+						open={openCards}
+						onClose={handleCloseCards}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button',
+						}}
+					>
+						<MenuItem>
+							<Typography
+								variant='h6'
+								sx={{
+									fontFamily: 'Nunito Sans',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbarMenus' to={'/monsters_cards'}>
+									<Trans i18nKey='monster'>MONSTER CARDS</Trans>
+								</Link>
+							</Typography>
+						</MenuItem>
+
+						<MenuItem>
+							<Typography
+								textAlign='center'
+								variant='h6'
+								sx={{
+									fontFamily: 'Nunito Sans',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbarMenus' to={'/trap_cards'}>
+									<Trans i18nKey='trap'>TRAP CARDS</Trans>
+								</Link>
+							</Typography>
+						</MenuItem>
+
+						<MenuItem>
+							<Typography
+								textAlign='center'
+								variant='h6'
+								sx={{
+									fontFamily: 'Nunito Sans',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbarMenus' to={'/spell_cards'}>
+									<Trans i18nKey='spell'>SPELL CARDS</Trans>
+								</Link>
+							</Typography>
+						</MenuItem>
+
+						<Divider />
+
+						<MenuItem>
+							<Typography
+								textAlign='center'
+								variant='h6'
+								sx={{
+									fontFamily: 'Nunito Sans',
+									textDecoration: 'none',
+								}}
+							>
+								<Link className='linkNavbarMenus' to={'/all_cards'}>
+									<Trans i18nKey='all'>All CARDS</Trans>
+								</Link>
+							</Typography>
+						</MenuItem>
+					</Menu>
 
 					<MenuItem>
 						<Typography
@@ -116,62 +206,7 @@ export const Navbar = () => {
 							variant='h6'
 							sx={{
 								fontFamily: 'Nunito Sans',
-								
-								
-								color: 'inherit',
-								textDecoration: 'none',
-							}}
-						>
-							<Link className='linkNavbar' to={'/trap_cards'}>
-								<Trans i18nKey='trap'>TRAP CARDS</Trans>
-							</Link>
-						</Typography>
-					</MenuItem>
 
-					<MenuItem>
-						<Typography
-							textAlign='center'
-							variant='h6'
-							sx={{
-								fontFamily: 'Nunito Sans',
-								
-								
-								color: 'inherit',
-								textDecoration: 'none',
-							}}
-						>
-							<Link className='linkNavbar' to={'/spell_cards'}>
-								<Trans i18nKey='spell'>SPELL CARDS</Trans>
-							</Link>
-						</Typography>
-					</MenuItem>
-
-					<MenuItem>
-						<Typography
-							textAlign='center'
-							variant='h6'
-							sx={{
-								fontFamily: 'Nunito Sans',
-								
-								
-								color: 'inherit',
-								textDecoration: 'none',
-							}}
-						>
-							<Link className='linkNavbar' to={'/all_cards'}>
-								<Trans i18nKey='all'>All CARDS</Trans>
-							</Link>
-						</Typography>
-					</MenuItem>
-
-					<MenuItem>
-						<Typography
-							textAlign='center'
-							variant='h6'
-							sx={{
-								fontFamily: 'Nunito Sans',
-								
-								
 								color: 'inherit',
 								textDecoration: 'none',
 							}}
@@ -188,8 +223,7 @@ export const Navbar = () => {
 							variant='h6'
 							sx={{
 								fontFamily: 'Nunito Sans',
-								
-								
+
 								color: 'inherit',
 								textDecoration: 'none',
 							}}
@@ -206,7 +240,7 @@ export const Navbar = () => {
 							variant='h6'
 							sx={{
 								fontFamily: 'Nunito Sans',
-								
+
 								color: 'inherit',
 								textDecoration: 'none',
 							}}

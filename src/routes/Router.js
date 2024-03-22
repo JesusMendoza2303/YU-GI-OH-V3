@@ -9,6 +9,7 @@ import { NewCardScreen } from '../components/new card/NewCardScreen'
 import { RaceScreen } from '../components/RaceCards/RaceScreen'
 import { AttributesScreen } from '../components/AttributesCards/AttributesScreen'
 import { AllCards } from '../components/allCards/AllCards'
+import { Error } from '../components/Error/Error'
 // import FullFeaturedCrudGrid from '../components/new card/FullFeaturedCrudGrid'
 
 export const Router = () => {
@@ -24,6 +25,7 @@ export const Router = () => {
 				<Route path='/attributes' element={<AttributesScreen />} />
 				<Route path='/:cardsid' element={<CardsByID />} />
 				<Route path='/all_cards' element={<AllCards />} />
+				<Route path='/error' element={<Error />} />
 			</Routes>
 		</BrowserRouter>
 	)

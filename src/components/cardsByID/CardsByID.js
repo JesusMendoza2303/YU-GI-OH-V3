@@ -14,13 +14,15 @@ import {
 	Autocomplete,
 	Button,
 	Checkbox,
-	CircularProgress,
+	Collapse,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 	Fab,
+	Fade,
 	FormControlLabel,
+	Grow,
 	Paper,
 	Radio,
 	RadioGroup,
@@ -70,6 +72,7 @@ export const CardsByID = () => {
 	const [loading, setLoading] = React.useState(false)
 	const [success, setSuccess] = React.useState(false)
 	const timer = React.useRef()
+	const [check, setCheck] = useState(true)
 
 	const navigate = useNavigate()
 
@@ -99,24 +102,12 @@ export const CardsByID = () => {
 
 	useEffect(() => {
 		dispatch(getRaces())
-		return () => {
-			dispatch(reinicio())
-		}
-	}, [])
-
-	useEffect(() => {
 		dispatch(getAttributes())
-		return () => {
-			dispatch(reinicio())
-		}
-	}, [])
-
-	useEffect(() => {
 		axios
 			.get(`http://localhost:3030/data?id=${cardsid}`)
 			.then(response => {
 				if (!response.data.length) {
-					navigate('/')
+					navigate('/error')
 				}
 
 				const cardsdetaild = response.data[0]
@@ -138,7 +129,6 @@ export const CardsByID = () => {
 			})
 
 			.catch(error => console.error(error))
-
 		return () => {
 			dispatch(reinicio())
 		}
@@ -191,7 +181,6 @@ export const CardsByID = () => {
 	}
 
 	const handleChange = e => {
-		e.preventDefault()
 		const { value, name } = e.target
 		setValues(preValues => ({
 			...preValues,
@@ -228,6 +217,7 @@ export const CardsByID = () => {
 			<Draggable
 				handle='#draggable-dialog-title'
 				cancel={'[class*="MuiDialogContent-root"]'}
+				enableUserSelectHack={false}
 			>
 				<Paper {...props} />
 			</Draggable>
@@ -254,119 +244,148 @@ export const CardsByID = () => {
 						<div>
 							{/* nombre */}
 
-							<Typography
-								component='div'
-								variant='h3'
-								sx={{
-									fontFamily: 'Bebas Neue',
-									fontWeight: 500,
-									letterSpacing: '.3rem',
-									color: 'black',
-								}}
+							<Fade
+								in={check}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(check ? { timeout: 1000 } : {})}
 							>
-								{values.name}
-							</Typography>
+								<Typography
+									component='div'
+									variant='h3'
+									sx={{
+										fontFamily: 'Bebas Neue',
+										fontWeight: 500,
+										letterSpacing: '.3rem',
+										color: 'black',
+									}}
+								>
+									{values.name}
+								</Typography>
+							</Fade>
+
 							<br />
 
 							{/* descripcion */}
 
-							<Typography
-								variant='h4'
-								color='black'
-								component='div'
-								sx={{
-									fontFamily: 'Dosis',
-									fontWeight: 500,
-								}}
+							<Fade
+								in={check}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(check ? { timeout: 1500 } : {})}
 							>
-								{values.desc}
-							</Typography>
+								<Typography
+									variant='h4'
+									color='black'
+									component='div'
+									sx={{
+										fontFamily: 'Dosis',
+										fontWeight: 500,
+									}}
+								>
+									{values.desc}
+								</Typography>
+							</Fade>
 
 							{/* variables */}
 
-							<Typography
-								variant='h4'
-								color='black'
-								sx={{
-									fontFamily: 'Dosis',
-									fontWeight: 500,
-									letterSpacing: '.3rem',
-								}}
+							<Fade
+								in={check}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(check ? { timeout: 2000 } : {})}
 							>
-								<p className='parrafo'>ID: {cardsid}</p>
-								<p className='parrafo'>
-									Type:
-									{values.type}
-								</p>
+								<Typography
+									variant='h4'
+									color='black'
+									sx={{
+										fontFamily: 'Dosis',
+										fontWeight: 500,
+										letterSpacing: '.3rem',
+									}}
+								>
+									<p className='parrafo'>ID: {cardsid}</p>
+									<p className='parrafo'>
+										Type:
+										{values.type}
+									</p>
 
-								{/* atk */}
+									{/* atk */}
 
-								<p className='parrafo'>
-									{!values.atk ? (
-										<Trans i18nKey='atkmessage'>this card dont have atk</Trans>
-									) : (
-										`atk: ${values.atk} `
-									)}
-								</p>
+									<p className='parrafo'>
+										{!values.atk ? (
+											<Trans i18nKey='atkmessage'>
+												this card dont have atk
+											</Trans>
+										) : (
+											`atk: ${values.atk} `
+										)}
+									</p>
 
-								{/* def */}
+									{/* def */}
 
-								<p className='parrafo'>
-									{!values.def ? (
-										<Trans i18nKey='defmessage'>this card dont have def</Trans>
-									) : (
-										`def: ${values.def}`
-									)}
-								</p>
+									<p className='parrafo'>
+										{!values.def ? (
+											<Trans i18nKey='defmessage'>
+												this card dont have def
+											</Trans>
+										) : (
+											`def: ${values.def}`
+										)}
+									</p>
 
-								{/* raza */}
+									{/* raza */}
 
-								<p className='parrafo'>
-									{!values.race ? (
-										<Trans i18nKey='racemessage'>
-											this card dont have race
-										</Trans>
-									) : (
-										`race: ${values.race}`
-									)}
-								</p>
+									<p className='parrafo'>
+										{!values.race ? (
+											<Trans i18nKey='racemessage'>
+												this card dont have race
+											</Trans>
+										) : (
+											`race: ${values.race}`
+										)}
+									</p>
 
-								{/* nivel */}
+									{/* nivel */}
 
-								<p className='parrafo'>
-									{!values.level ? (
-										<Trans i18nKey='levelmessage'>
-											this card dont have level
-										</Trans>
-									) : (
-										`level: ${values.level}`
-									)}
-								</p>
+									<p className='parrafo'>
+										{!values.level ? (
+											<Trans i18nKey='levelmessage'>
+												this card dont have level
+											</Trans>
+										) : (
+											`level: ${values.level}`
+										)}
+									</p>
 
-								{/* attribute */}
+									{/* attribute */}
 
-								<p className='parrafo'>
-									{!values.attribute ? (
-										<Trans i18nKey='attributemessage'>
-											this card dont have attribute
-										</Trans>
-									) : (
-										`attribute: ${values.attribute}`
-									)}
-								</p>
-							</Typography>
+									<p className='parrafo'>
+										{!values.attribute ? (
+											<Trans i18nKey='attributemessage'>
+												this card dont have attribute
+											</Trans>
+										) : (
+											`attribute: ${values.attribute}`
+										)}
+									</p>
+								</Typography>
+							</Fade>
 						</div>
 					</CardContent>
 				</Box>
 				{/* imagen */}
 				<div>
-					<CardMedia
-						className='imagenCardDetail'
-						component='img'
-						sx={{ width: 350 }}
-						image={card_images}
-						alt={values.name}
-					/>
+					<Grow
+						in={check}
+						style={{ transformOrigin: '0 0 0' }}
+						{...(check ? { timeout: 1000 } : {})}
+					>
+						<CardMedia
+							className='imagenCardDetail'
+							component='img'
+							sx={{ width: 350 }}
+							image={card_images}
+							alt={values.name}
+						/>
+					</Grow>
 				</div>
 			</Box>
 
@@ -521,14 +540,6 @@ export const CardsByID = () => {
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
 									console.log('🚀 ~ RaceScreen ~ value:', value)
-									// Suggest the creation of a new value
-									// const isExisting = options.some((option) => inputValue === option.title);
-									// if (inputValue !== '' && !isExisting) {
-									//   filtered.push({
-									//     inputValue,
-									//     title: `Add "${inputValue}"`,
-									//   });
-									// }
 
 									return filtered
 								}}
@@ -561,9 +572,6 @@ export const CardsByID = () => {
 										variant='outlined'
 										fullWidth
 										id='fullWidth'
-										// onChange={e => {
-										// 	handleChange(e)
-										// }}
 									/>
 								)}
 							/>
@@ -586,14 +594,6 @@ export const CardsByID = () => {
 									const { inputValue } = params
 									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
 									console.log('🚀 ~ RaceScreen ~ value:', value)
-									// // Suggest the creation of a new value
-									//  const isExisting = options.some((option) => inputValue === option.title);
-									//  if (inputValue !== '' && !isExisting) {
-									//   filtered.push({
-									//      inputValue,
-									//      title: `Add "${inputValue}"`,
-									//    });
-									//  }
 
 									return filtered
 								}}
