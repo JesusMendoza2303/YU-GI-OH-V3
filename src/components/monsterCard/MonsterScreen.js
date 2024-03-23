@@ -7,11 +7,11 @@ import {
 	getcardsByTypeLOCAL,
 	reinicio,
 } from '../../store/slices/cards/CardsAccions'
-import { CardGrid } from '../CardGrid/CardGrid'
+import { CardGrid } from '../helpers/CardGrid'
 
 import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
 
-import { Index } from '../CardGrid/Index'
+import { Index } from '../helpers/Index'
 
 export const MonsterScreen = () => {
 	const dispatch = useDispatch()
@@ -21,7 +21,7 @@ export const MonsterScreen = () => {
 		count,
 		isLoading,
 	} = useSelector(state => state.cards)
-	console.log('🚀 ~ TrapScreen ~ cards:', cards)
+
 	const type = 'Normal Monster'
 	const [check, setCheck] = useState(true)
 

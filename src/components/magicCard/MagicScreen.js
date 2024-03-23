@@ -2,7 +2,7 @@
 /* eslint-disable no-lone-blocks */
 import React, { useEffect, useState } from 'react'
 import { Navbar } from '../Navbar/Navbar'
-import { CardGrid } from '../CardGrid/CardGrid'
+import { CardGrid } from '../helpers/CardGrid'
 import {
 	getcardsByTypeLOCAL,
 	reinicio,
@@ -13,7 +13,7 @@ import Button from '@mui/material/Button'
 
 import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
 
-import { Index } from '../CardGrid/Index'
+import { Index } from '../helpers/Index'
 
 export const MagicScreen = () => {
 	const dispatch = useDispatch()

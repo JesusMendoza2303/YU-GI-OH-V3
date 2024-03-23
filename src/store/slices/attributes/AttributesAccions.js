@@ -18,8 +18,6 @@ export const createAttribute = newAttribute => {
 }
 
 export const removeAttribute = attributeId => {
-	console.log('🚀 ~ removeAttribute ~ attributeId:', attributeId)
-	console.log('borrao papa')
 	return async (dispatch, getState) => {
 		const attributes = await cardsApiLocal.delete(
 			`http://localhost:3030/attributes/${attributeId}`,
@@ -28,7 +26,6 @@ export const removeAttribute = attributeId => {
 }
 
 export const editAttribute = (idrow, attribute) => {
-	console.log('🚀 ~ editCardGrid ~ params:', idrow)
 	return async (dispatch, getState) => {
 		const cards = await cardsApiLocal.put(
 			`http://localhost:3030/attributes/${idrow}`,

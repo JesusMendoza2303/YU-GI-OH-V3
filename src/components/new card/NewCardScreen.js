@@ -43,8 +43,8 @@ import { useTranslation, Trans, i18n } from 'react-i18next'
 import { NewCardAccions } from './NewCardAccions/NewCardAccions'
 import allHandles from './handles/handle'
 import Draggable from 'react-draggable'
-import { FormularioBase } from '../CardGrid/FormularioBase'
-import { FormularioTerminosCondiciones } from '../CardGrid/FormularioTerminosCondiciones'
+import { FormularioBase } from '../helpers/FormularioBase'
+import { FormularioTerminosCondiciones } from '../helpers/FormularioTerminosCondiciones'
 
 const filter = createFilterOptions()
 
@@ -257,7 +257,6 @@ export const NewCardScreen = () => {
 	//  }, [])
 
 	const handlesubmit = e => {
-		console.log('se ha enviado')
 		//	 boton de carga
 		e?.preventDefault()
 		if (!loading) {

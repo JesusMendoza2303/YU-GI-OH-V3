@@ -7,12 +7,13 @@ import {
 	getcardsByNameLocal2,
 	reinicio,
 } from './store/slices/cards/CardsAccions'
-import { CardGrid } from './components/CardGrid/CardGrid'
+import { CardGrid } from './components/helpers/CardGrid'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import {
 	Alert,
 	CircularProgress,
+	Fade,
 	Grow,
 	Pagination,
 	Typography,
@@ -67,8 +68,6 @@ export const YugiohApp = () => {
 		}
 	}
 
-	console.log(cards.length)
-
 	const checked = () => {
 		if (cards.length < 1) {
 			setCheck(true)
@@ -78,24 +77,28 @@ export const YugiohApp = () => {
 	return (
 		<div className='general'>
 			<Navbar />
-
-			<Typography
-				justifyContent={'center'}
-				variant='h3'
-				component='h3'
-				className='principalTitle'
-				sx={{
-					mr: 2,
-					display: { xs: 'none', md: 'flex' },
-					fontFamily: 'Namdhinggo',
-					fontWeight: 500,
-					letterSpacing: '.3rem',
-					textDecoration: 'none',
-				}}
+			<Fade
+				in={checked}
+				style={{ transformOrigin: '0 0 0' }}
+				{...(checked ? { timeout: 1000 } : {})}
 			>
-				<Trans i18nKey='which'>WHICH CARD DO YOU WANT TO SEARCH?</Trans>
-			</Typography>
-
+				<Typography
+					justifyContent={'center'}
+					variant='h3'
+					component='h3'
+					className='principalTitle'
+					sx={{
+						mr: 2,
+						display: { xs: 'none', md: 'flex' },
+						fontFamily: 'Namdhinggo',
+						fontWeight: 500,
+						letterSpacing: '.3rem',
+						textDecoration: 'none',
+					}}
+				>
+					<Trans i18nKey='which'>WHICH CARD DO YOU WANT TO SEARCH?</Trans>
+				</Typography>
+			</Fade>
 			<div>
 				<Box
 					onSubmit={handleSubmit}

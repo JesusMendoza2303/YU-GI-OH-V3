@@ -85,8 +85,7 @@ export const RaceScreen = () => {
 
 	const handleDeleteClick = () => {
 		if (confirm('are you sure to delete this card?') === true) {
-			dispatch(remove())
-			console.log('borrado').then(res => {
+			dispatch(remove()).then(res => {
 				dispatch(getRaces())
 			})
 		}
@@ -141,7 +140,7 @@ export const RaceScreen = () => {
 			headerName: 'Actions',
 			width: 300,
 			cellClassName: 'actions',
-			renderCell: params => <RaceAccions {...{ params, rowId, setRowId }} />,
+			renderCell: params => <RaceAccions data={{ params, rowId }} />,
 
 			filterable: false,
 		},
@@ -212,6 +211,9 @@ export const RaceScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
+					onCellEditStart={params => {
+						setRowId(params.id)
+					}}
 				/>
 			</Box>
 

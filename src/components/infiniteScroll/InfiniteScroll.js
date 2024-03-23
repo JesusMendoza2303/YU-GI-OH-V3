@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux'
 
 export const InfiniteScroll = () => {
 	const { cards = [], isLoading, tarjeta } = useSelector(state => state.cards)
-	console.log('🚀 ~ InfiniteScroll ~ cards:', cards)
-	console.log('🚀 ~ InfiniteScroll ~ tarjeta:', tarjeta)
 
 	return (
 		<div>

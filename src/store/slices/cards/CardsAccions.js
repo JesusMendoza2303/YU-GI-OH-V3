@@ -110,7 +110,6 @@ export const editCard = (cardsid, naipe) => {
 }
 
 export const editCardGrid = (idrow, naipe) => {
-	console.log('🚀 ~ editCardGrid ~ params:', idrow)
 	return async (dispatch, getState) => {
 		const cards = await cardsApiLocal.put(
 			`http://localhost:3030/data/${idrow}`,

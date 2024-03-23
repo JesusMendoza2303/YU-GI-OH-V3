@@ -15611,7 +15611,7 @@
 			"id": 99928018
 		},
 		{
-			"name": "prueba ",
+			"name": "prueba 3000",
 			"type": "Trap Card",
 			"atk": 0,
 			"def": 0,
@@ -15628,24 +15628,6 @@
 			"id": 99928020
 		},
 		{
-			"id": 99928021,
-			"name": "prueba formulario base",
-			"desc": "carta prueba",
-			"atk": "1500",
-			"def": "1500",
-			"level": 1,
-			"race": "Dragon",
-			"attribute": "WATER",
-			"type": "Normal Monster",
-			"firstdate": "2024-02-26",
-			"lastdate": "2024-03-28",
-			"card_images": [
-				{
-					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
-				}
-			]
-		},
-		{
 			"name": "prueba terminos y condiciones ahora ID 2",
 			"desc": "carta prueba ahora IID 2",
 			"atk": "1500",
@@ -15660,6 +15642,24 @@
 				}
 			],
 			"id": 99928022
+		},
+		{
+			"id": 99928023,
+			"name": "prueba despues de helpers",
+			"desc": "prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "Rock",
+			"attribute": "",
+			"type": "Spell Card",
+			"firstdate": "2024-03-07",
+			"lastdate": "2024-03-27",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
 		}
 	],
 	"races": [
@@ -15776,16 +15776,8 @@
 			"name": "sddsdsds"
 		},
 		{
-			"id": 29,
-			"name": "equisde"
-		},
-		{
-			"id": 30,
-			"name": "prueba raza"
-		},
-		{
-			"name": "alexa32",
-			"id": 32
+			"name": "equisde 15",
+			"id": 29
 		}
 	],
 	"attributes": [
@@ -15826,12 +15818,8 @@
 			"name": "CARACAS"
 		},
 		{
-			"name": "MOROCONDO",
-			"id": 12
-		},
-		{
-			"id": 13,
-			"name": "LUFFY"
+			"name": "LUFFY ",
+			"id": 13
 		}
 	]
 }

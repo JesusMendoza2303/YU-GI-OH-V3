@@ -37,7 +37,6 @@ export const Navbar = () => {
 		setAnchorEl(event.currentTarget)
 	}
 	const handleClose = () => {
-		console.log('cerrado')
 		setAnchorEl(null)
 	}
 
@@ -47,7 +46,6 @@ export const Navbar = () => {
 		setAnchorElCards(event.currentTarget)
 	}
 	const handleCloseCards = () => {
-		console.log('cerrado')
 		setAnchorElCards(null)
 	}
 

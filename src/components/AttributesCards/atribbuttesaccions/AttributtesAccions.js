@@ -24,8 +24,13 @@ import {
 	getAttributes,
 	removeAttribute,
 } from '../../../store/slices/attributes/AttributesAccions'
+import { BotonEditarGrid } from '../../helpers/BotonEditarGrid'
+import { BotonEliminarGrid } from '../../helpers/BotonEliminarGrid'
 
-export const AttributtesAccions = (params, rowId, setRowId) => {
+export const AttributtesAccions = data => {
+	const params = data.data.params
+	const rowId = data.data.rowId
+
 	const dispatch = useDispatch()
 
 	const [loading, setLoading] = useState(false)
@@ -33,9 +38,9 @@ export const AttributtesAccions = (params, rowId, setRowId) => {
 	const [checked, setChecked] = useState(true)
 
 	const handledelete = () => {
-		const { id } = params.params
+		const id = params.id
 		const attributeId = id
-		console.log('🚀 ~ handledelete ~ attributeId:', attributeId)
+
 		if (confirm('are you sure to delete this attribute?') === true) {
 			dispatch(removeAttribute(attributeId)).then(res => {
 				dispatch(getAttributes())
@@ -45,102 +50,45 @@ export const AttributtesAccions = (params, rowId, setRowId) => {
 
 	const handleSubmit = () => {
 		setLoading(true)
-
-		console.log(params.params.row)
-
-		const { id } = params.params
+		const id = params.id
 		const idrow = id
 		console.log('🚀 ~ handleSubmit ~ idrow:', idrow)
-
-		const { name } = params.params.row
+		const { name } = params.row
+		console.log('🚀 ~ handleSubmit ~ name:', name)
 
 		const naipe = {
 			name,
 		}
-
-		console.log('esto es params', params.params)
-		console.log('esto es rowId', rowId)
-		console.log('esto es naipe', naipe)
-
 		dispatch(editAttribute(idrow, naipe))
 
 		setLoading(false)
 		setSuccess(true)
 	}
 
+	if (success) {
+		setTimeout(() => {
+			setSuccess(false)
+		}, 1000)
+	}
+
 	return (
 		<div>
 			{/* boton de edicion */}
-			<Grow
-				in={checked}
-				style={{ transformOrigin: '0 0 0' }}
-				{...(checked ? { timeout: 1000 } : {})}
-			>
-				<Fab
-					color='info'
-					sx={{
-						width: 40,
-						height: 40,
-						margin: 1,
-					}}
-				>
-					{success ? (
-						<Fab
-							color='primary'
-							sx={{
-								width: 40,
-								height: 40,
-								bgcolor: green[500],
-								'&:hover': { bgcolor: green[700] },
-							}}
-						>
-							<Check />
-						</Fab>
-					) : (
-						<div
-							// disabled={params.params.id !== rowId || loading}
 
-							onClick={handleSubmit}
-						>
-							<Save />
-						</div>
-					)}
-
-					{loading && (
-						<CircularProgress
-							size={52}
-							sx={{
-								color: green[500],
-								position: 'absolute',
-								top: -6,
-								left: -6,
-								zIndex: 1,
-							}}
-						/>
-					)}
-				</Fab>
-			</Grow>
+			<BotonEditarGrid
+				dataEdit={{
+					success,
+					checked,
+					green,
+					loading,
+					params,
+					handleSubmit,
+					rowId,
+				}}
+			/>
 
 			{/* boton de eliminacion */}
-
-			<Grow
-				in={checked}
-				style={{ transformOrigin: '0 0 0' }}
-				{...(checked ? { timeout: 1500 } : {})}
-			>
-				<Fab
-					color='error'
-					sx={{
-						width: 40,
-						height: 40,
-						margin: 1,
-					}}
-					// disabled={params.params.id !== rowId || loading}
-					onClick={handledelete}
-				>
-					<Delete />
-				</Fab>
-			</Grow>
+			<BotonEliminarGrid dataDelete={{ checked, handledelete }} />
 		</div>
 	)
 }

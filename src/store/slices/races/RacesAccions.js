@@ -26,7 +26,6 @@ export const removeRaces = raceId => {
 }
 
 export const editRaces = (idrow, race) => {
-	console.log('🚀 ~ editCardGrid ~ params:', idrow)
 	return async (dispatch, getState) => {
 		const cards = await cardsApiLocal.put(
 			`http://localhost:3030/races/${idrow}`,

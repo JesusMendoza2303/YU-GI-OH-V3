@@ -133,9 +133,7 @@ export const AttributesScreen = () => {
 			headerName: 'Actions',
 			width: 300,
 			cellClassName: 'actions',
-			renderCell: params => (
-				<AttributtesAccions {...{ params, rowId, setRowId }} />
-			),
+			renderCell: params => <AttributtesAccions data={{ params, rowId }} />,
 
 			filterable: false,
 		},
@@ -208,6 +206,9 @@ export const AttributesScreen = () => {
 						},
 					}}
 					slots={{ toolbar: GridToolbar }}
+					onCellEditStart={params => {
+						setRowId(params.id)
+					}}
 					// sdisableRowSelectionOnClick
 				/>
 			</Box>

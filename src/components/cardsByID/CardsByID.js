@@ -39,8 +39,8 @@ import { getAttributes } from '../../store/slices/attributes/AttributesAccions'
 import { useTranslation, Trans, i18n } from 'react-i18next'
 import Draggable from 'react-draggable'
 import allHandles from './handles/handles'
-import { FormularioBase } from '../CardGrid/FormularioBase'
-import { FormularioTerminosCondiciones } from '../CardGrid/FormularioTerminosCondiciones'
+import { FormularioBase } from '../helpers/FormularioBase'
+import { FormularioTerminosCondiciones } from '../helpers/FormularioTerminosCondiciones'
 
 const filter = createFilterOptions()
 
@@ -104,7 +104,6 @@ export const CardsByID = () => {
 				}
 
 				const cardsdetaild = response.data[0]
-				console.log('🚀 ~ useEffect ~ cardsdetaild:', cardsdetaild)
 
 				setCard_images(cardsdetaild.card_images[0]?.image_url)
 

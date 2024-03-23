@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import {
 	Autocomplete,
@@ -11,26 +12,22 @@ import React from 'react'
 import { Trans } from 'react-i18next'
 
 export const FormularioBase = data => {
-	console.log('🚀 ~ formularioBase ~ data:', data)
 	const values = data.data.values
-	console.log('🚀 ~ formularioBase ~ values:', values)
+
 	const handleChange = data.data.handleChange
-	console.log('🚀 ~ formularioBase ~ handleChange:', handleChange)
+
 	const setCard_images = data.data.setCard_images
-	console.log('🚀 ~ formularioBase ~ setCard_images:', setCard_images)
+
 	const card_images = data.data.card_images
-	console.log('🚀 ~ formularioBase ~ card_images:', card_images)
+
 	const handleChangeSelection = data.data.handleChangeSelection
-	console.log(
-		'🚀 ~ formularioBase ~ handleChangeSelection:',
-		handleChangeSelection,
-	)
+
 	const filter = data.data.filter
-	console.log('🚀 ~ formularioBase ~ filter:', filter)
+
 	const races = data.data.races
-	console.log('🚀 ~ formularioBase ~ races:', races)
+
 	const attributes = data.data.attributes
-	console.log('🚀 ~ formularioBase ~ attributes:', attributes)
+
 	return (
 		<>
 			{/* formulario de nombre */}
@@ -134,14 +131,12 @@ export const FormularioBase = data => {
 				value={values.race}
 				name='race'
 				onChange={(e, value) => {
-					console.log('🚀 ~ CardsByID ~ value:', value)
 					handleChangeSelection('race', value)
 				}}
 				filterOptions={(options, params) => {
 					const filtered = filter(options, params)
 
 					const { inputValue } = params
-					console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
 
 					return filtered
 				}}
@@ -190,7 +185,6 @@ export const FormularioBase = data => {
 					const filtered = filter(options, params)
 
 					const { inputValue } = params
-					console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
 
 					return filtered
 				}}

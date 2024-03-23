@@ -7,11 +7,11 @@ import {
 	getcardsByTypeLOCAL,
 	reinicio,
 } from '../../store/slices/cards/CardsAccions'
-import { CardGrid } from '../CardGrid/CardGrid'
+import { CardGrid } from '../helpers/CardGrid'
 
 import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
 
-import { Index } from '../CardGrid/Index'
+import { Index } from '../helpers/Index'
 
 export const TrapScreen = () => {
 	const dispatch = useDispatch()
