@@ -28,44 +28,23 @@ import {
 	Box,
 	Avatar,
 	Snackbar,
-	MenuItem,
-	Menu,
 	Autocomplete,
 	createFilterOptions,
 	DialogActions,
 	Grow,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
-import CircularProgress from '@mui/material/CircularProgress'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import Fab from '@mui/material/Fab'
-import CheckIcon from '@mui/icons-material/Check'
-import SaveIcon from '@mui/icons-material/Save'
-import { green } from '@mui/material/colors'
-import {
-	DataGrid,
-	GridToolbar,
-	GridRowModes,
-	GridToolbarContainer,
-	GridActionsCellItem,
-	GridRowEditStopReasons,
-} from '@mui/x-data-grid'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
-import CloseIcon from '@mui/icons-material/Close'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import { getRaces } from '../../store/slices/races/RacesAccions'
 import { getAttributes } from '../../store/slices/attributes/AttributesAccions'
 import { useTranslation, Trans, i18n } from 'react-i18next'
-import AddIcon from '@mui/icons-material/Add'
-import CancelIcon from '@mui/icons-material/Cancel'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { NewCardAccions } from './NewCardAccions/NewCardAccions'
 import allHandles from './handles/handle'
 import Draggable from 'react-draggable'
+import { FormularioBase } from '../CardGrid/FormularioBase'
+import { FormularioTerminosCondiciones } from '../CardGrid/FormularioTerminosCondiciones'
 
 const filter = createFilterOptions()
 
@@ -154,7 +133,7 @@ export const NewCardScreen = () => {
 		openchange(false)
 	}
 
-	const openpopup = () => {
+	const openPopupButton = () => {
 		openchange(true)
 		clearstate()
 	}
@@ -203,7 +182,7 @@ export const NewCardScreen = () => {
 				field: 'level',
 				headerName: 'level',
 				type: 'number',
-				width: 50,
+				width: 80,
 				editable: true,
 			},
 			{
@@ -352,9 +331,9 @@ export const NewCardScreen = () => {
 				</Box>
 			)}
 
-			{/* boton de creacion */}
-
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
+				{/* boton de creacion */}
+
 				<div style={{ margin: '1%' }}>
 					<Grow
 						in={checked}
@@ -363,7 +342,7 @@ export const NewCardScreen = () => {
 					>
 						<Button
 							className='createboton'
-							onClick={openpopup}
+							onClick={openPopupButton}
 							startIcon={<AddCircleIcon />}
 							variant='cotained'
 						>
@@ -410,10 +389,12 @@ export const NewCardScreen = () => {
 				onClose={closepopup}
 				fullWidth
 				maxWidth='sm'
-				aria-labelledby='draggable-dialog-title'
-				PaperComponent={PaperComponent}
+				// aria-labelledby='draggable-dialog-title'
+				// PaperComponent={PaperComponent}
 			>
-				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+				<DialogTitle
+				//  style={{ cursor: 'move' }} id='draggable-dialog-title'
+				>
 					{<AddReactionIcon />}
 					<span>
 						<Trans i18nKey='crearFormCarta'>Create a new card!</Trans>
@@ -422,240 +403,20 @@ export const NewCardScreen = () => {
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
 						<Stack spacing={2} margin={2}>
-							{/* formulario de nombre */}
+							{/* aqui esta los formularios desde nombre hasta defensa */}
 
-							<TextField
-								required
-								error={values.name.trim().length < 2}
-								name='name'
-								value={values.name}
-								onChange={e => {
-									handleChange(e)
+							<FormularioBase
+								data={{
+									values,
+									handleChange,
+									setCard_images,
+									card_images,
+									handleChangeSelection,
+									filter,
+									races,
+									attributes,
 								}}
-								variant='outlined'
-								label='name'
-							></TextField>
-
-							{/* formulario de descripcion */}
-
-							<TextField
-								required
-								error={values.desc.trim().length < 2}
-								name='desc'
-								value={values.desc}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='dec'
-							></TextField>
-
-							{/* formulario de imagenes */}
-
-							<TextField
-								required
-								value={card_images}
-								name='image'
-								onChange={e => {
-									setCard_images(e.target.value)
-								}}
-								variant='outlined'
-								label='incerta la url de la imagen'
-							></TextField>
-
-							{/* formulario de nivel */}
-
-							<TextField
-								required
-								type='number'
-								error={values.level < 1}
-								value={values.level}
-								name='level'
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='level'
-							></TextField>
-
-							{/* formulario de tipos */}
-
-							<RadioGroup required>
-								<Typography variant='h6' textAlign={'center'}>
-									<Trans i18nKey='TypeForm'>What type of card is it?</Trans>
-								</Typography>
-
-								<FormControlLabel
-									name='type'
-									value={'Normal Monster'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Normal Monster'
-								></FormControlLabel>
-
-								<FormControlLabel
-									name='type'
-									value={'Spell Card'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Spell Card'
-								></FormControlLabel>
-
-								<FormControlLabel
-									name='type'
-									value={'Trap Card'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Trap Card'
-								></FormControlLabel>
-							</RadioGroup>
-
-							{/* formulario de raza */}
-
-							<Autocomplete
-								required
-								value={values.race}
-								name='race'
-								onChange={(e, value) => {
-									console.log('🚀 ~ CardsByID ~ value:', value)
-									handleChangeSelection('race', value)
-								}}
-								filterOptions={(options, params) => {
-									const filtered = filter(options, params)
-
-									const { inputValue } = params
-									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-
-									return filtered
-								}}
-								selectOnFocus
-								clearOnBlur
-								handleHomeEndKeys
-								id='free-solo-with-text-demo'
-								options={races}
-								getOptionLabel={option => {
-									// Value selected with enter, right from the input
-									if (typeof option === 'string') {
-										return option
-									}
-									// Add "xxx" option created dynamically
-									if (option.inputValue) {
-										return option.inputValue
-									}
-									// Regular option
-
-									return option.name
-								}}
-								renderOption={(props, option) => (
-									<li {...props}>{option.name}</li>
-								)}
-								freeSolo
-								renderInput={params => (
-									<TextField
-										{...params}
-										label='Race'
-										variant='outlined'
-										fullWidth
-										id='fullWidth'
-									/>
-								)}
 							/>
-
-							{/* formulario de atributo */}
-
-							<Autocomplete
-								required
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								value={values.attribute}
-								name='attribute'
-								onChange={(e, value) => {
-									handleChangeSelection('attribute', value)
-								}}
-								filterOptions={(options, params) => {
-									const filtered = filter(options, params)
-
-									const { inputValue } = params
-									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-
-									return filtered
-								}}
-								selectOnFocus
-								clearOnBlur
-								handleHomeEndKeys
-								id='free-solo-with-text-demo'
-								options={attributes}
-								getOptionLabel={option => {
-									// Value selected with enter, right from the input
-									if (typeof option === 'string') {
-										return option
-									}
-									// Add "xxx" option created dynamically
-									if (option.inputValue) {
-										return option.inputValue
-									}
-									// Regular option
-
-									return option.name
-								}}
-								renderOption={(props, option) => (
-									<li {...props}>{option.name}</li>
-								)}
-								freeSolo
-								renderInput={params => (
-									<TextField
-										{...params}
-										label='Attribute'
-										variant='outlined'
-										fullWidth
-										id='fullWidth'
-										onChange={e => {
-											handleChange(e)
-										}}
-									/>
-								)}
-							/>
-
-							{/* formulario de ataque */}
-
-							<TextField
-								type='number'
-								name='atk'
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								value={values.atk}
-								error={values.atk < 0}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='atk'
-							></TextField>
-
-							{/* formulario de defensa */}
-
-							<TextField
-								type='number'
-								name='def'
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								required={values.def > 0}
-								value={values.def}
-								error={values.def < 0}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-							></TextField>
 
 							{/* inputs de fecha */}
 
@@ -669,10 +430,6 @@ export const NewCardScreen = () => {
 								type='Date'
 								name='firstdate'
 								required
-								// disabled={
-								// 	values.type === 'Spell Card' || values.type === 'Trap Card'
-								// }
-								// required={values.def > 0}
 								value={values.firsdate}
 								error={values.firstdate > values.lastdate}
 								onChange={e => {
@@ -701,55 +458,9 @@ export const NewCardScreen = () => {
 
 							{/* formulario de terminos y condiciones */}
 
-							<FormControlLabel
-								checked={agreeterm}
-								onChange={e => {
-									agreetermchange(e.target.checked)
-								}}
-								control={<Checkbox></Checkbox>}
-								label='Agree Terms & Conditions'
-							></FormControlLabel>
-
-							{/* boton de guardado */}
-
-							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Fab
-										aria-label='save'
-										type='submit'
-										disabled={
-											!agreeterm ||
-											values.atk < 0 ||
-											values.def < 0 ||
-											values.level < 1 ||
-											values.name.trim().length < 2 ||
-											values.desc.trim().length < 2 ||
-											values.firstdate.trim().length === 0 ||
-											values.lastdate.trim().length === 0 ||
-											values.lastdate < values.firstdate ||
-											values.firstdate > values.lastdate ||
-											values.type.trim().length === 0
-										}
-										color='secondary'
-										sx={buttonSx}
-										onClick={handlesubmit}
-									>
-										{success ? <CheckIcon /> : <SaveIcon />}
-									</Fab>
-									{loading && (
-										<CircularProgress
-											size={68}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: -6,
-												left: -6,
-												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-							</Box> */}
+							<FormularioTerminosCondiciones
+								dataTerms={{ agreeterm, agreetermchange }}
+							/>
 						</Stack>
 					</form>
 				</DialogContent>

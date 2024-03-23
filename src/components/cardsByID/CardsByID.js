@@ -11,31 +11,22 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import {
-	Autocomplete,
 	Button,
 	Checkbox,
-	Collapse,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Fab,
 	Fade,
 	FormControlLabel,
 	Grow,
 	Paper,
-	Radio,
-	RadioGroup,
 	Stack,
-	TextField,
 	createFilterOptions,
 } from '@mui/material'
 import { green } from '@mui/material/colors'
-import CheckIcon from '@mui/icons-material/Check'
-import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import CloseIcon from '@mui/icons-material/Close'
 import axios from 'axios'
 import {
 	editCard,
@@ -48,6 +39,8 @@ import { getAttributes } from '../../store/slices/attributes/AttributesAccions'
 import { useTranslation, Trans, i18n } from 'react-i18next'
 import Draggable from 'react-draggable'
 import allHandles from './handles/handles'
+import { FormularioBase } from '../CardGrid/FormularioBase'
+import { FormularioTerminosCondiciones } from '../CardGrid/FormularioTerminosCondiciones'
 
 const filter = createFilterOptions()
 
@@ -65,7 +58,7 @@ export const CardsByID = () => {
 
 	const [id] = useState(0)
 	const [open, openchange] = useState(false)
-	const [agreeterm] = useState(false)
+	const [agreeterm, agreetermchange] = useState(false)
 	const [card_images, setCard_images] = useState('')
 	//	const [race, setRace] = useState('')
 	const [edit, setedit] = useState(false)
@@ -150,13 +143,13 @@ export const CardsByID = () => {
 
 		// logica
 
-		const { name, desc, atk, def, level, type, race } = values
+		const { name, desc, atk, def, level, type, race, attribute } = values
 		const imagesArray = []
 		imagesArray.push({
 			image_url: card_images,
 		})
 
-		const naipe = { name, desc, atk, def, level, type, race }
+		const naipe = { name, desc, atk, def, level, type, race, attribute }
 
 		naipe.card_images = imagesArray
 
@@ -418,10 +411,12 @@ export const CardsByID = () => {
 				onClose={closepopup}
 				fullWidth
 				maxWidth='sm'
-				aria-labelledby='draggable-dialog-title'
-				PaperComponent={PaperComponent}
+				// aria-labelledby='draggable-dialog-title'
+				// PaperComponent={PaperComponent}
 			>
-				<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+				<DialogTitle
+				//  style={{ cursor: 'move' }} id='draggable-dialog-title'
+				>
 					{<EditIcon />}
 					<span>
 						<Trans i18nKey='editForm'>Edit this Card </Trans>
@@ -430,254 +425,24 @@ export const CardsByID = () => {
 				<DialogContent>
 					<form onSubmit={handlesubmit}>
 						<Stack spacing={2} margin={2}>
-							{/* formulario de name */}
-
-							<TextField
-								required
-								error={values.name.trim().length < 2}
-								name='name'
-								value={values.name}
-								onChange={e => {
-									handleChange(e)
+							<FormularioBase
+								data={{
+									values,
+									handleChange,
+									setCard_images,
+									card_images,
+									handleChangeSelection,
+									filter,
+									races,
+									attributes,
 								}}
-								variant='outlined'
-								label='name'
-							></TextField>
-
-							{/* formulario de descripcion */}
-
-							<TextField
-								required
-								error={values.desc.trim().length < 2}
-								name='desc'
-								value={values.desc}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='dec'
-							></TextField>
-
-							{/* formulario de imagenes */}
-
-							<TextField
-								required
-								value={card_images}
-								name='image'
-								onChange={e => {
-									setCard_images(e.target.value)
-								}}
-								variant='outlined'
-								label='incerta la url de la imagen'
-							></TextField>
-
-							{/* formulario de nivel */}
-
-							<TextField
-								required
-								type='number'
-								error={values.level < 1}
-								value={values.level}
-								name='level'
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='level'
-							></TextField>
-
-							{/* formulario de tipos */}
-
-							<RadioGroup required>
-								<Typography variant='h6' textAlign={'center'}>
-									<Trans i18nKey='typeFormID'>What type of card is it? </Trans>
-								</Typography>
-
-								<FormControlLabel
-									name='type'
-									value={'Normal Monster'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Normal Monster'
-								></FormControlLabel>
-
-								<FormControlLabel
-									name='type'
-									value={'Spell Card'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Spell Card'
-								></FormControlLabel>
-
-								<FormControlLabel
-									name='type'
-									value={'Trap Card'}
-									onChange={e => {
-										handleChange(e)
-									}}
-									control={<Radio></Radio>}
-									label='Trap Card'
-								/>
-							</RadioGroup>
-
-							{/* formulario de raza */}
-
-							<Autocomplete
-								required
-								value={values.race}
-								name='race'
-								onChange={(e, value) => {
-									console.log('🚀 ~ CardsByID ~ value:', value)
-									handleChangeSelection('race', value)
-								}}
-								filterOptions={(options, params) => {
-									const filtered = filter(options, params)
-
-									const { inputValue } = params
-									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-									console.log('🚀 ~ RaceScreen ~ value:', value)
-
-									return filtered
-								}}
-								selectOnFocus
-								clearOnBlur
-								handleHomeEndKeys
-								id='free-solo-with-text-demo'
-								options={races}
-								getOptionLabel={option => {
-									// Value selected with enter, right from the input
-									if (typeof option === 'string') {
-										return option
-									}
-									// Add "xxx" option created dynamically
-									if (option.inputValue) {
-										return option.inputValue
-									}
-									// Regular option
-
-									return option.name
-								}}
-								renderOption={(props, option) => (
-									<li {...props}>{option.name}</li>
-								)}
-								freeSolo
-								renderInput={params => (
-									<TextField
-										{...params}
-										label='Race'
-										variant='outlined'
-										fullWidth
-										id='fullWidth'
-									/>
-								)}
 							/>
-
-							{/* formulario de atributo */}
-
-							<Autocomplete
-								required
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								value={values.attribute}
-								name='attribute'
-								onChange={(e, value) => {
-									handleChangeSelection('attribute', value)
-								}}
-								filterOptions={(options, params) => {
-									const filtered = filter(options, params)
-
-									const { inputValue } = params
-									console.log('🚀 ~ CardsDetail ~ inputValue:', inputValue)
-									console.log('🚀 ~ RaceScreen ~ value:', value)
-
-									return filtered
-								}}
-								selectOnFocus
-								clearOnBlur
-								handleHomeEndKeys
-								id='free-solo-with-text-demo'
-								options={attributes}
-								getOptionLabel={option => {
-									// Value selected with enter, right from the input
-									if (typeof option === 'string') {
-										return option
-									}
-									// Add "xxx" option created dynamically
-									if (option.inputValue) {
-										return option.inputValue
-									}
-									// Regular option
-
-									return option.name
-								}}
-								renderOption={(props, option) => (
-									<li {...props}>{option.name}</li>
-								)}
-								freeSolo
-								renderInput={params => (
-									<TextField
-										{...params}
-										label='Attribute'
-										variant='outlined'
-										fullWidth
-										id='fullWidth'
-										onChange={e => {
-											handleChange(e)
-										}}
-									/>
-								)}
-							/>
-
-							{/* formulario de ataque */}
-
-							<TextField
-								type='number'
-								name='atk'
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								value={values.atk}
-								error={values.atk < 0}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='atk'
-							/>
-
-							{/* formulario de defensa */}
-
-							<TextField
-								type='number'
-								name='def'
-								disabled={
-									values.type === 'Spell Card' || values.type === 'Trap Card'
-								}
-								required={values.def > 0}
-								value={values.def}
-								error={values.def < 0}
-								onChange={e => {
-									handleChange(e)
-								}}
-								variant='outlined'
-								label='def'
-							></TextField>
 
 							{/* formulario de terminos y condiciones */}
 
-							<FormControlLabel
-								checked={agreeterm}
-								onChange={e => {
-									handleChange(e)
-								}}
-								control={<Checkbox></Checkbox>}
-								label='Agree Terms & Conditions'
-							></FormControlLabel>
+							<FormularioTerminosCondiciones
+								dataTerms={{ agreeterm, agreetermchange }}
+							/>
 
 							{/* nuevos botones de guardado y cierre */}
 

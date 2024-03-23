@@ -93,6 +93,12 @@ export const NewCardAccions = data => {
 		dispatch(reinicio())
 	}
 
+	if (success) {
+		setTimeout(() => {
+			setSuccess(false)
+		}, 1000)
+	}
+
 	return (
 		<div>
 			{/* boton de edicion */}

@@ -94,7 +94,7 @@ export const RaceScreen = () => {
 
 	// apertura y cierre del popup
 
-	const addAttribute = () => {
+	const openPopupButton = () => {
 		openpopup()
 		clearState()
 	}
@@ -171,9 +171,9 @@ export const RaceScreen = () => {
 		<div className='general'>
 			<Navbar />
 
-			{/* boton de creacion */}
-
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
+				{/* boton de creacion */}
+
 				<div style={{ margin: '1%' }}>
 					<Grow
 						in={checked}
@@ -182,7 +182,7 @@ export const RaceScreen = () => {
 					>
 						<Button
 							className='createboton'
-							onClick={addAttribute}
+							onClick={openPopupButton}
 							startIcon={<AddCircleIcon />}
 							variant='cotained'
 						>

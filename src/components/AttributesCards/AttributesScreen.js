@@ -86,7 +86,7 @@ export const AttributesScreen = () => {
 
 	// apertura y cierre del popup
 
-	const addAttribute = () => {
+	const openPopupButton = () => {
 		openpopup()
 		clearState()
 	}
@@ -166,9 +166,8 @@ export const AttributesScreen = () => {
 		<div>
 			<Navbar />
 
-			{/* boton de creacion */}
-
 			<Box sx={{ margin: '1%', backgroundColor: 'white' }}>
+				{/* boton de creacion */}
 				<div style={{ margin: '1%' }}>
 					<Grow
 						in={checked}
@@ -177,7 +176,7 @@ export const AttributesScreen = () => {
 					>
 						<Button
 							className='createboton'
-							onClick={addAttribute}
+							onClick={openPopupButton}
 							startIcon={<AddCircleIcon />}
 							variant='cotained'
 						>

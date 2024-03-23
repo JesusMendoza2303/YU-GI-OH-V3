@@ -3,9 +3,9 @@
 		{
 			"name": "7 completed",
 			"type": "Spell Card",
-			"desc": "Activate this card by choosing ATK or DEF; equip only to a Machine monster. It gains 700 ATK or DEF, depending on the choice.",
+			"desc": "Activate this card by choosing ATK or DEF; equip only to a Machine monster. It gains 700 ATK or DEF, depending on the choice.dsdsds",
 			"race": "Equip",
-			"level": 0,
+			"level": 4,
 			"card_images": [
 				{
 					"image_url": "https://images.ygoprodeck.com/images/cards/86198326.jpg"
@@ -15611,15 +15611,15 @@
 			"id": 99928018
 		},
 		{
-			"name": "prueba mondongo",
-			"type": "Normal Monter",
+			"name": "prueba ",
+			"type": "Trap Card",
 			"atk": 0,
 			"def": 0,
 			"desc": "Primarca de la guardia del cuervo",
 			"firstdate": "2024-03-07",
 			"lastdate": "2024-03-27",
 			"race": "pirate",
-			"level": 1,
+			"level": 0,
 			"card_images": [
 				{
 					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
@@ -15628,21 +15628,38 @@
 			"id": 99928020
 		},
 		{
-			"name": "prueba handles 3",
-			"type": "Normal Monter",
-			"atk": 0,
-			"def": 0,
-			"desc": "el primarca de",
-			"firstdate": "2024-03-01",
-			"lastdate": "2024-03-28",
-			"race": "Normal",
+			"id": 99928021,
+			"name": "prueba formulario base",
+			"desc": "carta prueba",
+			"atk": "1500",
+			"def": "1500",
 			"level": 1,
+			"race": "Dragon",
+			"attribute": "WATER",
+			"type": "Normal Monster",
+			"firstdate": "2024-02-26",
+			"lastdate": "2024-03-28",
 			"card_images": [
 				{
 					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
 				}
+			]
+		},
+		{
+			"name": "prueba terminos y condiciones ahora ID 2",
+			"desc": "carta prueba ahora IID 2",
+			"atk": "1500",
+			"def": "1500",
+			"level": "6",
+			"type": "Normal Monster",
+			"race": "Dragon",
+			"attribute": "LUFFY",
+			"card_images": [
+				{
+					"image_url": "https://www.geekmi.news/__export/1696177652184/sites/debate/img/2023/10/01/disexo_sin_txtulo_x15x.jpg_673822677.jpg"
+				}
 			],
-			"id": 99928025
+			"id": 99928022
 		}
 	],
 	"races": [
@@ -15811,6 +15828,10 @@
 		{
 			"name": "MOROCONDO",
 			"id": 12
+		},
+		{
+			"id": 13,
+			"name": "LUFFY"
 		}
 	]
 }
