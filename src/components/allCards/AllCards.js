@@ -26,8 +26,11 @@ import { Trans, useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import handles from './handles/handles'
 
 export const AllCards = () => {
+	// variables
+
 	const dispatch = useDispatch()
 	const {
 		cards = [],
@@ -38,15 +41,9 @@ export const AllCards = () => {
 	const [hasMore, setHasMore] = useState(true)
 	const [openSnack, setOpenSnack] = useState(true)
 	const [checked, setChecked] = React.useState(true)
-
 	const { t, i18n } = useTranslation()
 
-	const hanldesnackclose = () => {
-		setOpenSnack(false)
-	}
-	const hanldesnackOpen = () => {
-		setOpenSnack(true)
-	}
+	// llamada de las cartas
 
 	useEffect(() => {
 		dispatch(getcardsLocal(page + 1))
@@ -55,11 +52,16 @@ export const AllCards = () => {
 		}
 	}, [])
 
-	const fetchMoreData = () => {
-		setTimeout(() => {
-			dispatch(getScrollingCardsLocal(page + 1, cards))
-		}, 1000)
-	}
+	// handles
+
+	const { hanldesnackclose, fetchMoreData } = handles(
+		setOpenSnack,
+		dispatch,
+		getScrollingCardsLocal,
+		page,
+		cards,
+	)
+
 	return (
 		<div className='general'>
 			<Navbar />

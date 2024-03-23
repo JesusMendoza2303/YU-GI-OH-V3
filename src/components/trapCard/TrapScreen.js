@@ -7,11 +7,8 @@ import {
 	getcardsByTypeLOCAL,
 	reinicio,
 } from '../../store/slices/cards/CardsAccions'
-import { CardGrid } from '../helpers/CardGrid'
-
-import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
-
 import { Index } from '../helpers/Index'
+import handles from '../helpers/handlesCards/handles'
 
 export const TrapScreen = () => {
 	const dispatch = useDispatch()
@@ -23,21 +20,13 @@ export const TrapScreen = () => {
 	} = useSelector(state => state.cards)
 	const type = 'Trap Card'
 	const [check, setCheck] = useState(true)
-
 	const pageSize = 12
-
-	// esto es para la paginacion
-
-	const handleChange = (event, page) => {
-		const from = (page - 1) * pageSize
-		const to = (page - 1) * pageSize + pageSize
-		setPagination({ ...pagination, from, to })
-	}
-
 	const [pagination, setPagination] = useState({
 		from: 0,
 		to: pageSize,
 	})
+
+	// llamada a las cartas
 
 	useEffect(() => {
 		dispatch(getcardsByTypeLOCAL(type, pagination))
@@ -46,6 +35,11 @@ export const TrapScreen = () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
+
+	// handles
+
+	const { handleChange } = handles(pageSize, setPagination, pagination)
+
 	return (
 		<div className='general'>
 			<Index data={{ check, count, pageSize, handleChange }} />

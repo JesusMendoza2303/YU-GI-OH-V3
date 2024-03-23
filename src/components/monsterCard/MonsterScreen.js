@@ -12,8 +12,11 @@ import { CardGrid } from '../helpers/CardGrid'
 import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
 
 import { Index } from '../helpers/Index'
+import handles from '../helpers/handlesCards/handles'
 
 export const MonsterScreen = () => {
+	// variables
+
 	const dispatch = useDispatch()
 	const {
 		cards = [],
@@ -21,24 +24,15 @@ export const MonsterScreen = () => {
 		count,
 		isLoading,
 	} = useSelector(state => state.cards)
-
 	const type = 'Normal Monster'
 	const [check, setCheck] = useState(true)
-
 	const pageSize = 12
-
-	// esto es para la paginacion
-
-	const handleChange = (event, page) => {
-		const from = (page - 1) * pageSize
-		const to = (page - 1) * pageSize + pageSize
-		setPagination({ ...pagination, from, to })
-	}
-
 	const [pagination, setPagination] = useState({
 		from: 0,
 		to: pageSize,
 	})
+
+	// llamada de las cartas
 
 	useEffect(() => {
 		dispatch(getcardsByTypeLOCAL(type, pagination))
@@ -47,6 +41,11 @@ export const MonsterScreen = () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
+
+	// handles
+
+	const { handleChange } = handles(pageSize, setPagination, pagination)
+
 	return (
 		<div className='general'>
 			<Index data={{ check, count, pageSize, handleChange }} />

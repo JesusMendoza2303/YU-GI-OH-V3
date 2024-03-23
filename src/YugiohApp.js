@@ -20,12 +20,13 @@ import {
 } from '@mui/material'
 import { useTranslation, Trans, i18n } from 'react-i18next'
 import stiker2 from './styles/stiker2.png'
+import handles from './components/buscadorHandles/handles'
 
 export const YugiohApp = () => {
+	// variables
+
 	const { t, i18n } = useTranslation()
-
 	const [check, setCheck] = useState(false)
-
 	const dispatch = useDispatch()
 	const [search, setsearch] = useState()
 	const {
@@ -35,19 +36,13 @@ export const YugiohApp = () => {
 		tarjeta,
 		count,
 	} = useSelector(state => state.cards)
-
 	const pageSize = 12
-
-	const handleChange = (event, page) => {
-		const from = (page - 1) * pageSize
-		const to = (page - 1) * pageSize + pageSize
-		setPagination({ ...pagination, from, to })
-	}
-
 	const [pagination, setPagination] = useState({
 		from: 0,
 		to: pageSize,
 	})
+
+	// llamada a las cartas y paginacion
 
 	useEffect(() => {
 		dispatch(getcardsByNameLocal2(search, pagination))
@@ -56,23 +51,18 @@ export const YugiohApp = () => {
 		}
 	}, [pagination.from, pagination.to])
 
-	const handleInputChange = e => {
-		setsearch(e.target.value)
-	}
+	// handles
 
-	const handleSubmit = e => {
-		e.preventDefault()
-
-		if (search.trim()) {
-			dispatch(getcardsByNameLocal2(search, pagination))
-		}
-	}
-
-	const checked = () => {
-		if (cards.length < 1) {
-			setCheck(true)
-		}
-	}
+	const { handleChange, handleSubmit, checked } = handles(
+		pageSize,
+		pagination,
+		setPagination,
+		search,
+		dispatch,
+		getcardsByNameLocal2,
+		setCheck,
+		cards,
+	)
 
 	return (
 		<div className='general'>

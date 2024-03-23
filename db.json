@@ -5,7 +5,7 @@
 			"type": "Spell Card",
 			"desc": "Activate this card by choosing ATK or DEF; equip only to a Machine monster. It gains 700 ATK or DEF, depending on the choice.dsdsds",
 			"race": "Equip",
-			"level": 4,
+			"level": 1,
 			"card_images": [
 				{
 					"image_url": "https://images.ygoprodeck.com/images/cards/86198326.jpg"
@@ -15611,23 +15611,6 @@
 			"id": 99928018
 		},
 		{
-			"name": "prueba 3000",
-			"type": "Trap Card",
-			"atk": 0,
-			"def": 0,
-			"desc": "Primarca de la guardia del cuervo",
-			"firstdate": "2024-03-07",
-			"lastdate": "2024-03-27",
-			"race": "pirate",
-			"level": 0,
-			"card_images": [
-				{
-					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
-				}
-			],
-			"id": 99928020
-		},
-		{
 			"name": "prueba terminos y condiciones ahora ID 2",
 			"desc": "carta prueba ahora IID 2",
 			"atk": "1500",
@@ -15655,6 +15638,42 @@
 			"type": "Spell Card",
 			"firstdate": "2024-03-07",
 			"lastdate": "2024-03-27",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
+		},
+		{
+			"id": 99928026,
+			"name": "Sanguinius 5252525252525",
+			"desc": "el primarca de los angeles sangrientos",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "Insect",
+			"attribute": "",
+			"type": "Spell Card",
+			"firstdate": "2024-03-07",
+			"lastdate": "2024-03-19",
+			"card_images": [
+				{
+					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
+				}
+			]
+		},
+		{
+			"id": 99928027,
+			"name": "prueba",
+			"desc": "prueba",
+			"atk": 0,
+			"def": 0,
+			"level": 1,
+			"race": "Normal",
+			"attribute": "",
+			"type": "Spell Card",
+			"firstdate": "2024-03-01",
+			"lastdate": "2024-03-02",
 			"card_images": [
 				{
 					"image_url": "https://artwork.40k.gallery/wp-content/uploads/2022/07/johannes-helgeson-corax.jpg"
@@ -15764,20 +15783,16 @@
 			"id": 25
 		},
 		{
-			"id": 26,
-			"name": "mano nose tengo hambre"
+			"name": "mano nose",
+			"id": 26
 		},
 		{
 			"id": 27,
-			"name": "dsdsdsds"
+			"name": "prueba"
 		},
 		{
 			"id": 28,
-			"name": "sddsdsds"
-		},
-		{
-			"name": "equisde 15",
-			"id": 29
+			"name": "prueba"
 		}
 	],
 	"attributes": [
@@ -15818,8 +15833,8 @@
 			"name": "CARACAS"
 		},
 		{
-			"name": "LUFFY ",
-			"id": 13
+			"id": 14,
+			"name": "PRUEBA"
 		}
 	]
 }

@@ -14,6 +14,7 @@ import Button from '@mui/material/Button'
 import { Box, CircularProgress, Grow, Pagination } from '@mui/material'
 
 import { Index } from '../helpers/Index'
+import handles from '../helpers/handlesCards/handles'
 
 export const MagicScreen = () => {
 	const dispatch = useDispatch()
@@ -26,27 +27,23 @@ export const MagicScreen = () => {
 	const type = 'Spell Card'
 	const pageSize = 12
 	const [check, setCheck] = useState(true)
-
-	// esto es para la paginacion
-
-	const handleChange = (event, page) => {
-		const from = (page - 1) * pageSize
-		const to = (page - 1) * pageSize + pageSize
-		setPagination({ ...pagination, from, to })
-	}
-
 	const [pagination, setPagination] = useState({
 		from: 0,
 		to: pageSize,
 	})
 
+	// llamada a las cartas
+
 	useEffect(() => {
 		dispatch(getcardsByTypeLOCAL(type, pagination))
-
 		return () => {
 			dispatch(reinicio())
 		}
 	}, [pagination.from, pagination.to])
+
+	// handles
+
+	const { handleChange } = handles(pageSize, setPagination, pagination)
 
 	return (
 		<div className='general'>

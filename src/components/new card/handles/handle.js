@@ -41,61 +41,90 @@ const allHandles = (
 		}))
 	}
 
-	// const handlesubmit = e => {
-	// 	console.log ('se ha enviado')
-	// 	// boton de carga
-	// 	e?.preventDefault()
-	// 	if (!loading) {
-	// 		setSuccess(false)
-	// 		setLoading(true)
-	// 		timer.current = window.setTimeout(() => {
-	// 			setSuccess(true)
-	// 			setLoading(false)
-	// 		}, 2000)
-	// 	}
-	// 	// logica
-	// 	const {
-	// 		name,
-	// 		desc,
-	// 		atk,
-	// 		def,
-	// 		level,
-	// 		race,
-	// 		type,
-	// 		firstdate,
-	// 		lastdate,
-	// 		attribute,
-	// 	} = values
+	// manejar el submit
 
-	// 	const imagesArray = []
-	// 	imagesArray.push({
-	// 		image_url: card_images,
-	// 	})
+	const handlesubmit = e => {
+		console.log('se ha enviado')
+		//  boton de carga
+		e?.preventDefault()
+		if (!loading) {
+			setSuccess(false)
+			setLoading(true)
+			timer.current = window.setTimeout(() => {
+				setSuccess(true)
+				setLoading(false)
+			}, 2000)
+		}
+		//  logica
+		const {
+			name,
+			desc,
+			atk,
+			def,
+			level,
+			race,
+			type,
+			firstdate,
+			lastdate,
+			attribute,
+		} = values
 
-	// 	const naipe = {
-	// 		id,
-	// 		name,
-	// 		desc,
-	// 		atk,
-	// 		def,
-	// 		level,
-	// 		race,
-	// 		attribute,
-	// 		type,
-	// 		firstdate,
-	// 		lastdate,
-	// 	}
+		const imagesArray = []
+		imagesArray.push({
+			image_url: card_images,
+		})
 
-	// 	naipe.card_images = imagesArray
+		const naipe = {
+			id,
+			name,
+			desc,
+			atk,
+			def,
+			level,
+			race,
+			attribute,
+			type,
+			firstdate,
+			lastdate,
+		}
 
-	// 	dispatch(createCard(naipe)).then(res => {
-	// 		dispatch(getcardsGrid())
+		naipe.card_images = imagesArray
 
-	// 		closepopup()
-	// 	})
-	// }
+		dispatch(createCard(naipe)).then(res => {
+			dispatch(getcardsGrid())
 
-	return { handleConsole, handleConsoleCustom, clearstate }
+			closepopup()
+		})
+	}
+
+	// manejar el cambio de los values
+
+	const handleChange = e => {
+		e.preventDefault()
+		const { value, name } = e.target
+
+		setValues(preValues => ({
+			...preValues,
+			[name]: value,
+		}))
+	}
+
+	const handleChangeSelection = (field, value) => {
+		const { name } = value
+		setValues(preValues => ({
+			...preValues,
+			[field]: name,
+		}))
+	}
+
+	return {
+		handleConsole,
+		handleConsoleCustom,
+		clearstate,
+		handlesubmit,
+		handleChange,
+		handleChangeSelection,
+	}
 }
 
 export default allHandles

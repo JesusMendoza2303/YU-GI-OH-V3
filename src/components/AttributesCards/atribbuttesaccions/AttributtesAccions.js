@@ -26,6 +26,7 @@ import {
 } from '../../../store/slices/attributes/AttributesAccions'
 import { BotonEditarGrid } from '../../helpers/BotonEditarGrid'
 import { BotonEliminarGrid } from '../../helpers/BotonEliminarGrid'
+import handlesAccions from '../handles/handlesAccions'
 
 export const AttributtesAccions = data => {
 	const params = data.data.params
@@ -37,39 +38,18 @@ export const AttributtesAccions = data => {
 	const [success, setSuccess] = useState(false)
 	const [checked, setChecked] = useState(true)
 
-	const handledelete = () => {
-		const id = params.id
-		const attributeId = id
+	// handles
 
-		if (confirm('are you sure to delete this attribute?') === true) {
-			dispatch(removeAttribute(attributeId)).then(res => {
-				dispatch(getAttributes())
-			})
-		}
-	}
-
-	const handleSubmit = () => {
-		setLoading(true)
-		const id = params.id
-		const idrow = id
-		console.log('🚀 ~ handleSubmit ~ idrow:', idrow)
-		const { name } = params.row
-		console.log('🚀 ~ handleSubmit ~ name:', name)
-
-		const naipe = {
-			name,
-		}
-		dispatch(editAttribute(idrow, naipe))
-
-		setLoading(false)
-		setSuccess(true)
-	}
-
-	if (success) {
-		setTimeout(() => {
-			setSuccess(false)
-		}, 1000)
-	}
+	const { handleSubmit, handledelete } = handlesAccions(
+		setLoading,
+		params,
+		dispatch,
+		editAttribute,
+		setSuccess,
+		success,
+		removeAttribute,
+		getAttributes,
+	)
 
 	return (
 		<div>

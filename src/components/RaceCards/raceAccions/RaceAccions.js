@@ -12,11 +12,10 @@ import {
 } from '../../../store/slices/races/RacesAccions'
 import { BotonEliminarGrid } from '../../helpers/BotonEliminarGrid'
 import { BotonEditarGrid } from '../../helpers/BotonEditarGrid'
+import handles from '../handles/handle'
 
 export const RaceAccions = data => {
 	const params = data.data.params
-	console.log('🚀 ~ RaceAccions ~ params:', params)
-
 	const rowId = data.data.rowId
 
 	const dispatch = useDispatch()
@@ -25,41 +24,17 @@ export const RaceAccions = data => {
 	const [success, setSuccess] = useState(false)
 	const [checked, setChecked] = useState(true)
 
-	const handledelete = () => {
-		const id = params.id
-		const raceId = id
+	// handles
 
-		if (confirm('are you sure to delete this attribute?') === true) {
-			dispatch(removeRaces(raceId)).then(res => {
-				dispatch(getRaces())
-			})
-		}
-	}
-
-	if (success) {
-		setTimeout(() => {
-			setSuccess(false)
-		}, 1000)
-	}
-
-	const handleSubmit = () => {
-		setLoading(true)
-
-		const id = params.id
-		const idrow = id
-
-		const { name } = params.row
-
-		const race = {
-			name,
-		}
-		console.log('🚀 ~ handleSubmit ~ race:', race)
-
-		dispatch(editRaces(idrow, race))
-
-		setLoading(false)
-		setSuccess(true)
-	}
+	const { handledelete, handleSubmit } = handles(
+		params,
+		getRaces,
+		success,
+		setSuccess,
+		removeRaces,
+		setLoading,
+		editRaces,
+	)
 
 	return (
 		<div>

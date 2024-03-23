@@ -45,6 +45,7 @@ import {
 } from '../../store/slices/attributes/AttributesAccions'
 import { AttributtesAccions } from './atribbuttesaccions/AttributtesAccions'
 import Draggable from 'react-draggable'
+import handleScreen from './handles/handlesScreen'
 
 const filter = createFilterOptions()
 
@@ -73,17 +74,6 @@ export const AttributesScreen = () => {
 	const [name, setName] = useState('')
 	const [checked, setChecked] = useState(true)
 
-	// manejar el boton de borrado
-
-	const handleDeleteClick = () => {
-		if (confirm('are you sure to delete this card?') === true) {
-			dispatch(remove())
-			console.log('borrado').then(res => {
-				dispatch(getRaces())
-			})
-		}
-	}
-
 	// apertura y cierre del popup
 
 	const openPopupButton = () => {
@@ -97,12 +87,6 @@ export const AttributesScreen = () => {
 		openchange(true)
 	}
 
-	// limpiar le estado para que el formulario aparezca vacio
-
-	const clearState = () => {
-		setName('')
-	}
-
 	// esto es el apartado visual del boton de carga
 
 	const buttonSx = {
@@ -113,6 +97,8 @@ export const AttributesScreen = () => {
 			},
 		}),
 	}
+
+	// columnas
 
 	const columns = useMemo(() => [
 		{
@@ -149,16 +135,23 @@ export const AttributesScreen = () => {
 		})
 	}
 
-	function PaperComponent(props) {
-		return (
-			<Draggable
-				handle='#draggable-dialog-title'
-				cancel={'[class*="MuiDialogContent-root"]'}
-			>
-				<Paper {...props} />
-			</Draggable>
-		)
-	}
+	// handles
+
+	const {
+		PaperComponent,
+		handleSubmitAttribute,
+		clearState,
+		handleDeleteClick,
+	} = handleScreen(
+		closepopup,
+		dispatch,
+		createAttribute,
+		getAttributes,
+		id,
+		name,
+		setName,
+		remove,
+	)
 
 	return (
 		<div>
@@ -230,7 +223,7 @@ export const AttributesScreen = () => {
 					</span>
 				</DialogTitle>
 				<DialogContent>
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmitAttribute}>
 						<Stack spacing={2} margin={2}>
 							<TextField
 								required
@@ -252,35 +245,6 @@ export const AttributesScreen = () => {
 								control={<Checkbox></Checkbox>}
 								label='Agree Terms & Conditions'
 							></FormControlLabel>
-
-							{/* boton de guardado */}
-
-							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Fab
-										aria-label='save'
-										type='submit'
-										disabled={!agreeterm || name.trim().length < 2}
-										color='secondary'
-										sx={buttonSx}
-										onClick={handleSubmit}
-									>
-										{success ? <CheckIcon /> : <SaveIcon />}
-									</Fab>
-									{loading && (
-										<CircularProgress
-											size={68}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: -6,
-												left: -6,
-												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-							</Box> */}
 						</Stack>
 					</form>
 				</DialogContent>
@@ -289,7 +253,7 @@ export const AttributesScreen = () => {
 
 				<DialogActions>
 					<Button
-						onClick={handleSubmit}
+						onClick={handleSubmitAttribute}
 						disabled={!agreeterm || name.trim().length < 2}
 						color='secondary'
 						type='submit'

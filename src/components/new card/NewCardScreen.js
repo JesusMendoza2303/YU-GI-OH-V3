@@ -107,26 +107,6 @@ export const NewCardScreen = () => {
 		}
 	}, [])
 
-	// manejar el cambio de los values
-
-	const handleChange = e => {
-		e.preventDefault()
-		const { value, name } = e.target
-
-		setValues(preValues => ({
-			...preValues,
-			[name]: value,
-		}))
-	}
-
-	const handleChangeSelection = (field, value) => {
-		const { name } = value
-		setValues(preValues => ({
-			...preValues,
-			[field]: name,
-		}))
-	}
-
 	// apertura y cierre del formulario
 
 	const closepopup = () => {
@@ -141,6 +121,8 @@ export const NewCardScreen = () => {
 	const hanldesnackclose = () => {
 		setOpenSnack(false)
 	}
+
+	// columnas
 
 	const columns = useMemo(
 		() => [
@@ -213,6 +195,8 @@ export const NewCardScreen = () => {
 		[rowId],
 	)
 
+	// funcionar paper para el draggable
+
 	function PaperComponent(props) {
 		return (
 			<Draggable
@@ -226,7 +210,14 @@ export const NewCardScreen = () => {
 
 	// ejemplo handles
 
-	const { handleConsoleCustom, handleConsole, clearstate } = allHandles(
+	const {
+		handleConsoleCustom,
+		handleConsole,
+		clearstate,
+		handlesubmit,
+		handleChange,
+		handleChangeSelection,
+	} = allHandles(
 		values,
 		setValues,
 		setCard_images,
@@ -248,66 +239,6 @@ export const NewCardScreen = () => {
 			clearTimeout(timer.current)
 		}
 	}, [])
-
-	//  useEffect(() => {
-	//  	handlesubmit ()
-	//  	return () => {
-	//  		clearTimeout(timer.current)
-	//  	}
-	//  }, [])
-
-	const handlesubmit = e => {
-		//	 boton de carga
-		e?.preventDefault()
-		if (!loading) {
-			setSuccess(false)
-			setLoading(true)
-			timer.current = window.setTimeout(() => {
-				setSuccess(true)
-				setLoading(false)
-			}, 2000)
-		}
-		// logica
-		const {
-			name,
-			desc,
-			atk,
-			def,
-			level,
-			race,
-			type,
-			firstdate,
-			lastdate,
-			attribute,
-		} = values
-
-		const imagesArray = []
-		imagesArray.push({
-			image_url: card_images,
-		})
-
-		const naipe = {
-			id,
-			name,
-			desc,
-			atk,
-			def,
-			level,
-			race,
-			attribute,
-			type,
-			firstdate,
-			lastdate,
-		}
-
-		naipe.card_images = imagesArray
-
-		dispatch(createCard(naipe)).then(res => {
-			dispatch(getcardsGrid())
-
-			closepopup()
-		})
-	}
 
 	return (
 		<div>

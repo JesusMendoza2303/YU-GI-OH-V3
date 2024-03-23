@@ -42,24 +42,17 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useTranslation, Trans, i18n } from 'react-i18next'
 import { RaceAccions } from './raceAccions/RaceAccions'
 import Draggable from 'react-draggable'
+import handles from './handles/handle'
+import handleScreen from './handles/handleScreen'
 
 const filter = createFilterOptions()
 
 export const RaceScreen = () => {
-	const { t, i18n } = useTranslation()
-	// const [value, setValue] = useState('')
-	const { races = [] } = useSelector(state => state.races)
-
-	const dispatch = useDispatch()
-
-	useEffect(() => {
-		dispatch(getRaces())
-		return () => {
-			dispatch(reinicio())
-		}
-	}, [])
-
 	// estados
+
+	const { t, i18n } = useTranslation()
+	const { races = [] } = useSelector(state => state.races)
+	const dispatch = useDispatch()
 	const [rowId, setRowId] = useState(null)
 	const [id, setId] = useState(0)
 	const [loading, setLoading] = useState(false)
@@ -70,26 +63,14 @@ export const RaceScreen = () => {
 	const [name, setName] = useState('')
 	const [checked, setChecked] = useState(true)
 
-	// manejar el menu
+	// llamar a las razas
 
-	const [anchorEl, setAnchorEl] = React.useState(null)
-	const open = Boolean(anchorEl)
-	const handleClick = event => {
-		setAnchorEl(event.currentTarget)
-	}
-	const handleClose = () => {
-		setAnchorEl(null)
-	}
-
-	// manejar el boton de borrado
-
-	const handleDeleteClick = () => {
-		if (confirm('are you sure to delete this card?') === true) {
-			dispatch(remove()).then(res => {
-				dispatch(getRaces())
-			})
+	useEffect(() => {
+		dispatch(getRaces())
+		return () => {
+			dispatch(reinicio())
 		}
-	}
+	}, [])
 
 	// apertura y cierre del popup
 
@@ -104,12 +85,6 @@ export const RaceScreen = () => {
 		openchange(true)
 	}
 
-	// limpiar le estado para que el formulario aparezca vacio
-
-	const clearState = () => {
-		setName('')
-	}
-
 	// esto es el apartado visual del boton de carga
 
 	const buttonSx = {
@@ -120,6 +95,8 @@ export const RaceScreen = () => {
 			},
 		}),
 	}
+
+	// columnas
 
 	const columns = useMemo(() => [
 		{
@@ -146,25 +123,19 @@ export const RaceScreen = () => {
 		},
 	])
 
-	const handleSubmit = e => {
-		e.preventDefault()
-		const newRace = { id, name }
-		dispatch(createRace(newRace)).then(res => {
-			dispatch(getRaces())
-			closepopup()
-		})
-	}
+	// handles
 
-	function PaperComponent(props) {
-		return (
-			<Draggable
-				handle='#draggable-dialog-title'
-				cancel={'[class*="MuiDialogContent-root"]'}
-			>
-				<Paper {...props} />
-			</Draggable>
+	const { PaperComponent, handleSubmitRace, clearState, handleDeleteClick } =
+		handleScreen(
+			closepopup,
+			dispatch,
+			createRace,
+			getRaces,
+			id,
+			name,
+			setName,
+			remove,
 		)
-	}
 
 	return (
 		<div className='general'>
@@ -234,7 +205,7 @@ export const RaceScreen = () => {
 					</span>
 				</DialogTitle>
 				<DialogContent>
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmitRace}>
 						<Stack spacing={2} margin={2}>
 							<TextField
 								required
@@ -256,35 +227,6 @@ export const RaceScreen = () => {
 								control={<Checkbox></Checkbox>}
 								label='Agree Terms & Conditions'
 							></FormControlLabel>
-
-							{/* boton de guardado */}
-
-							{/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Box sx={{ m: 1, position: 'relative' }}>
-									<Fab
-										aria-label='save'
-										type='submit'
-										disabled={!agreeterm || name.trim().length < 2}
-										color='secondary'
-										sx={buttonSx}
-										onClick={handleSubmit}
-									>
-										{success ? <CheckIcon /> : <SaveIcon />}
-									</Fab>
-									{loading && (
-										<CircularProgress
-											size={68}
-											sx={{
-												color: green[500],
-												position: 'absolute',
-												top: -6,
-												left: -6,
-												zIndex: 1,
-											}}
-										/>
-									)}
-								</Box>
-							</Box> */}
 						</Stack>
 					</form>
 				</DialogContent>
@@ -293,7 +235,7 @@ export const RaceScreen = () => {
 
 				<DialogActions>
 					<Button
-						onClick={handleSubmit}
+						onClick={handleSubmitRace}
 						disabled={!agreeterm || name.trim().length < 2}
 						color='secondary'
 						type='submit'
